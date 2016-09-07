@@ -4,6 +4,10 @@ The purpose of this document is just to list the functionality of each of the cl
 * Run the game loop
 * Handle assets (spritesheet, textures)
 
+##Window Renderer
+* Set render settings
+* Display all objects on screen (GLFW and OpenGL)
+
 ## InputHandler
 * Handle keyboard and mouse input (KeyEventListener and MouseListener)
 
