@@ -46,10 +46,12 @@ public class Window {
 			if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) 	//on Escape, set the window to close
 				glfwSetWindowShouldClose(window, true);
 		});
+		
 		glfwSetWindowSizeCallback(window, (window, width, height) -> { 	//Resize listener
 			//System.out.println("resize" + width + " : " + height);
 			glViewport(0,0,width, height); 	//Reset the viewport to the correct size
 		});
+		
 		glfwSetMouseButtonCallback(window, (window, button, action, mods) -> { 	//Mouse click listener
 			if (button == GLFW_MOUSE_BUTTON_LEFT){ 	//If left mouse button
 				if (action == GLFW_RELEASE) 	//Set a boolean variable based on state of mouse (GLFW won't poll mouse state again if already pressed, need to manually store state)
