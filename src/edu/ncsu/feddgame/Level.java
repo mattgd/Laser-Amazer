@@ -9,6 +9,7 @@ public class Level {
 		this.number = number;
 		//TODO Test values here, maybe 16x16 would be better?
 		this.levelMap = new int[8][8]; // Save data for 8x8 grid not including the outside bounds
+		
 	}
 	
 	// Generate the level based on an algorithm
