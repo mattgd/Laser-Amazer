@@ -50,6 +50,8 @@ public class GameInstance {
 	private final int WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600; 	//Store the window size
 	private boolean mouseHeld;
 	
+	public static ObjectManager objectManager;
+	
 	// Game begins here
 	public GameInstance() {
 		try { 	// Run and quit on error
@@ -63,6 +65,8 @@ public class GameInstance {
 	
 	private void setup(){ 	//Setup all the window settings
 		GLFWErrorCallback.createPrint(System.err).set();
+		
+		objectManager = new ObjectManager();
 		
 		if (!glfwInit()) 	//Throw exception if glfw fails to initialize
 			throw new IllegalStateException("Can not initialize GLFW");
@@ -107,27 +111,9 @@ public class GameInstance {
 		
 		glEnable(GL_TEXTURE_2D);
 		
-		// Vertices for a quadrilateral
-		float[] vertices = new float[] {
-			-0.5f, 0.5f, 0, // TOP LEFT - 0
-			0.5f, 0.5f, 0, // TOP RIGHT - 1
-			0.5f, -0.5f, 0, // BOTTOM RIGHT - 2
-			-0.5f, -0.5f, 0, // BOTTOM LEFT - 3
-		};
 		
-		float[] texture = new float[] {
-			0, 0, // TOP LEFT
-			1, 0, // TOP RIGHT
-			1, 1, // BOTTOM RIGHT
-			0, 1, // BOTTOM LEFT
-		};
-		
-		int[] indices = new int[] {
-				0, 1, 2,
-				2, 3, 0
-		};
-		
-		Model model = new Model(vertices, texture, indices);
+		CreatePolygon.createBox(0,0);
+		CreatePolygon.createBox(10f, .2f);
 		Shader shader = new Shader("shader");
 		Texture tex = new Texture("bound.png");
 		
@@ -156,13 +142,13 @@ public class GameInstance {
 		while (!glfwWindowShouldClose(window)) { 	//Poll window while window isn't about to close
 			boolean canRender = false;
 			
-			double timeNow = Timer.getTime();
-			double elapsed = timeNow - time;
-			unprocessed += elapsed;
-			frameTime += elapsed;
-			
-			time = timeNow;
-			
+			{
+				double timeNow = Timer.getTime();
+				double elapsed = timeNow - time;
+				unprocessed += elapsed;
+				frameTime += elapsed;
+				time = timeNow;
+			}
 			// Run all non-render related tasks
 			while (unprocessed >= frameCap) {
 				unprocessed -= frameCap;
@@ -189,7 +175,7 @@ public class GameInstance {
 				shader.bind();
 				shader.setUniform("sampler", 0);
 				shader.setUniform("projection", camera.getProjection().mul(target));
-				model.render();
+				objectManager.render();
 				tex.bind(0);
 				
 				//renderBox(x, y); 	//Test rendering of objects
@@ -199,32 +185,6 @@ public class GameInstance {
 				frames++;
 			}
 		}
-	}
-	
-	private void renderBox(float x, float y){
-		glBegin(GL_QUADS);
-		glColor4f(1,1,1,0);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(-.1f + x, .1f + y);
-		
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex2f(.1f + x, .1f + y); 	//draw a white box in the center of the screen
-		
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex2f(.1f + x, -.1f + y);
-		
-		glTexCoord2f(0.0f, 1.0f);
-		glVertex2f(-.1f + x, -.1f + y);
-		glEnd();
-	}
-	private void renderLine(){
-		if (!mouseHeld) 	//Continue if the mouse button is held
-			return;
-		glBegin(GL_LINES);
-		glColor4f(0,1,0,0);
-		glVertex2f(.5f, -.1f); 	//Draw a green vertical line
-		glVertex2f(.5f, .1f);
-		glEnd();
 	}
 	
 }

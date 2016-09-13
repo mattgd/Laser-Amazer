@@ -9,8 +9,8 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 
-public class Model {
-
+public class Model { //Documentation would be nice -Jeremy
+	
 	private int drawCount;
 	private int vertexId;
 	private int textureId;
