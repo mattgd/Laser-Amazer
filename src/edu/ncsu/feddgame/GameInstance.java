@@ -103,7 +103,7 @@ public class GameInstance {
 				target = scale;
 				
 				//TODO Put key/mouse events here
-				glfwPollEvents();
+				window.update();
 				
 				if (frameTime >= 1.0) {
 					frameTime = 0;

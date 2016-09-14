@@ -9,13 +9,6 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 
-/**
- * This class provides methods for binding objects
- * to the graphics shader and rendering them on screen.
- * This is done by providing vertex and index data for the
- * object. Also provides shader unbinding.
- */
-
 public class Model {
 	
 	private int drawCount;
@@ -23,8 +16,12 @@ public class Model {
 	private int textureId;
 	private int indexId;
 	
-	// Create and bind the vertices, texture coordinates, and indices
-	// to the graphics shader.
+	/**
+	 * Create and bind the vertices, texture coordinates, and indices to the graphics shader.
+	 * @param vertices
+	 * @param tCoords
+	 * @param indices
+	 */
 	public Model(float[] vertices, float[] tCoords, int[] indices) {
 		drawCount = indices.length;
 		
@@ -43,6 +40,9 @@ public class Model {
 		unbind();
 	}
 	
+	/**
+	 * Render all of the vertices on screen.
+	 */
 	public void render() {
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
@@ -62,12 +62,20 @@ public class Model {
 		glDisableVertexAttribArray(1);
 	}
 	
+	/**
+	 * Unbind all of the vertices, texture coordinates,
+	 * and indices from the graphics shader.
+	 */
 	private void unbind() {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	
-	// Used for vertex and texture coordinate data
+	/**
+	 * @param data
+	 * @return buffer array of vertex or texture coordinate data
+	 * in the correct orientation.
+	 */
 	private FloatBuffer createFloatBuffer(float[] data) {
 		FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
 		buffer.put(data);
@@ -76,7 +84,10 @@ public class Model {
 		return buffer;
 	}
 	
-	// Used for index data
+	/**
+	 * @param data
+	 * @return buffer array of index data in the correct orientation.
+	 */
 	private IntBuffer createIntBuffer(int[] data) {
 		IntBuffer buffer = BufferUtils.createIntBuffer(data.length);
 		buffer.put(data);

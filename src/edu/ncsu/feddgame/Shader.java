@@ -35,6 +35,10 @@ public class Shader {
 
 	private int program, vs, fs; // Vertex and fragment shaders
 	
+	/**
+	 * Loads the shaders from their respective .vs or .fs files
+	 * @param path
+	 */
 	public Shader(String path) {
 		program = glCreateProgram();
 		
@@ -80,14 +84,25 @@ public class Shader {
 		}
 	}
 	
+	/**
+	 * Installs the program object as part of current rendering state
+	 */
 	public void bind() {
 		glUseProgram(program);
 	}
 	
+	/**
+	 * Removes/resets the program object
+	 */
 	public void unbind() {
 		glUseProgram(0);
 	}
 	
+	/**
+	 * Reads a shader file to a String.
+	 * @param path
+	 * @return String with the contents of the shader file
+	 */
 	private String readFile(String path) {
 		StringBuilder sb = new StringBuilder();
 		BufferedReader reader;
@@ -109,6 +124,11 @@ public class Shader {
 		return sb.toString();
 	}
 	
+	/**
+	 * Load uniform variables defined in the shader files
+	 * @param name
+	 * @param value
+	 */
 	public void setUniform(String name, int value) {
 		int location = glGetUniformLocation(program, name);
 		
@@ -116,6 +136,11 @@ public class Shader {
 			glUniform1i(location, value);
 	}
 	
+	/**
+	 * Load uniform variables defined in the shader files
+	 * @param name
+	 * @param matrix
+	 */
 	public void setUniform(String name, Matrix4f matrix) {
 		int location = glGetUniformLocation(program, name);
 		FloatBuffer buffer = BufferUtils.createFloatBuffer(4 * 4);

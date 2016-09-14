@@ -13,6 +13,11 @@ public class Window {
 	private boolean fullscreen, mouseHeld = false;
 	private String title;
 	
+	private Input input;
+	
+	/**
+	 * Sets the error callback for the game
+	 */
 	public static void setCallbacks() {
 		glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err));
 	}
@@ -31,6 +36,10 @@ public class Window {
 		createWindow();
 	}
 	
+	/**
+	 * Creates the window with the parameters
+	 * of the local variables.
+	 */
 	public void createWindow() {
 		long monitor = glfwGetPrimaryMonitor();
 
@@ -56,16 +65,28 @@ public class Window {
 		setMouseButtonCallback();
 		
 		glfwMakeContextCurrent(window);
+		
+		input = new Input(window);
 	}
 	
+	/**
+	 * @return close flag of the window
+	 */
 	public boolean shouldClose() {
 		return glfwWindowShouldClose(window);
 	}
 	
+	/**
+	 * Swaps the front and back buffers of the window
+	 */
 	public void swapBuffers() {
 		glfwSwapBuffers(window);
 	}
 	
+	/**
+	 * Sets the key callback to be checked
+	 * when glfwPollEvents is called
+	 */
 	public void setKeyCallback() {
 		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> { 	//Key listener
 			if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) 	//on Escape, set the window to close
@@ -73,13 +94,19 @@ public class Window {
 		});
 	}
 	
+	/**
+	 * Sets the size callback for the window
+	 */
 	public void setWindowSizeCallback() {
 		glfwSetWindowSizeCallback(window, (window, width, height) -> { 	//Resize listener
-			//System.out.println("resize" + width + " : " + height);
 			glViewport(0,0,width, height); 	//Reset the viewport to the correct size
 		});
 	}
 	
+	/**
+	 * Sets the mouse callback to be checked
+	 * when glfwPollEvents is called
+	 */
 	public void setMouseButtonCallback() {
 		glfwSetMouseButtonCallback(window, (window, button, action, mods) -> { 	//Mouse click listener
 			if (button == GLFW_MOUSE_BUTTON_LEFT){ 	//If left mouse button
@@ -91,20 +118,40 @@ public class Window {
 		});
 	}
 	
+	/**
+	 * @return true if GLFW_MOUSE_BUTTON_LEFT is held
+	 */
 	public boolean isMouseHeld() {
 		return mouseHeld;
 	}
 	
+	/**
+	 * @return width of the game window
+	 */
 	public int getWidth() {
 		return width;
 	}
 	
+	/**
+	 * @return height of the game window
+	 */
 	public int getHeight() {
 		return width;
 	}
 
+	/**
+	 * @return true if the window is fullscreen
+	 */
 	public boolean isFullscreen() {
 		return fullscreen;
+	}
+	
+	/**
+	 * Updates input array and polls GLFW events
+	 */
+	public void update() {
+		input.update();
+		glfwPollEvents();
 	}
 	
 }

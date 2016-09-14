@@ -3,6 +3,10 @@ package edu.ncsu.feddgame;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
+/**
+ * Enables the in-game view to be  moved around.
+ */
+
 public class Camera {
 
 	private Vector3f position;

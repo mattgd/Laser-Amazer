@@ -26,6 +26,10 @@ public class Texture {
 	
 	private int texture, width, height;
 	
+	/**
+	 * Instantiates a new Texture from an image file.
+	 * @param String path
+	 */
 	public Texture(String path) {
 		BufferedImage image;
 
@@ -62,6 +66,10 @@ public class Texture {
 		}
 	}
 	
+	/**
+	 * Creates the texture within LWJGL
+	 * @param int sampler
+	 */
 	public void bind(int sampler) {
 		if (sampler >= 0 && sampler <= 31) {
 			glActiveTexture(GL_TEXTURE0 + sampler);
@@ -69,6 +77,9 @@ public class Texture {
 		}
 	}
 	
+	/**
+	 * Removes the texture from LWJGL
+	 */
 	public void unbind() {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
