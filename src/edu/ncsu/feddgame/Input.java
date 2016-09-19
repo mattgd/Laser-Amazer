@@ -20,7 +20,8 @@ public class Input {
 	 * @return true if the key is currently being held
 	 */
 	public boolean isKeyDown(int key) {
-		return glfwGetKey(window, key) == 1;
+		return false; 	//temp fix, we need to use specific key IDs or use callbacks, as many numbers in the range don't exist and cause errors
+		//return glfwGetKey(window, key) == 1;
 	}
 	
 	/**

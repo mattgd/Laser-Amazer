@@ -4,7 +4,6 @@ import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
 import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
 import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwInit;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
@@ -48,7 +47,7 @@ public class GameInstance {
 
 		glfwSwapInterval(1); 	// Set Vsync (swap the double buffer from drawn to displayed every refresh cycle)
 	}
-	
+	@SuppressWarnings("unused")
 	private void loop() { 	// Render Loop
 		GL.createCapabilities();
 		
@@ -58,8 +57,9 @@ public class GameInstance {
 		
 		glEnable(GL_TEXTURE_2D);
 		
-		CreatePolygon.createBox(0,0);
+		int box1 = CreatePolygon.createBox(0,0);
 		CreatePolygon.createBox(10f, .2f);
+		CreatePolygon.createTrapezoid(-10f, 5f, 2f, 1, 1);
 		Shader shader = new Shader("shader");
 		Texture tex = new Texture("bound.png");
 		
@@ -84,7 +84,8 @@ public class GameInstance {
 		double unprocessed = 0;
 		
 		//projection.mul(scale, target);
-		
+		int i = 0; 	//Temp int
+		float dir = 1;
 		while (!window.shouldClose()) { 	// Poll window while window isn't about to close
 			boolean canRender = false;
 			
@@ -104,6 +105,14 @@ public class GameInstance {
 				
 				//TODO Put key/mouse events here
 				window.update();
+				if (i < 80){
+					objectManager.moveModel(box1, 0.1f * dir, 0f, 0f); 	//Test animation of models, this pings the box back and forth
+					i++;
+				}else{
+					i = 0;
+					dir *= -1f;
+				}
+				
 				
 				if (frameTime >= 1.0) {
 					frameTime = 0;
