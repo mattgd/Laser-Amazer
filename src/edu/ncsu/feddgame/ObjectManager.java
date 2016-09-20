@@ -2,6 +2,8 @@ package edu.ncsu.feddgame;
 
 import java.util.ArrayList;
 
+
+
 public class ObjectManager {
 	
 	private ArrayList<Model> models = new ArrayList<Model>();
@@ -45,7 +47,9 @@ public class ObjectManager {
 	 * @param z
 	 */
 	public void moveModel(int index, float x, float y, float z){
-		models.get(index).move(x, y, z);
+		if (models.get(index) != null){
+			models.get(index).move(x, y, z);
+		}
 	}
 
 }

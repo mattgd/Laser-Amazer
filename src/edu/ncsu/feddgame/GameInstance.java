@@ -20,12 +20,15 @@ public class GameInstance {
 	
 	private Window window;
 	public static ObjectManager objectManager;
+	boolean canRender;
+	int box1;
+	
 	
 	// Game begins here
 	public GameInstance() {
 		try { 	// Run and quit on error
 			setup();
-			loop();
+			renderLoop();
 		} finally {
 			glfwTerminate();
 			System.exit(1);
@@ -44,11 +47,9 @@ public class GameInstance {
 		glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
 		
 		window = new Window(800, 600, "FEDD Game", false);
-
-		glfwSwapInterval(1); 	// Set Vsync (swap the double buffer from drawn to displayed every refresh cycle)
 	}
-	@SuppressWarnings("unused")
-	private void loop() { 	// Render Loop
+	
+	private void renderLoop() { 	// Render Loop
 		GL.createCapabilities();
 		
 		//TODO Should probably throw exception and exit here if window is null
@@ -57,7 +58,7 @@ public class GameInstance {
 		
 		glEnable(GL_TEXTURE_2D);
 		
-		int box1 = CreatePolygon.createBox(0,0);
+		box1 = CreatePolygon.createBox(0,0);
 		CreatePolygon.createBox(10f, .2f);
 		CreatePolygon.createTrapezoid(-10f, 5f, 2f, 1, 1);
 		Shader shader = new Shader("shader");
@@ -84,10 +85,11 @@ public class GameInstance {
 		double unprocessed = 0;
 		
 		//projection.mul(scale, target);
-		int i = 0; 	//Temp int
-		float dir = 1;
+		
+		new Thread(() -> logicLoop()).start(); 	//Run the logic in a separate thread
+		
 		while (!window.shouldClose()) { 	// Poll window while window isn't about to close
-			boolean canRender = false;
+			canRender = false;
 			
 			{
 				double timeNow = Timer.getTime();
@@ -105,13 +107,7 @@ public class GameInstance {
 				
 				//TODO Put key/mouse events here
 				window.update();
-				if (i < 80){
-					objectManager.moveModel(box1, 0.1f * dir, 0f, 0f); 	//Test animation of models, this pings the box back and forth
-					i++;
-				}else{
-					i = 0;
-					dir *= -1f;
-				}
+				
 				
 				
 				if (frameTime >= 1.0) {
@@ -136,6 +132,36 @@ public class GameInstance {
 				window.swapBuffers(); // Swap the render buffers
 				frames++;
 			}
+		}
+	}
+	
+	private void logicLoop(){
+		int i = 0; 	//Temp int
+		float dir = 1;
+		long timing = Math.round(1f / window.refreshRate * 1000f); 	//Get the number of milliseconds between frames based on refresh rate
+		while (!window.shouldClose()){
+			
+			
+			double timeNow = Timer.getTime(); 	//Get time at the start of the loop
+			
+			
+			if (i < 80){
+				objectManager.moveModel(box1, 0.1f * dir, 0f, 0f); 	//Test animation of models, this pings the box back and forth
+				i++;
+			}else{
+				i = 0;
+				dir *= -1f;
+			}
+			
+			{
+				long sleeptime = timing - (long)(Timer.getTime() - timeNow); 	//Sync the game loop to update at the refresh rate
+				try {
+					Thread.sleep(sleeptime);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}	
+				
 		}
 	}
 }

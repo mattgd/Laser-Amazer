@@ -65,8 +65,7 @@ public class Model {
 		this.vertices[5] += z;
 		this.vertices[8] += z;
 		this.vertices[11] += z;
-		bindVertices(this.vertices);
-		unbind();
+		
 	}
 	
 	/**
@@ -75,6 +74,8 @@ public class Model {
 	public void render() {
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
+		
+		bindVertices(this.vertices);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, vertexId);
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);

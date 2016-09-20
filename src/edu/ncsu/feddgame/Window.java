@@ -8,26 +8,28 @@ import org.lwjgl.glfw.GLFWVidMode;
 
 public class Window {
 
-	private long window;
+	public long window;
+	public int refreshRate;
 	private int width, height;
 	private boolean fullscreen, mouseHeld = false;
 	private String title;
 	
 	private Input input;
 	
-	/**
-	 * Sets the error callback for the game
-	 */
-	public static void setCallbacks() {
-		glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err));
-	}
 	
 	public Window () {
 		this.width = 800;
 		this.height = 600;
 		this.title = "Game Window";
+		createWindow();
 	}
-	
+	/**
+	 * 
+	 * @param width
+	 * @param height
+	 * @param title
+	 * @param fullscreen
+	 */
 	public Window (int width, int height, String title, boolean fullscreen) {
 		this.width = width;
 		this.height = height;
@@ -52,21 +54,27 @@ public class Window {
 		
 		if (window == 0)
 			throw new IllegalStateException("Failed to create window.");
+		GLFWVidMode vidMode = glfwGetVideoMode(monitor);
+		refreshRate = vidMode.refreshRate();
 		
 		if (!fullscreen) {
-			GLFWVidMode vidMode = glfwGetVideoMode(monitor);
 			glfwSetWindowPos(window, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2); // Show window in center of screen
-			
 			glfwShowWindow(window);
 		}
 		
 		setKeyCallback();
 		setWindowSizeCallback();
 		setMouseButtonCallback();
-		
 		glfwMakeContextCurrent(window);
-		
+		glfwSwapInterval(1); 	// Set Vsync (swap the double buffer from drawn to displayed every refresh cycle)
 		input = new Input(window);
+	}
+	
+	/**
+	 * Sets the error callback for the game
+	 */
+	public static void setCallbacks() {
+		glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err));
 	}
 	
 	/**
