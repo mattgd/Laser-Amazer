@@ -4,7 +4,6 @@ import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
 import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
 import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwInit;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
@@ -21,7 +20,7 @@ public class GameInstance {
 	private Window window;
 	public static ObjectManager objectManager;
 	boolean canRender;
-	int box1;
+	int box1, laser1, laser2;
 	
 	
 	// Game begins here
@@ -30,13 +29,13 @@ public class GameInstance {
 			setup();
 			renderLoop();
 		} finally {
-			glfwTerminate();
-			System.exit(1);
+			//glfwTerminate();
+			//System.exit(1);
 		}
 	}
 	
 	private void setup() { 	// Setup all the window settings
-		Window.setCallbacks();
+		//Window.setCallbacks();
 		
 		objectManager = new ObjectManager();
 		
@@ -59,8 +58,11 @@ public class GameInstance {
 		glEnable(GL_TEXTURE_2D);
 		
 		box1 = CreatePolygon.createBox(0,0);
-		CreatePolygon.createBox(10f, .2f);
+		
+		CreatePolygon.createBox(3, -6);
 		CreatePolygon.createTrapezoid(-10f, 5f, 2f, 1, 1);
+		laser1 = CreatePolygon.createLaser(0f, -4f, -6f, 2f);
+		laser2 = CreatePolygon.createLaser(3f, 10, 3, 2);
 		Shader shader = new Shader("shader");
 		Texture tex = new Texture("bound.png");
 		
@@ -126,8 +128,8 @@ public class GameInstance {
 				shader.bind();
 				shader.setUniform("sampler", 0);
 				shader.setUniform("projection", camera.getProjection().mul(target));
-				objectManager.render();
 				tex.bind(0);
+				objectManager.render();
 				
 				window.swapBuffers(); // Swap the render buffers
 				frames++;
@@ -139,11 +141,14 @@ public class GameInstance {
 		int i = 0; 	//Temp int
 		float dir = 1;
 		long timing = Math.round(1f / window.refreshRate * 1000f); 	//Get the number of milliseconds between frames based on refresh rate
+		
+		
 		while (!window.shouldClose()){
 			
-			
+			objectManager.reflectLaser(laser1);
+			objectManager.reflectLaser(laser2);
 			double timeNow = Timer.getTime(); 	//Get time at the start of the loop
-			
+			//((LaserModel)objectManager.getModel(laser2)).setEndPoint(i / 10f, 5f); 	//Test animation
 			
 			if (i < 80){
 				objectManager.moveModel(box1, 0.1f * dir, 0f, 0f); 	//Test animation of models, this pings the box back and forth
