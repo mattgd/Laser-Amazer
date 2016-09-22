@@ -16,6 +16,8 @@ public class Model {
 	private int textureId;
 	private int indexId;
 	public float[] vertices;
+	private float[] tCoords;
+	private int[] indices;
 	
 	/**
 	 * Create and bind the vertices, texture coordinates, and indices to the graphics shader.
@@ -25,7 +27,24 @@ public class Model {
 	 */
 	public Model(float[] vertices, float[] tCoords, int[] indices) {
 		drawCount = indices.length;
+		this.indices = indices;
+		this.tCoords = tCoords;
 		this.vertices = vertices;
+	}
+	
+	private void bindVertices(float[] v){
+		vertexId = glGenBuffers();
+		glBindBuffer(GL_ARRAY_BUFFER, vertexId);
+		glBufferData(GL_ARRAY_BUFFER, createFloatBuffer(vertices), GL_STATIC_DRAW);
+		unbind();
+	}
+	
+	/**
+	 * Render all of the vertices on screen.
+	 */
+	public void render() {
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
 		
 		bindVertices(this.vertices);
 		
@@ -37,45 +56,6 @@ public class Model {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, createIntBuffer(indices), GL_STATIC_DRAW);
 		
-		unbind();
-	}
-	
-	private void bindVertices(float[] v){
-		vertexId = glGenBuffers();
-		glBindBuffer(GL_ARRAY_BUFFER, vertexId);
-		glBufferData(GL_ARRAY_BUFFER, createFloatBuffer(vertices), GL_STATIC_DRAW);
-		unbind();
-	}
-	/**
-	 * Adjusts the verices of the model by the values passed
-	 * @param x
-	 * @param y
-	 * @param z
-	 */
-	public void move(float x, float y, float z){ 	//Moves the vertices by 
-		this.vertices[0] += x;
-		this.vertices[3] += x;
-		this.vertices[6] += x;
-		this.vertices[9] += x;
-		this.vertices[1] += y;
-		this.vertices[4] += y;
-		this.vertices[7] += y;
-		this.vertices[10] += y;
-		this.vertices[2] += z;
-		this.vertices[5] += z;
-		this.vertices[8] += z;
-		this.vertices[11] += z;
-		
-	}
-	
-	/**
-	 * Render all of the vertices on screen.
-	 */
-	public void render() {
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
-		
-		bindVertices(this.vertices);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, vertexId);
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
@@ -124,6 +104,28 @@ public class Model {
 		buffer.flip();
 		
 		return buffer;
+	}
+	
+	/**
+	 * Adjusts the vertices of the model by the values passed
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
+	public void move(float x, float y, float z){ 	//Moves the vertices by 
+		this.vertices[0] += x;
+		this.vertices[3] += x;
+		this.vertices[6] += x;
+		this.vertices[9] += x;
+		this.vertices[1] += y;
+		this.vertices[4] += y;
+		this.vertices[7] += y;
+		this.vertices[10] += y;
+		this.vertices[2] += z;
+		this.vertices[5] += z;
+		this.vertices[8] += z;
+		this.vertices[11] += z;
+		
 	}
 	
 }

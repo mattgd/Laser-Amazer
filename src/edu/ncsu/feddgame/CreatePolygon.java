@@ -9,7 +9,7 @@ public class CreatePolygon {
 	 * @param xOffset
 	 * @param yOffset
 	 */
-	public static int createBox(float xOffset,float yOffset, float size){
+	public static Model createBox(float xOffset,float yOffset, float size){
 		// Vertices for a quadrilateral
 		float[] vertices = new float[] {
 			-size/2f + xOffset, size/2f + yOffset, 0, // TOP LEFT - 0
@@ -31,7 +31,7 @@ public class CreatePolygon {
 				};
 		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices)); 	//Add the model to the objectManager
 	}
-	public static int createBox(float xOffset, float yOffset){
+	public static Model createBox(float xOffset, float yOffset){
 		return createBox(xOffset, yOffset, 1); 	//default size of 1
 	}
 	
@@ -44,7 +44,7 @@ public class CreatePolygon {
 	 * @param height
 	 * @return
 	 */
-	public static int createTrapezoid(float xOffset, float yOffset, float topBase, float bottomBase, float height){
+	public static Model createTrapezoid(float xOffset, float yOffset, float topBase, float bottomBase, float height){
 		// Vertices for a trapezoid
 		float[] vertices = new float[] {
 			-topBase/2f + xOffset, height + yOffset, 0, // TOP LEFT - 0
@@ -75,7 +75,7 @@ public class CreatePolygon {
 	 * @param endY
 	 * @return
 	 */
-	public static int createLaser(float begX, float begY, float endX, float endY){
+	public static Model createLaser(float begX, float begY, float endX, float endY){
 		
 		float[] texture = new float[] {
 			0, 0,

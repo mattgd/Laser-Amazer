@@ -6,15 +6,22 @@ import java.util.ArrayList;
 
 public class ObjectManager {
 	
-	private ArrayList<Model> models = new ArrayList<Model>();
+	private static ArrayList<Model> models = new ArrayList<Model>();
+	private ArrayList<Model> addModels = new ArrayList<Model>();
 	/**
 	 * Adds a passed Model to the stored arraylist
 	 * @param Model m
 	 */
-	public int addModel(Model m){
-		models.add(m);
-		return models.indexOf(m);
+	public Model addModel(Model m){
+		addModels.add(m);
+		return m;
 	}
+	
+	public void updateModels(){
+		models.addAll(addModels);
+		addModels.clear();
+	}
+	
 	/**
 	 * Removed the model object at the index specified
 	 * @param index
@@ -34,14 +41,28 @@ public class ObjectManager {
 		return models.get(index);
 	}
 	
+	public int indexOf(Model m){
+		return models.indexOf(m);
+	}
+	
 	/**
 	 * Calls the render() function on all models
 	 */
-	public void render(){
-		for(Model m : models){
-			m.render();
+	public void renderAll(){
+		int num = models.size();
+		for(int i = 0; i < num; i++){
+			models.get(i).render();
 		}
 		
+	}
+	
+	public void reflectAll(){
+		int size = models.size();
+		for (int i = 0; i < size; i++){
+			if (models.get(i) instanceof LaserModel){
+				reflectLaser(i);
+			}
+		}
 	}
 	/**
 	 * Moves the model at the index specified by the values passed

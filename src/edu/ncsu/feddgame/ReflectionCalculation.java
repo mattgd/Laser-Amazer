@@ -18,10 +18,10 @@ public class ReflectionCalculation {
 		if (!intersects.isEmpty()){ 	//If there exists at least one valid intersection
 			Object[] closest = getClosestIntersection(); 	//Find the closest one
 			laser.setEndPoint((float)closest[1], (float)closest[2]); 	//Modify the laser to the correct length
-			//TODO (short term): have laser extend into infinity when no object of intersection
-			
-			
-			//TODO (longer term): calculate the angle of reflection and generate a new laser after reflection
+			float newSlope = (float)closest[3] - laser.getSlope();
+			if ((float)closest[1] < Float.MAX_VALUE / 3 && (float)closest[2] < Float.MAX_VALUE / 3)
+			CreatePolygon.createLaser((float)closest[1], (float)closest[2], .00001f, .00001f * newSlope); 	//TODO: 99% sure there is a bit of lag going on
+			//TODO: have laser extend into infinity when no object of intersection
 		}
 	}
 	
@@ -44,8 +44,8 @@ public class ReflectionCalculation {
 					float yIntercept;
 					if (slope == Float.POSITIVE_INFINITY || slope == Float.NEGATIVE_INFINITY){ 	//If the laser is vertical
 						if (sl == Float.POSITIVE_INFINITY || sl == Float.NEGATIVE_INFINITY){ 	//If both are vertical
-							xIntercept = Float.POSITIVE_INFINITY; 	//They will never intercept
-							yIntercept = Float.POSITIVE_INFINITY;
+							xIntercept = 100f; 	//They will never intercept
+							yIntercept = 100f;
 						}else{
 							yIntercept = sl * (coords[0] - v[0]) + v[1]; 	//Use separate math for vertical laser and non-vertical edge
 							xIntercept = coords[0];
