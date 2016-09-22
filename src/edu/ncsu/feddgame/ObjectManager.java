@@ -30,6 +30,10 @@ public class ObjectManager {
 		models.remove(m);
 	}
 	
+	public Model getModel(int index){
+		return models.get(index);
+	}
+	
 	/**
 	 * Calls the render() function on all models
 	 */
@@ -50,6 +54,14 @@ public class ObjectManager {
 		if (models.get(index) != null){
 			models.get(index).move(x, y, z);
 		}
+	}
+	/**
+	 * Executes the calculation of the path of a single laser segment at the index passed
+	 * @param index
+	 */
+	public void reflectLaser(int index){
+		if (models.get(index) != null && models.get(index) instanceof LaserModel)
+			ReflectionCalculation.reflect((LaserModel)models.get(index), models);
 	}
 
 }
