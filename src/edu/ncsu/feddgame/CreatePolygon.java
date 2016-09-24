@@ -2,8 +2,6 @@ package edu.ncsu.feddgame;
 
 public class CreatePolygon {
 	
-	private static final float w = .25f; 	//Width of the laser rendered
-	
 	/**
 	 * Creates a Box model and stores it in the objectManager of the GameInstance
 	 * @param xOffset
@@ -71,11 +69,11 @@ public class CreatePolygon {
 	 * Creates a laser with start and end points passed
 	 * @param begX
 	 * @param begY
-	 * @param endX
-	 * @param endY
+	 * @param d
+	 * @param length
 	 * @return
 	 */
-	public static Model createLaser(float begX, float begY, float endX, float endY){
+	public static Model createLaser(float begX, float begY, double angle, float length){
 		
 		float[] texture = new float[] {
 			0, 0,
@@ -89,7 +87,24 @@ public class CreatePolygon {
 				2, 3, 0
 		};
 		
-		return GameInstance.objectManager.addModel(new LaserModel(texture, indices, begX, begY, endX, endY, w)); 	//Add the model to the objectManager
+		return GameInstance.objectManager.addModel(new LaserModel(texture, indices, begX, begY, (float)angle, length)); 	//Add the model to the objectManager
+	}
+	
+	public static LaserModel createReflectedLaser(float begX, float begY, double angle, float length){
+		
+		float[] texture = new float[] {
+			0, 0,
+			1, 0,
+			1, 1,
+			0, 1,
+		};
+		
+		int[] indices = new int[] {
+				0, 1, 2,
+				2, 3, 0
+		};
+		
+		return GameInstance.objectManager.addLaserModel(new LaserModel(texture, indices, begX, begY, (float)angle, length)); 	//Add the model to the objectManager
 	}
 
 }

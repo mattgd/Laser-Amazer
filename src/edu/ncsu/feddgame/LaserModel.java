@@ -1,9 +1,10 @@
 package edu.ncsu.feddgame;
 
 public class LaserModel extends Model{
-	private float slope;
-	private float coords[] = new float[4];
-	private float w;
+	private float angle; 	//Angle in radians
+	private float length; 	//Length of vector
+	private float coords[] = new float[2];
+	private static final float w = .25f; 	//Width of the laser rendered
 	
 	public int xDir = 0, yDir = 0;
 	
@@ -18,14 +19,12 @@ public class LaserModel extends Model{
 	 * @param x1
 	 * @param y1
 	 */
-	public LaserModel(float[] tCoords, int[] indices, float x0, float y0, float x1, float y1, float w) {
-		super(getVertices(x0, y0, x1, y1, w), tCoords, indices);
-		this.w = w;
-		this.slope = (y1 - y0)/(x1 - x0);
+	public LaserModel(float[] tCoords, int[] indices, float x0, float y0, float angle, float length) {
+		super(getVertices(x0, y0, angle, length, w), tCoords, indices);
+		this.angle = angle;
+		this.length = length;
 		coords[0] = x0;
 		coords[1] = y0;
-		coords[2] = x1;
-		coords[3] = y1;
 		determineDirection();
 	}
 	
@@ -38,12 +37,14 @@ public class LaserModel extends Model{
 	 * @param w
 	 * @return
 	 */
-	public static float[] getVertices(float begX, float begY, float endX, float endY, float w){
+	public static float[] getVertices(float begX, float begY, float angle, float length, float width){
+		
+		float endX = length * (float)Math.cos(angle) + begX;
+		float endY = length * (float)Math.sin(angle) + begY;
 		float dy = endY - begY;
 		float dx = endX - begX;
-		float length = (float)Math.sqrt(dx * dx + dy * dy);
-		float xS = (w * dy / length) / 2;
-		float yS = (w * dx / length) / 2;
+		float xS = (width * dy / length) / 2;
+		float yS = (width * dx / length) / 2;
 		
 		float[] vertices = new float[] {
 				begX - xS, begY + yS, 0,
@@ -56,30 +57,31 @@ public class LaserModel extends Model{
 	}
 	
 	/**
-	 * Returns the slope of the laser line
+	 * Returns the angle of the laser line
 	 * @return
 	 */
-	public float getSlope(){
-		return this.slope;
+	public float getAngle(){
+		return this.angle;
 	}
+	
 	/**
 	 * Sets a value of 1 for positive, -1 for negative for the vector directions of the laser
 	 */
 	private void determineDirection(){
-		if (coords[3] - coords[1] >= 0){
+		if (Math.sin(angle) >= 0){
 			yDir = 1;
 		}else{
 			yDir = -1;
 		}
-		if (coords[2] - coords[0] >= 0){
+		if (Math.cos(angle) >= 0){
 			xDir = 1;
 		}else{
 			xDir = -1;
 		}
 	}
 	
-	public void setEndPoint(float xCoord, float yCoord){
-		this.vertices = getVertices(coords[0], coords[1], xCoord, yCoord, w);
+	public void setLength(float length){
+		this.vertices = getVertices(coords[0], coords[1], angle, length, w);
 	}
 	
 	/**

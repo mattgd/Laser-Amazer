@@ -61,8 +61,8 @@ public class GameInstance {
 		
 		CreatePolygon.createBox(3, -6);
 		CreatePolygon.createTrapezoid(-10f, 5f, 2f, 1, 1);
-		laser1 = CreatePolygon.createLaser(0f, -4f, -6f, 2f);
-		laser2 = CreatePolygon.createLaser(3f, 10, 3, 2);
+		laser1 = CreatePolygon.createLaser(-6, 3, Math.toRadians(145), 1);
+		laser2 = CreatePolygon.createLaser(3f, 10, -Math.PI / 2d + .1d, 1);
 		objectManager.updateModels();
 		Shader shader = new Shader("shader");
 		Texture tex = new Texture("bound.png");
@@ -143,11 +143,10 @@ public class GameInstance {
 		float dir = 1;
 		long timing = Math.round(1f / window.refreshRate * 1000f); 	//Get the number of milliseconds between frames based on refresh rate
 		
-		
 		while (!window.shouldClose()){
 			
 			objectManager.reflectAll();
-			objectManager.updateModels(); 	//This causes the lag, seems to be an issue with too many lasers being added per cycle
+			objectManager.updateModels(); 
 			double timeNow = Timer.getTime(); 	//Get time at the start of the loop
 			
 			if (i < 80){
@@ -160,7 +159,7 @@ public class GameInstance {
 			
 			{
 				long sleeptime = timing - (long)(Timer.getTime() - timeNow); 	//Sync the game loop to update at the refresh rate
-				System.out.println(sleeptime);
+				//System.out.println(sleeptime);
 				try {
 					Thread.sleep(sleeptime);
 				} catch (InterruptedException e) {

@@ -17,17 +17,24 @@ public class ReflectionCalculation {
 		findIntersects(laser, models);
 		if (!intersects.isEmpty()){ 	//If there exists at least one valid intersection
 			Object[] closest = getClosestIntersection(); 	//Find the closest one
-			laser.setEndPoint((float)closest[1], (float)closest[2]); 	//Modify the laser to the correct length
-			float newSlope = (float)closest[3] - laser.getSlope();
+			float length = (float) Math.hypot((float)closest[1] - coords[0], (float)closest[2] - coords[1]);
+			laser.setLength(length); 	//Modify the laser to the correct length
+			float angle = laser.getAngle() - (float)closest[3];
+			float newAngle = (float)Math.atan((Math.sin(angle) * -laser.yDir) / (Math.cos(angle) * -laser.xDir));
+			System.out.println(laser.getAngle() + "-> " + angle);
+			
 			if ((float)closest[1] < Float.MAX_VALUE / 3 && (float)closest[2] < Float.MAX_VALUE / 3)
-			CreatePolygon.createLaser((float)closest[1], (float)closest[2], .00001f, .00001f * newSlope); 	//TODO: 99% sure there is a bit of lag going on
-			//TODO: have laser extend into infinity when no object of intersection
+			CreatePolygon.createReflectedLaser((float)closest[1], (float)closest[2], newAngle, 1f);
+			
+		}else{
+			//Not needed once the walls are implemented
+			//laser.setEndPoint(100f * laser.xDir, laser.getAngle() * 100f * laser.yDir);
 		}
 	}
 	
 	public static void findIntersects(LaserModel laser, ArrayList<Model> models){
 		intersects.clear();
-		float slope = laser.getSlope();
+		float slope = (float)Math.tan(laser.getAngle());
 		coords = laser.getCoords();
 		int xDir = laser.xDir;
 		int yDir = laser.yDir;
@@ -97,7 +104,7 @@ public class ReflectionCalculation {
 		break;
 		case 1: vertices = new float[]{mod.vertices[0], mod.vertices[1], mod.vertices[3], mod.vertices[4]}; 	//Top side
 		break;
-		case 2: vertices = new float[]{mod.vertices[3], mod.vertices[4], mod.vertices[6], mod.vertices[7]}; 	//Right side
+		case 2: vertices = new float[]{mod.vertices[6], mod.vertices[7], mod.vertices[3], mod.vertices[4]}; 	//Right side 	//flipped so that the vector isn't facing upwards
 		break;
 		case 3: vertices = new float[]{mod.vertices[6], mod.vertices[7], mod.vertices[9], mod.vertices[10]}; 	//Bottom side
 		break;
