@@ -1,5 +1,7 @@
 package edu.ncsu.feddgame;
 
+import org.joml.Vector2d;
+
 public class CreatePolygon {
 	
 	/**
@@ -66,7 +68,8 @@ public class CreatePolygon {
 	}
 	
 	/**
-	 * Creates a laser with start and end points passed
+	 * Creates a LaserModel object and passes it to the models list of the objectManager
+	 * Use this when creating the starting laser, all reflected lasers should use the other method
 	 * @param begX
 	 * @param begY
 	 * @param d
@@ -90,7 +93,15 @@ public class CreatePolygon {
 		return GameInstance.objectManager.addModel(new LaserModel(texture, indices, begX, begY, (float)angle, length)); 	//Add the model to the objectManager
 	}
 	
-	public static LaserModel createReflectedLaser(float begX, float begY, double angle, float length){
+	/**
+	 * Creates a LaserModel object and passes it to the lasers list of the objectManager
+	 * This is used for all reflected lasers to avoid calculating redundant reflections on lasers
+	 * @param begX
+	 * @param begY
+	 * @param vect
+	 * @return
+	 */
+	public static void createReflectedLaser(float begX, float begY, Vector2d vect){
 		
 		float[] texture = new float[] {
 			0, 0,
@@ -104,7 +115,7 @@ public class CreatePolygon {
 				2, 3, 0
 		};
 		
-		return GameInstance.objectManager.addLaserModel(new LaserModel(texture, indices, begX, begY, (float)angle, length)); 	//Add the model to the objectManager
+		GameInstance.objectManager.addLaserModel(new LaserModel(texture, indices, begX, begY, vect)); 	//Add the model to the objectManager
 	}
 
 }

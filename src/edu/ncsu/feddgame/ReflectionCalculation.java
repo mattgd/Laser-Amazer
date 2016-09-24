@@ -3,6 +3,8 @@ package edu.ncsu.feddgame;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joml.Vector2d;
+
 public class ReflectionCalculation {
 	
 	static List<Object[]> intersects = new ArrayList<Object[]>(); 	//list of arrays : [Model, xIntercept, yIntercept, slope of intersected line segment]
@@ -17,19 +19,39 @@ public class ReflectionCalculation {
 		findIntersects(laser, models);
 		if (!intersects.isEmpty()){ 	//If there exists at least one valid intersection
 			Object[] closest = getClosestIntersection(); 	//Find the closest one
-			float length = (float) Math.hypot((float)closest[1] - coords[0], (float)closest[2] - coords[1]);
+			float length = (float) Math.hypot((float)closest[1] - coords[0], (float)closest[2] - coords[1]); 	//Pythagorean theorem to find length of vector
 			laser.setLength(length); 	//Modify the laser to the correct length
-			float angle = laser.getAngle() - (float)closest[3];
-			float newAngle = (float)Math.atan((Math.sin(angle) * -laser.yDir) / (Math.cos(angle) * -laser.xDir));
-			System.out.println(laser.getAngle() + "-> " + angle);
-			
-			if ((float)closest[1] < Float.MAX_VALUE / 3 && (float)closest[2] < Float.MAX_VALUE / 3)
-			CreatePolygon.createReflectedLaser((float)closest[1], (float)closest[2], newAngle, 1f);
+			Vector2d resultantV = reflectionVector(laser.vect, new Vector2d(10d, 10d * (float)closest[3])); 	//Calculates reflected vector using the laser's vector and then a new vector representing the side of the model
+			CreatePolygon.createReflectedLaser((float)closest[1], (float)closest[2], resultantV);
 			
 		}else{
 			//Not needed once the walls are implemented
-			//laser.setEndPoint(100f * laser.xDir, laser.getAngle() * 100f * laser.yDir);
+			//Otherwise, could set the lasers magnitude off the screen
 		}
+	}
+	
+	/**
+	 * Returns a vector reflected from the incidence vector off of the surface vector
+	 * @param incidence
+	 * @param surface
+	 * @return
+	 */
+	public static Vector2d reflectionVector(Vector2d incidence, Vector2d surface){
+		Vector2d resultant = new Vector2d();
+		Vector2d normal;
+		if (surface.y == Double.NEGATIVE_INFINITY){ 	//Check for vertical sides of blocks, because JOML is stupid about infinite slopes
+			normal = new Vector2d(1, 0);
+		}else if (surface.y == Double.POSITIVE_INFINITY){
+			normal = new Vector2d(-1, 0);
+		}else{
+			normal = surface.perpendicular().normalize(); 	//Normalize a perpendicular vector otherwise
+		}
+		normal.mul(2d * incidence.dot(normal));
+		incidence.sub(normal, resultant); 	//Vector calculations to find reflected ray
+		resultant.mul(100); 	//Increase magnitude off-screen 				//Can be removed once walls are implemented
+		//System.out.println(incidence + "-> " + resultant);
+		return resultant;
+		
 	}
 	
 	public static void findIntersects(LaserModel laser, ArrayList<Model> models){
@@ -104,7 +126,7 @@ public class ReflectionCalculation {
 		break;
 		case 1: vertices = new float[]{mod.vertices[0], mod.vertices[1], mod.vertices[3], mod.vertices[4]}; 	//Top side
 		break;
-		case 2: vertices = new float[]{mod.vertices[6], mod.vertices[7], mod.vertices[3], mod.vertices[4]}; 	//Right side 	//flipped so that the vector isn't facing upwards
+		case 2: vertices = new float[]{mod.vertices[3], mod.vertices[4], mod.vertices[6], mod.vertices[7]}; 	//Right side 	//flipped so that the vector isn't facing upwards
 		break;
 		case 3: vertices = new float[]{mod.vertices[6], mod.vertices[7], mod.vertices[9], mod.vertices[10]}; 	//Bottom side
 		break;

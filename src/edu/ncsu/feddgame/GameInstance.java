@@ -59,10 +59,11 @@ public class GameInstance {
 		
 		box1 = CreatePolygon.createBox(0,0);
 		
-		CreatePolygon.createBox(3, -6);
+		CreatePolygon.createBox(2f, -6);
 		CreatePolygon.createTrapezoid(-10f, 5f, 2f, 1, 1);
-		laser1 = CreatePolygon.createLaser(-6, 3, Math.toRadians(145), 1);
-		laser2 = CreatePolygon.createLaser(3f, 10, -Math.PI / 2d + .1d, 1);
+		CreatePolygon.createBox(4f, -9);
+		laser1 = CreatePolygon.createLaser(-8.7f, 2, Math.toRadians(100), 1);
+		laser2 = CreatePolygon.createLaser(8f, 10, Math.toRadians(251), 1);
 		objectManager.updateModels();
 		Shader shader = new Shader("shader");
 		Texture tex = new Texture("bound.png");
@@ -143,10 +144,10 @@ public class GameInstance {
 		float dir = 1;
 		long timing = Math.round(1f / window.refreshRate * 1000f); 	//Get the number of milliseconds between frames based on refresh rate
 		
+		
 		while (!window.shouldClose()){
-			
 			objectManager.reflectAll();
-			objectManager.updateModels(); 
+			objectManager.updateModels();
 			double timeNow = Timer.getTime(); 	//Get time at the start of the loop
 			
 			if (i < 80){

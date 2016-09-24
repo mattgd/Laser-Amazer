@@ -1,16 +1,19 @@
 package edu.ncsu.feddgame;
 
+import org.joml.Vector2d;
+
 public class LaserModel extends Model{
 	private float angle; 	//Angle in radians
 	private float length; 	//Length of vector
 	private float coords[] = new float[2];
 	private static final float w = .25f; 	//Width of the laser rendered
-	
+	public Vector2d vect;
+	private static Vector2d originV = new Vector2d(10, 0);
 	public int xDir = 0, yDir = 0;
 	
 	
 	/**
-	 * New Laser Model
+	 * New Laser Model given angle and length
 	 * @param vertices
 	 * @param tCoords
 	 * @param indices
@@ -23,6 +26,24 @@ public class LaserModel extends Model{
 		super(getVertices(x0, y0, angle, length, w), tCoords, indices);
 		this.angle = angle;
 		this.length = length;
+		this.vect = new Vector2d(length * Math.cos(angle), length * Math.sin(angle));
+		coords[0] = x0;
+		coords[1] = y0;
+		determineDirection();
+	}
+	/**
+	 * New Laser Model given a vector
+	 * @param tCoords
+	 * @param indices
+	 * @param x0
+	 * @param y0
+	 * @param vect
+	 */
+	public LaserModel(float[] tCoords, int[] indices, float x0, float y0, Vector2d vect){
+		super(getVertices(x0, y0, (float)originV.angle(vect), (float)vect.length(), w), tCoords, indices);
+		this.angle = (float)originV.angle(vect);
+		this.length = (float)vect.length();
+		this.vect = vect;
 		coords[0] = x0;
 		coords[1] = y0;
 		determineDirection();
@@ -82,6 +103,12 @@ public class LaserModel extends Model{
 	
 	public void setLength(float length){
 		this.vertices = getVertices(coords[0], coords[1], angle, length, w);
+	}
+	
+	public void setVector(Vector2d vect){
+		this.vect = vect;
+		this.angle = (float)originV.angle(vect);
+		this.length = (float)vect.length();
 	}
 	
 	/**

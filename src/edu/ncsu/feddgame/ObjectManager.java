@@ -19,11 +19,19 @@ public class ObjectManager {
 		return m;
 	}
 	
+	/**
+	 * Adds a passed Laser to the stored arraylist
+	 * @param m
+	 * @return
+	 */
 	public LaserModel addLaserModel(LaserModel m){
 		addLasers.add(m);
 		return m;
 	}
 	
+	/**
+	 * Flushes the buffer arraylist into the primary arraylists
+	 */
 	public void updateModels(){
 		models.addAll(addModels);
 		lasers.addAll(addLasers);
@@ -46,29 +54,39 @@ public class ObjectManager {
 		models.remove(m);
 	}
 	
+	/**
+	 * Returns the model at the given index
+	 * @param index
+	 * @return
+	 */
 	public Model getModel(int index){
 		return models.get(index);
 	}
 	
+	/**
+	 * Returns the index of the given Model
+	 * @param m
+	 * @return
+	 */
 	public int indexOf(Model m){
 		return models.indexOf(m);
 	}
 	
 	/**
-	 * Calls the render() function on all models
+	 * Calls the render() function on all models and lasers
 	 */
 	public void renderAll(){
-		int num = models.size();
-		for(int i = 0; i < num; i++){
+		for(int i = 0; i < models.size(); i++){
 			models.get(i).render();
 		}
-		num = lasers.size();
-		for(int i = 0; i < num; i++){
+		for(int i = 0; i < lasers.size(); i++){
 			lasers.get(i).render();
 		}
 		
 	}
-	
+	/**
+	 * Calculates reflection on all lasers that were initially added in the models arraylist
+	 */
 	public void reflectAll(){
 		lasers.clear();
 		int size = models.size();
