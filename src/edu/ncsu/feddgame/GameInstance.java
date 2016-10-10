@@ -20,7 +20,7 @@ public class GameInstance {
 	private Window window;
 	public static ObjectManager objectManager;
 	boolean canRender;
-	Model box1, laser1, laser2;
+	public ILevel level;
 	
 	
 	// Game begins here
@@ -46,6 +46,8 @@ public class GameInstance {
 		glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
 		
 		window = new Window(800, 600, "FEDD Game", false);
+		
+		level = new TestLevel();
 	}
 	
 	private void renderLoop() { 	// Render Loop
@@ -57,14 +59,9 @@ public class GameInstance {
 		
 		glEnable(GL_TEXTURE_2D);
 		
-		box1 = CreatePolygon.createBox(0,0);
-		
-		CreatePolygon.createBox(2f, -6);
-		CreatePolygon.createTrapezoid(-10f, 5f, 2f, 1, 1);
-		CreatePolygon.createBox(4f, -9);
-		laser1 = CreatePolygon.createLaser(-8.7f, 2, Math.toRadians(100), 1);
-		laser2 = CreatePolygon.createLaser(8f, 10, Math.toRadians(251), 1);
+		level.renderObjects(); 	//Add all objects to the scene from the level class
 		objectManager.updateModels();
+		
 		Shader shader = new Shader("shader");
 		Texture tex = new Texture("bound.png");
 		
@@ -140,23 +137,15 @@ public class GameInstance {
 	}
 	
 	private void logicLoop(){
-		int i = 0; 	//Temp int
-		float dir = 1;
-		long timing = Math.round(1f / window.refreshRate * 1000f); 	//Get the number of milliseconds between frames based on refresh rate
 		
+		long timing = Math.round(1f / 60 * 1000f); 	//Get the number of milliseconds between frames based on 60 times a second
 		
 		while (!window.shouldClose()){
 			objectManager.reflectAll();
 			objectManager.updateModels();
 			double timeNow = Timer.getTime(); 	//Get time at the start of the loop
 			
-			if (i < 80){
-				objectManager.moveModel(objectManager.indexOf(box1), 0.1f * dir, 0f, 0f); 	//Test animation of models, this pings the box back and forth
-				i++;
-			}else{
-				i = 0;
-				dir *= -1f;
-			}
+				level.logicLoop(); 	//Run the logic necessary for the level
 			
 			{
 				long sleeptime = timing - (long)(Timer.getTime() - timeNow); 	//Sync the game loop to update at the refresh rate
