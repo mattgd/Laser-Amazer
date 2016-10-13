@@ -15,9 +15,10 @@ public class Model {
 	private int vertexId;
 	private int textureId;
 	private int indexId;
+	private boolean generated = false;
 	public float[] vertices;
-	//private float[] tCoords;
-	//private int[] indices;
+	private float[] tCoords;
+	private int[] indices;
 	
 	/**
 	 * Create and bind the vertices, texture coordinates, and indices to the graphics shader.
@@ -26,32 +27,10 @@ public class Model {
 	 * @param indices
 	 */
 	public Model(float[] vertices, float[] tCoords, int[] indices) {
-		drawCount = indices.length;
-		//this.indices = indices;
-		//this.tCoords = tCoords;
+		this.indices = indices;
+		this.tCoords = tCoords;
 		this.vertices = vertices;
-		
 		drawCount = indices.length;
-		
-		vertexId = glGenBuffers();
-		glBindBuffer(GL_ARRAY_BUFFER, vertexId);
-		glBufferData(GL_ARRAY_BUFFER, createBuffer(vertices), GL_STATIC_DRAW);
-		
-		textureId = glGenBuffers();
-		glBindBuffer(GL_ARRAY_BUFFER, textureId);
-		glBufferData(GL_ARRAY_BUFFER, createBuffer(tCoords), GL_STATIC_DRAW);
-		
-		indexId = glGenBuffers();
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
-		
-		IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
-		buffer.put(indices);
-		buffer.flip();
-		
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	
 	protected void finalize() throws Throwable {
@@ -64,6 +43,29 @@ public class Model {
 	 * Render all of the vertices on screen.
 	 */
 	public void render() {
+		if (!generated) {
+			vertexId = glGenBuffers();
+			glBindBuffer(GL_ARRAY_BUFFER, vertexId);
+			glBufferData(GL_ARRAY_BUFFER, createBuffer(vertices), GL_STATIC_DRAW);
+			
+			textureId = glGenBuffers();
+			glBindBuffer(GL_ARRAY_BUFFER, textureId);
+			glBufferData(GL_ARRAY_BUFFER, createBuffer(tCoords), GL_STATIC_DRAW);
+			
+			indexId = glGenBuffers();
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
+			
+			IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
+			buffer.put(indices);
+			buffer.flip();
+			
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
+
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			generated = true;
+		}
+		
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 
@@ -97,18 +99,6 @@ public class Model {
 	}
 	
 	/**
-	 * @param data
-	 * @return buffer array of index data in the correct orientation.
-	 */
-	private IntBuffer createIntBuffer(int[] data) {
-		IntBuffer buffer = BufferUtils.createIntBuffer(data.length);
-		buffer.put(data);
-		buffer.flip();
-		
-		return buffer;
-	}
-	
-	/**
 	 * Adjusts the vertices of the model by the values passed
 	 * @param x
 	 * @param y
@@ -127,7 +117,6 @@ public class Model {
 		this.vertices[5] += z;
 		this.vertices[8] += z;
 		this.vertices[11] += z;
-		
 	}
 	
 }

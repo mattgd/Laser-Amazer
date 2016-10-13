@@ -129,11 +129,7 @@ public class GameInstance {
 		}
 	}
 	
-	private void logicLoop() {
-		// This doesn't fix the multi-threading incompatibility
-		//glfwMakeContextCurrent(window.window);
-		GL.createCapabilities();
-		
+	private void logicLoop() {	
 		long timing = Math.round(1f / 60 * 1000f); 	//Get the number of milliseconds between frames based on 60 times a second
 		
 		while (!window.shouldClose()){

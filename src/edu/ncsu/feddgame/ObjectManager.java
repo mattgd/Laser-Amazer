@@ -75,7 +75,7 @@ public class ObjectManager {
 	/**
 	 * Calls the render() function on all models and lasers
 	 */
-	public void renderAll(){
+	public void renderAll() {
 		for(int i = 0; i < models.size(); i++){
 			models.get(i).render();
 		}
@@ -87,7 +87,7 @@ public class ObjectManager {
 	/**
 	 * Calculates reflection on all lasers that were initially added in the models arraylist
 	 */
-	public void reflectAll(){
+	public void reflectAll() {
 		lasers.clear();
 		int size = models.size();
 		for (int i = 0; i < size; i++){
@@ -104,16 +104,17 @@ public class ObjectManager {
 	 * @param y
 	 * @param z
 	 */
-	public void moveModel(int index, float x, float y, float z){
-		if (models.get(index) != null){
+	public void moveModel(int index, float x, float y, float z) {
+		if (models.get(index) != null) {
 			models.get(index).move(x, y, z);
 		}
+		
 	}
 	/**
 	 * Executes the calculation of the path of a single laser segment at the index passed
 	 * @param index
 	 */
-	public void reflectLaser(int index){
+	public void reflectLaser(int index) {
 		if (models.get(index) != null && models.get(index) instanceof LaserModel)
 			ReflectionCalculation.reflect((LaserModel)models.get(index), models);
 	}
