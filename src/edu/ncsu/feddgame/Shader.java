@@ -10,6 +10,9 @@ import static org.lwjgl.opengl.GL20.glBindAttribLocation;
 import static org.lwjgl.opengl.GL20.glCompileShader;
 import static org.lwjgl.opengl.GL20.glCreateProgram;
 import static org.lwjgl.opengl.GL20.glCreateShader;
+import static org.lwjgl.opengl.GL20.glDeleteProgram;
+import static org.lwjgl.opengl.GL20.glDeleteShader;
+import static org.lwjgl.opengl.GL20.glDetachShader;
 import static org.lwjgl.opengl.GL20.glGetProgramInfoLog;
 import static org.lwjgl.opengl.GL20.glGetProgrami;
 import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
@@ -82,6 +85,14 @@ public class Shader {
 			System.err.println(glGetProgramInfoLog(program));
 			System.exit(1);
 		}
+	}
+	
+	protected void finalize() throws Throwable {
+		glDetachShader(program, vs);
+		glDetachShader(program, fs);
+		glDeleteShader(vs);
+		glDeleteShader(fs);
+		glDeleteProgram(program);
 	}
 	
 	/**

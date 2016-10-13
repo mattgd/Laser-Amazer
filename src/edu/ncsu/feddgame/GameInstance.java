@@ -10,9 +10,11 @@ import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
 public class GameInstance {
@@ -65,10 +67,6 @@ public class GameInstance {
 		Shader shader = new Shader("shader");
 		Texture tex = new Texture("bound.png");
 		
-		//Matrix4f projection = new Matrix4f()
-				//.ortho2D(-window.getWidth() / 2, window.getWidth() / 2, -window.getHeight() / 2, window.getHeight() / 2)
-				//.scale(32);
-		
 		Matrix4f scale = new Matrix4f()
 				.translate(new Vector3f(100, 0, 0))
 				.scale(32);
@@ -84,8 +82,6 @@ public class GameInstance {
 		
 		double time = Timer.getTime();
 		double unprocessed = 0;
-		
-		//projection.mul(scale, target);
 		
 		new Thread(() -> logicLoop()).start(); 	//Run the logic in a separate thread
 		
@@ -103,13 +99,10 @@ public class GameInstance {
 			while (unprocessed >= frameCap) {
 				unprocessed -= frameCap;
 				canRender = true;
-				
 				target = scale;
 				
 				//TODO Put key/mouse events here
 				window.update();
-				
-				
 				
 				if (frameTime >= 1.0) {
 					frameTime = 0;
@@ -136,7 +129,10 @@ public class GameInstance {
 		}
 	}
 	
-	private void logicLoop(){
+	private void logicLoop() {
+		// This doesn't fix the multi-threading incompatibility
+		//glfwMakeContextCurrent(window.window);
+		GL.createCapabilities();
 		
 		long timing = Math.round(1f / 60 * 1000f); 	//Get the number of milliseconds between frames based on 60 times a second
 		

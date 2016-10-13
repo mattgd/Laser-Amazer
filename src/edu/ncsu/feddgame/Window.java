@@ -16,7 +16,6 @@ public class Window {
 	
 	private Input input;
 	
-	
 	public Window () {
 		this.width = 800;
 		this.height = 600;

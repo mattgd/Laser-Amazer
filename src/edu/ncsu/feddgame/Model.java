@@ -16,8 +16,8 @@ public class Model {
 	private int textureId;
 	private int indexId;
 	public float[] vertices;
-	private float[] tCoords;
-	private int[] indices;
+	//private float[] tCoords;
+	//private int[] indices;
 	
 	/**
 	 * Create and bind the vertices, texture coordinates, and indices to the graphics shader.
@@ -27,16 +27,37 @@ public class Model {
 	 */
 	public Model(float[] vertices, float[] tCoords, int[] indices) {
 		drawCount = indices.length;
-		this.indices = indices;
-		this.tCoords = tCoords;
+		//this.indices = indices;
+		//this.tCoords = tCoords;
 		this.vertices = vertices;
-	}
-	
-	private void bindVertices(float[] v){
+		
+		drawCount = indices.length;
+		
 		vertexId = glGenBuffers();
 		glBindBuffer(GL_ARRAY_BUFFER, vertexId);
-		glBufferData(GL_ARRAY_BUFFER, createFloatBuffer(vertices), GL_STATIC_DRAW);
-		unbind();
+		glBufferData(GL_ARRAY_BUFFER, createBuffer(vertices), GL_STATIC_DRAW);
+		
+		textureId = glGenBuffers();
+		glBindBuffer(GL_ARRAY_BUFFER, textureId);
+		glBufferData(GL_ARRAY_BUFFER, createBuffer(tCoords), GL_STATIC_DRAW);
+		
+		indexId = glGenBuffers();
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
+		
+		IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
+		buffer.put(indices);
+		buffer.flip();
+		
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+	
+	protected void finalize() throws Throwable {
+		glDeleteBuffers(vertexId);
+		glDeleteBuffers(textureId);
+		glDeleteBuffers(indexId);
 	}
 	
 	/**
@@ -45,18 +66,7 @@ public class Model {
 	public void render() {
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
-		
-		bindVertices(this.vertices);
-		
-		textureId = glGenBuffers();
-		glBindBuffer(GL_ARRAY_BUFFER, textureId);
-		glBufferData(GL_ARRAY_BUFFER, createFloatBuffer(tCoords), GL_STATIC_DRAW);
-		
-		indexId = glGenBuffers();
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, createIntBuffer(indices), GL_STATIC_DRAW);
-		
-		
+
 		glBindBuffer(GL_ARRAY_BUFFER, vertexId);
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
 		
@@ -66,19 +76,11 @@ public class Model {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
 		glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_INT, 0);
 		
-		unbind();
-		
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-	}
-	
-	/**
-	 * Unbind all of the vertices, texture coordinates,
-	 * and indices from the graphics shader.
-	 */
-	private void unbind() {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
 	}
 	
 	/**
@@ -86,7 +88,7 @@ public class Model {
 	 * @return buffer array of vertex or texture coordinate data
 	 * in the correct orientation.
 	 */
-	private FloatBuffer createFloatBuffer(float[] data) {
+	private FloatBuffer createBuffer(float[] data) {
 		FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
 		buffer.put(data);
 		buffer.flip();

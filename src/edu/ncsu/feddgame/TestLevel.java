@@ -14,20 +14,18 @@ public class TestLevel implements ILevel{
 		laser2 = CreatePolygon.createLaser(8f, 10, Math.toRadians(251), 1);
 	}
 
-	
 	int i = 0;
 	float dir = 1;
 	
 	@Override
 	public void logicLoop() {
-		if (i < 80){
+		if (i < 80) {
 			GameInstance.objectManager.moveModel(GameInstance.objectManager.indexOf(box1), 0.1f * dir, 0f, 0f); 	//Test animation of models, this pings the box back and forth
 			i++;
-		}else{
+		} else {
 			i = 0;
 			dir *= -1f;
 		}
-		
 	}
 
 }
