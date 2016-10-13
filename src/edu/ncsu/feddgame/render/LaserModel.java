@@ -1,4 +1,4 @@
-package edu.ncsu.feddgame;
+package edu.ncsu.feddgame.render;
 
 import org.joml.Vector2d;
 

@@ -1,4 +1,4 @@
-package edu.ncsu.feddgame;
+package edu.ncsu.feddgame.level;
 
 public interface ILevel {
 	/**

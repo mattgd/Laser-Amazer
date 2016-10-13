@@ -1,6 +1,8 @@
-package edu.ncsu.feddgame;
+package edu.ncsu.feddgame.render;
 
 import org.joml.Vector2d;
+
+import edu.ncsu.feddgame.GameInstance;
 
 public class CreatePolygon {
 	

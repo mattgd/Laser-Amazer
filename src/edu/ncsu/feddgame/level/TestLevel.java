@@ -1,4 +1,8 @@
-package edu.ncsu.feddgame;
+package edu.ncsu.feddgame.level;
+
+import edu.ncsu.feddgame.GameInstance;
+import edu.ncsu.feddgame.render.CreatePolygon;
+import edu.ncsu.feddgame.render.Model;
 
 public class TestLevel implements ILevel{
 

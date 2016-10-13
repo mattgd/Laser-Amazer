@@ -1,4 +1,4 @@
-package edu.ncsu.feddgame;
+package edu.ncsu.feddgame.render;
 
 import static org.lwjgl.opengl.GL11.GL_NEAREST;
 import static org.lwjgl.opengl.GL11.GL_RGBA;

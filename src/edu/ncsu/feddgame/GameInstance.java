@@ -17,6 +17,12 @@ import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
+import edu.ncsu.feddgame.level.ILevel;
+import edu.ncsu.feddgame.level.TestLevel;
+import edu.ncsu.feddgame.render.Camera;
+import edu.ncsu.feddgame.render.Shader;
+import edu.ncsu.feddgame.render.Texture;
+
 public class GameInstance {
 	
 	private Window window;
@@ -65,6 +71,8 @@ public class GameInstance {
 		objectManager.updateModels();
 		
 		Shader shader = new Shader("shader");
+		TextureManager texManager = new TextureManager();
+		System.out.println(texManager.getTextures());
 		Texture tex = new Texture("bound.png");
 		
 		Matrix4f scale = new Matrix4f()

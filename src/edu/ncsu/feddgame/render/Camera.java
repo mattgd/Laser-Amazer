@@ -1,4 +1,4 @@
-package edu.ncsu.feddgame;
+package edu.ncsu.feddgame.render;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;

@@ -2,6 +2,10 @@ package edu.ncsu.feddgame;
 
 import java.util.ArrayList;
 
+import edu.ncsu.feddgame.render.LaserModel;
+import edu.ncsu.feddgame.render.Model;
+import edu.ncsu.feddgame.render.ReflectionCalculation;
+
 
 
 public class ObjectManager {
@@ -11,7 +15,7 @@ public class ObjectManager {
 	private ArrayList<Model> addModels = new ArrayList<Model>();
 	private ArrayList<LaserModel> addLasers = new ArrayList<LaserModel>();
 	/**
-	 * Adds a passed Model to the stored arraylist
+	 * Adds a passed Model to the stored ArrayList
 	 * @param Model m
 	 */
 	public Model addModel(Model m){
@@ -20,7 +24,7 @@ public class ObjectManager {
 	}
 	
 	/**
-	 * Adds a passed Laser to the stored arraylist
+	 * Adds a passed Laser to the stored ArrayList
 	 * @param m
 	 * @return
 	 */
@@ -30,9 +34,9 @@ public class ObjectManager {
 	}
 	
 	/**
-	 * Flushes the buffer arraylist into the primary arraylists
+	 * Flushes the buffer ArrayList into the primary ArrayLists
 	 */
-	public void updateModels(){
+	public void updateModels() {
 		models.addAll(addModels);
 		lasers.addAll(addLasers);
 		addModels.clear();
@@ -43,14 +47,14 @@ public class ObjectManager {
 	 * Removed the model object at the index specified
 	 * @param index
 	 */
-	public void removeModel(int index){
+	public void removeModel(int index) {
 		models.remove(index);
 	}
 	/**
 	 * Removes the model passed
 	 * @param m
 	 */
-	public void removeModel(Model m){
+	public void removeModel(Model m) {
 		models.remove(m);
 	}
 	
@@ -59,7 +63,7 @@ public class ObjectManager {
 	 * @param index
 	 * @return
 	 */
-	public Model getModel(int index){
+	public Model getModel(int index) {
 		return models.get(index);
 	}
 	
@@ -68,7 +72,7 @@ public class ObjectManager {
 	 * @param m
 	 * @return
 	 */
-	public int indexOf(Model m){
+	public int indexOf(Model m) {
 		return models.indexOf(m);
 	}
 	
@@ -76,13 +80,12 @@ public class ObjectManager {
 	 * Calls the render() function on all models and lasers
 	 */
 	public void renderAll() {
-		for(int i = 0; i < models.size(); i++){
+		for(int i = 0; i < models.size(); i++) {
 			models.get(i).render();
 		}
-		for(int i = 0; i < lasers.size(); i++){
+		for(int i = 0; i < lasers.size(); i++) {
 			lasers.get(i).render();
 		}
-		
 	}
 	/**
 	 * Calculates reflection on all lasers that were initially added in the models arraylist
