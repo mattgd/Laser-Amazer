@@ -3,6 +3,7 @@ package edu.ncsu.feddgame.render;
 import org.joml.Vector2d;
 
 import edu.ncsu.feddgame.GameInstance;
+import edu.ncsu.feddgame.LaserWrapper;
 
 public class CreatePolygon {
 	
@@ -103,7 +104,7 @@ public class CreatePolygon {
 	 * @param length
 	 * @return
 	 */
-	public static Model createLaser(float begX, float begY, double angle, float length){
+	public static LaserModel createLaser(float begX, float begY, double angle, float length){
 		
 		float[] texture = new float[] {
 			0, 0,
@@ -117,7 +118,11 @@ public class CreatePolygon {
 				2, 3, 0
 		};
 		
-		return GameInstance.objectManager.addModel(new LaserModel(texture, indices, begX, begY, (float)angle, length)); 	//Add the model to the objectManager
+		return new LaserModel(texture, indices, begX, begY, (float)angle, length); 	//Add the model to the objectManager
+	}
+	
+	public static LaserWrapper newLaser(float begX, float begY, double angle, float length){
+		return new LaserWrapper(createLaser(begX, begY, angle, length));
 	}
 	
 	/**

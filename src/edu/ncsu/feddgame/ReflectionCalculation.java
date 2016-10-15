@@ -26,8 +26,10 @@ public class ReflectionCalculation {
 			Object[] closest = getClosestIntersection(); 	//Find the closest one
 			float length = (float) Math.hypot((float)closest[1] - coords[0], (float)closest[2] - coords[1]); 	//Pythagorean theorem to find length of vector
 			laser.setLength(length); 	//Modify the laser to the correct length
-			Vector2d resultantV = reflectionVector(laser.vect, new Vector2d(10d, 10d * (float)closest[3])); 	//Calculates reflected vector using the laser's vector and then a new vector representing the side of the model
-			return new Object[]{CreatePolygon.createReflectedLaser((float)closest[1], (float)closest[2], resultantV), !(closest[0] instanceof Wall)};
+			if (length > 0f){
+				Vector2d resultantV = reflectionVector(laser.vect, new Vector2d(10d, 10d * (float)closest[3])); 	//Calculates reflected vector using the laser's vector and then a new vector representing the side of the model
+				return new Object[]{CreatePolygon.createReflectedLaser((float)closest[1], (float)closest[2], resultantV), !(closest[0] instanceof Wall)};
+			}
 			
 		}
 		return null;
@@ -51,8 +53,7 @@ public class ReflectionCalculation {
 		}
 		normal.mul(2d * incidence.dot(normal));
 		incidence.sub(normal, resultant); 	//Vector calculations to find reflected ray
-		resultant.mul(100); 	//Increase magnitude off-screen 				//Can be removed once walls are implemented
-		//System.out.println(incidence + "-> " + resultant);
+		//resultant.mul(100); 	//Increase magnitude off-screen 				//Can be removed once walls are implemented
 		return resultant;
 		
 	}
@@ -108,10 +109,13 @@ public class ReflectionCalculation {
 	 * @return
 	 */
 	private static Object[] getClosestIntersection(){
-		Object[] closest = new Object[]{null, Float.MAX_VALUE / 2, Float.MAX_VALUE / 2, 0}; 	//Start with a massively large value
+		Object[] closest = new Object[]{null, Float.MAX_VALUE / 2f, Float.MAX_VALUE / 2f, 0f}; 	//Start with a massively large value
+		float length;
 		for(Object[] b : intersects){ 	//For all intersecting points
+			length = (float) Math.hypot((float)b[1] - coords[0], (float)b[2] - coords[1]);
 			if ((Math.hypot((float)b[1] - coords[0], (float)b[2] - coords[1])) < (Math.hypot((float)closest[1] - coords[0], (float)closest[2] - coords[1]))) 	//if the new object is closer than the old one
-				closest = b; 	//set the new one to the closest
+				if (length > 0f) 	//Ensure that the new intersection point isn't at the exact same spot
+					closest = b; 	//set the new one to the closest
 		}
 		return closest;
 	}

@@ -10,5 +10,10 @@ public interface ILevel {
 	 * Run all logic that needs to be run, called 60 times a second
 	 */
 	public void logicLoop();
+	
+	/**
+	 * Extra rendering that needs to be done, primarily for laser rendering
+	 */
+	public void renderLoop();
 
 }
