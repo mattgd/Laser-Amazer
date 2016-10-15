@@ -8,6 +8,7 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL15;
 
 public class Model {
 	
@@ -43,7 +44,11 @@ public class Model {
 	 * Render all of the vertices on screen.
 	 */
 	public void render() {
+		//System.out.println("red");
 		if (!generated) {
+			glDeleteBuffers(vertexId);
+			glDeleteBuffers(textureId);
+			glDeleteBuffers(indexId);
 			vertexId = glGenBuffers();
 			glBindBuffer(GL_ARRAY_BUFFER, vertexId);
 			glBufferData(GL_ARRAY_BUFFER, createBuffer(vertices), GL_STATIC_DRAW);
@@ -63,7 +68,7 @@ public class Model {
 
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
-			generated = true;
+			generated = false;
 		}
 		
 		glEnableVertexAttribArray(0);

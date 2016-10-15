@@ -69,6 +69,31 @@ public class CreatePolygon {
 		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices)); 	//Add the model to the objectManager
 	}
 	
+	public static Wall createWall(float xOffset, float yOffset, float width, float height){
+		// Vertices for a trapezoid
+				float[] vertices = new float[] {
+					-width/2f + xOffset, height + yOffset, 0, // TOP LEFT - 0
+					width/2f + xOffset, height + yOffset, 0, // TOP RIGHT - 1
+					width/2f + xOffset, -height + yOffset, 0, // BOTTOM RIGHT - 2
+					-width/2f + xOffset, -height + yOffset, 0, // BOTTOM LEFT - 3
+				};
+				
+				float[] texture = new float[] {
+					0, 0, // TOP LEFT
+					1, 0, // TOP RIGHT
+					1, 1, // BOTTOM RIGHT
+					0, 1, // BOTTOM LEFT
+				};
+				
+				int[] indices = new int[] {
+						0, 1, 2,
+						2, 3, 0
+				};
+		Wall m = new Wall(vertices, texture, indices);
+		GameInstance.objectManager.addModel(m);
+		return m;
+	}
+	
 	/**
 	 * Creates a LaserModel object and passes it to the models list of the objectManager
 	 * Use this when creating the starting laser, all reflected lasers should use the other method
@@ -103,7 +128,7 @@ public class CreatePolygon {
 	 * @param vect
 	 * @return
 	 */
-	public static void createReflectedLaser(float begX, float begY, Vector2d vect){
+	public static LaserModel createReflectedLaser(float begX, float begY, Vector2d vect){
 		
 		float[] texture = new float[] {
 			0, 0,
@@ -117,7 +142,7 @@ public class CreatePolygon {
 				2, 3, 0
 		};
 		
-		GameInstance.objectManager.addLaserModel(new LaserModel(texture, indices, begX, begY, vect)); 	//Add the model to the objectManager
+		return new LaserModel(texture, indices, begX, begY, vect); 	//Return the new Laser
 	}
 
 }

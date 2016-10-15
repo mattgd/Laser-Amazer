@@ -3,16 +3,16 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/joml-1.8.3.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl.jar">
+	<classpathentry kind="lib" path="lib/lwjgl/lwjgl.jar" sourcepath="lib/lwjgl/lwjgl-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="FEDD Game/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-glfw.jar">
+	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-glfw.jar" sourcepath="lib/lwjgl/lwjgl-glfw-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="FEDD Game/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-opengl.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-opengl.jar" sourcepath="lib/lwjgl/lwjgl-opengl-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

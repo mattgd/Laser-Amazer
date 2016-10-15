@@ -1,9 +1,14 @@
-package edu.ncsu.feddgame.render;
+package edu.ncsu.feddgame;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.joml.Vector2d;
+
+import edu.ncsu.feddgame.render.CreatePolygon;
+import edu.ncsu.feddgame.render.LaserModel;
+import edu.ncsu.feddgame.render.Model;
+import edu.ncsu.feddgame.render.Wall;
 
 public class ReflectionCalculation {
 	
@@ -15,19 +20,17 @@ public class ReflectionCalculation {
 	 * @param laser
 	 * @param models
 	 */
-	public static void reflect(LaserModel laser, ArrayList<Model> models){
-		findIntersects(laser, models);
+	public static Object[] reflect(LaserModel laser){
+		findIntersects(laser, GameInstance.objectManager.getModels());
 		if (!intersects.isEmpty()){ 	//If there exists at least one valid intersection
 			Object[] closest = getClosestIntersection(); 	//Find the closest one
 			float length = (float) Math.hypot((float)closest[1] - coords[0], (float)closest[2] - coords[1]); 	//Pythagorean theorem to find length of vector
 			laser.setLength(length); 	//Modify the laser to the correct length
 			Vector2d resultantV = reflectionVector(laser.vect, new Vector2d(10d, 10d * (float)closest[3])); 	//Calculates reflected vector using the laser's vector and then a new vector representing the side of the model
-			CreatePolygon.createReflectedLaser((float)closest[1], (float)closest[2], resultantV);
+			return new Object[]{CreatePolygon.createReflectedLaser((float)closest[1], (float)closest[2], resultantV), !(closest[0] instanceof Wall)};
 			
-		}else{
-			//Not needed once the walls are implemented
-			//Otherwise, could set the lasers magnitude off the screen
 		}
+		return null;
 	}
 	
 	/**

@@ -141,8 +141,6 @@ public class GameInstance {
 		long timing = Math.round(1f / 60 * 1000f); 	//Get the number of milliseconds between frames based on 60 times a second
 		
 		while (!window.shouldClose()){
-			objectManager.reflectAll();
-			objectManager.updateModels();
 			double timeNow = Timer.getTime(); 	//Get time at the start of the loop
 			
 				level.logicLoop(); 	//Run the logic necessary for the level

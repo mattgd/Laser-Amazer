@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import edu.ncsu.feddgame.render.LaserModel;
 import edu.ncsu.feddgame.render.Model;
-import edu.ncsu.feddgame.render.ReflectionCalculation;
 
 
 
@@ -23,6 +22,14 @@ public class ObjectManager {
 		return m;
 	}
 	
+	public ArrayList<Model> getModels() {
+		return models;
+	}
+
+	public void setModels(ArrayList<Model> models) {
+		ObjectManager.models = models;
+	}
+	
 	/**
 	 * Adds a passed Laser to the stored ArrayList
 	 * @param m
@@ -37,7 +44,7 @@ public class ObjectManager {
 	 * Flushes the buffer ArrayList into the primary ArrayLists
 	 */
 	public void updateModels() {
-		models.addAll(addModels);
+		getModels().addAll(addModels);
 		lasers.addAll(addLasers);
 		addModels.clear();
 		addLasers.clear();
@@ -48,14 +55,14 @@ public class ObjectManager {
 	 * @param index
 	 */
 	public void removeModel(int index) {
-		models.remove(index);
+		getModels().remove(index);
 	}
 	/**
 	 * Removes the model passed
 	 * @param m
 	 */
 	public void removeModel(Model m) {
-		models.remove(m);
+		getModels().remove(m);
 	}
 	
 	/**
@@ -64,7 +71,7 @@ public class ObjectManager {
 	 * @return
 	 */
 	public Model getModel(int index) {
-		return models.get(index);
+		return getModels().get(index);
 	}
 	
 	/**
@@ -73,18 +80,15 @@ public class ObjectManager {
 	 * @return
 	 */
 	public int indexOf(Model m) {
-		return models.indexOf(m);
+		return getModels().indexOf(m);
 	}
 	
 	/**
 	 * Calls the render() function on all models and lasers
 	 */
 	public void renderAll() {
-		for(int i = 0; i < models.size(); i++) {
-			models.get(i).render();
-		}
-		for(int i = 0; i < lasers.size(); i++) {
-			lasers.get(i).render();
+		for(int i = 0; i < getModels().size(); i++) {
+			getModels().get(i).render();
 		}
 	}
 	/**
@@ -92,9 +96,9 @@ public class ObjectManager {
 	 */
 	public void reflectAll() {
 		lasers.clear();
-		int size = models.size();
+		int size = getModels().size();
 		for (int i = 0; i < size; i++){
-			if (models.get(i) instanceof LaserModel){
+			if (getModels().get(i) instanceof LaserModel){
 				reflectLaser(i);
 			}
 		}
@@ -108,8 +112,8 @@ public class ObjectManager {
 	 * @param z
 	 */
 	public void moveModel(int index, float x, float y, float z) {
-		if (models.get(index) != null) {
-			models.get(index).move(x, y, z);
+		if (getModels().get(index) != null) {
+			getModels().get(index).move(x, y, z);
 		}
 		
 	}
@@ -118,8 +122,8 @@ public class ObjectManager {
 	 * @param index
 	 */
 	public void reflectLaser(int index) {
-		if (models.get(index) != null && models.get(index) instanceof LaserModel)
-			ReflectionCalculation.reflect((LaserModel)models.get(index), models);
+		if (getModels().get(index) != null && getModels().get(index) instanceof LaserModel){}
+			//ReflectionCalculation.reflect((LaserModel)getModels().get(index), getModels());
 	}
 
 }
