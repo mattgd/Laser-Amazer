@@ -5,8 +5,9 @@ import java.util.List;
 
 import org.joml.Vector2d;
 
-import edu.ncsu.feddgame.render.CreatePolygon;
+import edu.ncsu.feddgame.render.CreateModel;
 import edu.ncsu.feddgame.render.LaserModel;
+import edu.ncsu.feddgame.render.LaserStop;
 import edu.ncsu.feddgame.render.Model;
 import edu.ncsu.feddgame.render.Wall;
 
@@ -28,7 +29,8 @@ public class ReflectionCalculation {
 			laser.setLength(length); 	//Modify the laser to the correct length
 			if (length > 0f){
 				Vector2d resultantV = reflectionVector(laser.vect, new Vector2d(10d, 10d * (float)closest[3])); 	//Calculates reflected vector using the laser's vector and then a new vector representing the side of the model
-				return new Object[]{CreatePolygon.createReflectedLaser((float)closest[1], (float)closest[2], resultantV), !(closest[0] instanceof Wall)};
+				reflectionCallback((Model)closest[0], laser);
+				return new Object[]{CreateModel.createReflectedLaser((float)closest[1], (float)closest[2], resultantV), closest[0]};
 			}
 			
 		}
@@ -148,6 +150,16 @@ public class ReflectionCalculation {
 	 */
 	private static float getSlope(float[] vert){
 		return (vert[3] - vert[1])/(vert[2] - vert[0]);
+	}
+	
+	private static void reflectionCallback(Model m, LaserModel l){
+		//System.out.println(m.getClass());
+		Class<? extends Model> c = m.getClass();
+		if (c == Wall.class){
+			//System.out.println("wall, dude");
+		}else if(c == LaserStop.class){
+			((LaserStop)m).laserIntersection();
+		}
 	}
 
 }

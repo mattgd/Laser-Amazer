@@ -5,6 +5,8 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import edu.ncsu.feddgame.render.LaserModel;
+import edu.ncsu.feddgame.render.LaserStop;
+import edu.ncsu.feddgame.render.Wall;
 
 public class LaserWrapper {
 	private LinkedList<LaserModel> laserList = new LinkedList<LaserModel>(); 	//Linked List of all lasers
@@ -21,11 +23,11 @@ public class LaserWrapper {
 		root = init;
 	}
 	/**
-	 * Runs recursively the reflectioncalculations on the last laser in the list
+	 * Runs recursively the reflection calculations on the last laser in the list
 	 */
 	private void calculateReflections(){
 		newL = ReflectionCalculation.reflect(laserList.getLast()); 	//reflect the last laser in the list
-		if (newL != null && (Boolean)newL[1]){ 	//if the returned reflection is neither null nor off a wall
+		if (newL != null && (!(newL[1] instanceof Wall) && !(newL[1] instanceof LaserStop))){ 	//if the returned reflection is neither null nor off a wall
 			laserList.add((LaserModel)newL[0]); 	//add the new laser and
 			calculateReflections(); 				//reflect again with that new one
 		}

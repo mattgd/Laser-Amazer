@@ -5,7 +5,7 @@ import org.joml.Vector2d;
 import edu.ncsu.feddgame.GameInstance;
 import edu.ncsu.feddgame.LaserWrapper;
 
-public class CreatePolygon {
+public class CreateModel {
 	
 	/**
 	 * Creates a Box model and stores it in the objectManager of the GameInstance
@@ -50,10 +50,10 @@ public class CreatePolygon {
 	public static Model createTrapezoid(float xOffset, float yOffset, float topBase, float bottomBase, float height){
 		// Vertices for a trapezoid
 		float[] vertices = new float[] {
-			-topBase/2f + xOffset, height + yOffset, 0, // TOP LEFT - 0
-			topBase/2f + xOffset, height + yOffset, 0, // TOP RIGHT - 1
-			bottomBase/2f + xOffset, -height + yOffset, 0, // BOTTOM RIGHT - 2
-			-bottomBase/2f + xOffset, -height + yOffset, 0, // BOTTOM LEFT - 3
+			-topBase/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
+			topBase/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
+			bottomBase/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
+			-bottomBase/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
 		};
 		
 		float[] texture = new float[] {
@@ -73,10 +73,10 @@ public class CreatePolygon {
 	public static Wall createWall(float xOffset, float yOffset, float width, float height){
 		// Vertices for a trapezoid
 				float[] vertices = new float[] {
-					-width/2f + xOffset, height + yOffset, 0, // TOP LEFT - 0
-					width/2f + xOffset, height + yOffset, 0, // TOP RIGHT - 1
-					width/2f + xOffset, -height + yOffset, 0, // BOTTOM RIGHT - 2
-					-width/2f + xOffset, -height + yOffset, 0, // BOTTOM LEFT - 3
+					-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
+					width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
+					width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
+					-width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
 				};
 				
 				float[] texture = new float[] {
@@ -95,16 +95,7 @@ public class CreatePolygon {
 		return m;
 	}
 	
-	/**
-	 * Creates a LaserModel object and passes it to the models list of the objectManager
-	 * Use this when creating the starting laser, all reflected lasers should use the other method
-	 * @param begX
-	 * @param begY
-	 * @param d
-	 * @param length
-	 * @return
-	 */
-	public static LaserModel createLaser(float begX, float begY, double angle, float length){
+	private static LaserModel createLaser(float begX, float begY, double angle, float length){
 		
 		float[] texture = new float[] {
 			0, 0,
@@ -148,6 +139,76 @@ public class CreatePolygon {
 		};
 		
 		return new LaserModel(texture, indices, begX, begY, vect); 	//Return the new Laser
+	}
+	
+	public static LaserStart createLaserStart(float xOffset, float yOffset, int side, double angle){
+		float width = 1, height = 1;
+		float x = 0, y = 0;
+		float[] vertices = new float[] {
+				-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
+				width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
+				width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
+				-width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
+			};
+			
+			float[] texture = new float[] {
+				0, 0, // TOP LEFT
+				1, 0, // TOP RIGHT
+				1, 1, // BOTTOM RIGHT
+				0, 1, // BOTTOM LEFT
+			};
+			
+			int[] indices = new int[] {
+					0, 1, 2,
+					2, 3, 0
+			};
+			switch (side){
+			case 0:
+				x = xOffset - width/2f;
+				y = yOffset;
+				break;
+			case 1:
+				x = xOffset;
+				y = yOffset + height/2f;
+				break;
+			case 2:
+				x = xOffset + width/2f;
+				y = yOffset;
+			case 3:
+				x = xOffset;
+				y = yOffset - height/2f;
+				break;
+			}
+		LaserStart l = new LaserStart(vertices, texture, indices, newLaser(x, y, angle, 1));
+		GameInstance.objectManager.addModel(l);
+		return l;
+	}
+	
+	public static LaserStop createLaserStop(float xOffset, float yOffset){
+		int size = 1;
+		// Vertices for a quadrilateral
+		float[] vertices = new float[] {
+			-size/2f + xOffset, size/2f + yOffset, 0, // TOP LEFT - 0
+			size/2f + xOffset, size/2f + yOffset, 0, // TOP RIGHT - 1
+			size/2f + xOffset, -size/2f + yOffset, 0, // BOTTOM RIGHT - 2
+			-size/2f + xOffset, -size/2f + yOffset, 0, // BOTTOM LEFT - 3
+		};
+		
+		float[] texture = new float[] {
+			0, 0, // TOP LEFT
+			1, 0, // TOP RIGHT
+			1, 1, // BOTTOM RIGHT
+			0, 1, // BOTTOM LEFT
+		};
+		
+		int[] indices = new int[] {
+				0, 1, 2,
+				2, 3, 0
+		};
+		LaserStop l = new LaserStop(vertices, texture, indices);
+		GameInstance.objectManager.addModel(l);
+		return l;
+				
 	}
 
 }
