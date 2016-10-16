@@ -22,10 +22,12 @@ public class TestLevel implements ILevel{
 		CreateModel.createBox(4f, -9);
 		laswrap = CreateModel.createLaserStart(8, 10, 3, Math.toRadians(251));
 		lasstop = CreateModel.createLaserStop(3, -10.4f);
+		{ 	//Walls
 			top = CreateModel.createWall(0f, 12.5f, 25f, .5f);
 			bottom = CreateModel.createWall(0f, -12.5f, 25f, .5f);
 			left = CreateModel.createWall(-12.5f, 0f, .5f, 25f);
 			right = CreateModel.createWall(12.5f, 0f, .5f, 25f);
+		}
 	}
 
 	int i = 0;

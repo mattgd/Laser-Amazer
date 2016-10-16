@@ -69,7 +69,7 @@ public class GameInstance {
 		
 		Shader shader = new Shader("shader");
 		TextureManager texManager = new TextureManager();
-		System.out.println(texManager.getTextures());
+		//System.out.println(texManager.getTextures());
 		Texture tex = new Texture("bound.png");
 		
 		Matrix4f scale = new Matrix4f()

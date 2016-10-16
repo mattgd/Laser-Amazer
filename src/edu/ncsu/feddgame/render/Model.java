@@ -19,18 +19,36 @@ public class Model {
 	public float[] vertices;
 	private float[] tCoords;
 	private int[] indices;
+	private Texture tex;
+	private String texString;
 	
+	private String defaultTexString = "bound.png";
 	/**
 	 * Create and bind the vertices, texture coordinates, and indices to the graphics shader.
 	 * @param vertices
 	 * @param tCoords
 	 * @param indices
 	 */
-	public Model(float[] vertices, float[] tCoords, int[] indices) {
+	public Model(float[] vertices, float[] tCoords, int[] indices, String texture) {
 		this.indices = indices;
 		this.tCoords = tCoords;
 		this.vertices = vertices;
 		drawCount = indices.length;
+		this.texString = texture;
+	}
+	
+	/**
+	 * Create and bind the vertices, texture coordinates, and indices with the default texture
+	 * @param vertices
+	 * @param tCoords
+	 * @param indices
+	 */
+	public Model(float[] vertices, float[] tCoords, int[] indices){
+		this.indices = indices;
+		this.tCoords = tCoords;
+		this.vertices = vertices;
+		drawCount = indices.length;
+		this.texString = defaultTexString;
 	}
 	
 	protected void finalize() throws Throwable {
@@ -44,7 +62,9 @@ public class Model {
 	 */
 	public void render() {
 		//System.out.println("red");
+		
 		if (!generated) {
+			tex = new Texture(texString);
 			glDeleteBuffers(vertexId);
 			glDeleteBuffers(textureId);
 			glDeleteBuffers(indexId);
@@ -69,7 +89,7 @@ public class Model {
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			generated = false;
 		}
-		
+		tex.bind(0);
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 
@@ -87,6 +107,7 @@ public class Model {
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
+		tex.unbind();
 	}
 	
 	/**
