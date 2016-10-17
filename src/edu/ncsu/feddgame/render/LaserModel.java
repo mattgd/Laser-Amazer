@@ -5,7 +5,7 @@ import org.joml.Vector2d;
 public class LaserModel extends Model{
 	private float angle; 	//Angle in radians
 	private float coords[] = new float[2];
-	private static final float w = .25f; 	//Width of the laser rendered
+	private static final float w = .2f; 	//Width of the laser rendered
 	public Vector2d vect;
 	private static Vector2d originV = new Vector2d(10, 0);
 	public int xDir = 0, yDir = 0;

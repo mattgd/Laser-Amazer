@@ -185,6 +185,8 @@ public class Window {
 	public void setWindowSizeCallback() {
 		glfwSetWindowSizeCallback(window, (window, width, height) -> { 	//Resize listener
 			glViewport(0,0,width, height); 	//Reset the viewport to the correct size
+			this.width = width;
+			this.height = height;
 		});
 	}
 	

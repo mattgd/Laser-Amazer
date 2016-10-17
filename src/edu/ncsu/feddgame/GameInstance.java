@@ -22,7 +22,7 @@ import edu.ncsu.feddgame.render.Texture;
 
 public class GameInstance {
 	
-	private Window window;
+	public static Window window;
 	public static ObjectManager objectManager;
 	boolean canRender;
 	public ILevel level;

@@ -18,7 +18,7 @@ public class TestLevel implements ILevel{
 	public void renderObjects() {
 		box1 = CreateModel.createBox(0,0);
 		CreateModel.createBox(2f, -6);
-		CreateModel.createTrapezoid(-5f, 5f, 2f, 1, 1);
+		CreateModel.createTrapezoid(5.5f, 0.1f, 1.5f, 1, 1);
 		CreateModel.createBox(3.4f, -8);
 		laswrap = CreateModel.createLaserStart(7.5f, 9, 3, Math.toRadians(251));
 		lasstop = CreateModel.createLaserStop(3, -9f);
@@ -36,13 +36,15 @@ public class TestLevel implements ILevel{
 	@Override
 	public void logicLoop() {
 		laswrap.reflect();
-		if (i < 80) {
-			GameInstance.objectManager.moveModel(GameInstance.objectManager.indexOf(box1), 0.1f * dir, 0f, 0f); 	//Test animation of models, this pings the box back and forth
-			i++;
-		} else {
-			
-			i = 0;
-			dir *= -1f;
+		if (GameInstance.window.isMouseHeld()){
+			if (i < 160) {
+				GameInstance.objectManager.moveModel(GameInstance.objectManager.indexOf(box1), 0.05f * dir, 0f, 0f); 	//Test animation of models, this pings the box back and forth
+				i++;
+			} else {
+				
+				i = 0;
+				dir *= -1f;
+			}
 		}
 	}
 	
