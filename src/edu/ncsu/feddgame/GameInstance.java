@@ -74,7 +74,7 @@ public class GameInstance {
 		
 		Matrix4f scale = new Matrix4f()
 				.translate(new Vector3f(100, 0, 0))
-				.scale(32);
+				.scale(40);
 		
 		Matrix4f target = new Matrix4f();
 		
@@ -128,6 +128,7 @@ public class GameInstance {
 				tex.bind(0);
 				objectManager.renderAll();
 				level.renderLoop();
+				window.renderButtons();
 				window.swapBuffers(); // Swap the render buffers
 				frames++;
 			}

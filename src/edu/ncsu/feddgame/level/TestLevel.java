@@ -18,15 +18,15 @@ public class TestLevel implements ILevel{
 	public void renderObjects() {
 		box1 = CreateModel.createBox(0,0);
 		CreateModel.createBox(2f, -6);
-		CreateModel.createTrapezoid(-10f, 5f, 2f, 1, 1);
-		CreateModel.createBox(4f, -9);
-		laswrap = CreateModel.createLaserStart(8, 10, 3, Math.toRadians(251));
-		lasstop = CreateModel.createLaserStop(3, -10.4f);
+		CreateModel.createTrapezoid(-5f, 5f, 2f, 1, 1);
+		CreateModel.createBox(3.4f, -8);
+		laswrap = CreateModel.createLaserStart(7.5f, 9, 3, Math.toRadians(251));
+		lasstop = CreateModel.createLaserStop(3, -9f);
 		{ 	//Walls
-			top = CreateModel.createWall(0f, 12.5f, 25f, .5f);
-			bottom = CreateModel.createWall(0f, -12.5f, 25f, .5f);
-			left = CreateModel.createWall(-12.5f, 0f, .5f, 25f);
-			right = CreateModel.createWall(12.5f, 0f, .5f, 25f);
+			top = CreateModel.createWall(0f, 10f, 25f, .5f);
+			bottom = CreateModel.createWall(0f, -10f, 25f, .5f);
+			left = CreateModel.createWall(-10f, 0f, .5f, 25f);
+			right = CreateModel.createWall(10f, 0f, .5f, 25f);
 		}
 	}
 

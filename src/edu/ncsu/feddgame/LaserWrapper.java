@@ -27,7 +27,7 @@ public class LaserWrapper {
 	 */
 	private void calculateReflections(){
 		newL = ReflectionCalculation.reflect(laserList.getLast()); 	//reflect the last laser in the list
-		if (newL != null && (!(newL[1] instanceof Wall) && !(newL[1] instanceof LaserStop))){ 	//if the returned reflection is neither null nor off a wall
+		if (newL != null && (!(newL[1] instanceof Wall) && !(newL[1] instanceof LaserStop)) && laserList.size() < 20){ 	//if the returned reflection is neither null nor off a wall
 			laserList.add((LaserModel)newL[0]); 	//add the new laser and
 			calculateReflections(); 				//reflect again with that new one
 		}
