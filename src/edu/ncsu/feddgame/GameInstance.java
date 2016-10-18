@@ -50,7 +50,7 @@ public class GameInstance {
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); 	// Set window resizable and visible (set at defaults right now)
 		glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
 		
-		window = new Window(800, 600, "FEDD Game", false);
+		window = new Window(800, 800, "FEDD Game", false);
 		
 		level = new TestLevel();
 	}
