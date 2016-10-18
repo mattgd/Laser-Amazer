@@ -27,6 +27,13 @@ import java.util.ArrayList;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 
+import edu.ncsu.feddgame.render.Model;
+import edu.ncsu.feddgame.render.MovableModel;
+import gui.CreateUI;
+import gui.IClickable;
+import gui.UIElement;
+import gui.UIUtils;
+
 public class Window {
 
 	public long window;
@@ -38,7 +45,7 @@ public class Window {
 	
 	private Input input;
 	
-	public ArrayList<Button> buttonList = new ArrayList<Button>();
+	public ArrayList<UIElement> elementList = new ArrayList<UIElement>();
 	
 	public Window () {
 		this.width = 800;
@@ -93,58 +100,19 @@ public class Window {
 		glfwSwapInterval(1); 	// Set Vsync (swap the double buffer from drawn to displayed every refresh cycle)
 		input = new Input(window);
 		
-		createButton(-8f, 1f, 1, 1, () -> {
+		elementList.add(CreateUI.createButton(-8f, 1f, 1, 1, () -> {
 			System.out.println("Click");
-		});
-		createButton(4f, 8f, 1, 1, () -> {
+		}));
+		elementList.add(CreateUI.createButton(4f, 8f, 1, 1, () -> {
 			System.out.println("Click2");
-		});
+		}));
 		
 		
 	}
 	
-	/**
-	 * Creates a new button object and adds it to the window view
-	 * @param xOffset
-	 * @param yOffset
-	 * @param height
-	 * @param width
-	 * @param r
-	 */
-	public void createButton(float xOffset, float yOffset, float height, float width, Runnable r){
-		// Vertices for a trapezoid
-		float[] vertices = new float[] {
-			-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
-			width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
-			width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
-			-width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
-		};
-		
-		float[] texture = new float[] {
-			0, 0, // TOP LEFT
-			1, 0, // TOP RIGHT
-			1, 1, // BOTTOM RIGHT
-			0, 1, // BOTTOM LEFT
-		};
-		
-		int[] indices = new int[] {
-				0, 1, 2,
-				2, 3, 0
-		};
-		buttonList.add(new Button(vertices, texture, indices, r));
-	}
 	
-	/**
-	 * Converts cursor coordinates into coordinates on the cartesian coordinate system in-game
-	 * @param xPos
-	 * @param yPos
-	 * @return
-	 */
-	public float[] convertToWorldspace(float xPos, float yPos){
-		float xP = (xPos - this.width/2f) * (20f / this.width);
-		float yP = (-yPos + this.height/2f) * (20f / this.height);
-		return new float[]{xP, yP};
-	}
+	
+	
 	
 	
 	/**
@@ -201,8 +169,24 @@ public class Window {
 					mouseHeld = false;
 				}else if (action == GLFW_PRESS){
 					mouseHeld = true;
-					for(Button b : buttonList){ 	//Iterate and perform click checks on all buttons in the arraylist
-						b.checkClick(mouseX, mouseY);
+					for(Model b : GameInstance.objectManager.getModels()){ 	//Iterate over all models in the scene
+						if (b instanceof MovableModel){
+							MovableModel m = (MovableModel)b;
+							if (m.checkClick(mouseX, mouseY)) 	//If the object is movable and is the one clicked
+								new Thread(() -> { 	//Start a new thread to move it while the mouse is being held
+								while (mouseHeld){
+									try{
+									wait(0); 			//Don't ask: the game breaks without some random code before the followCursor call
+									}catch (Exception e){}
+									m.followCursor(mouseX, mouseY);
+								}
+								}).start();
+						}
+					}
+					for (UIElement e : elementList){
+						if (e instanceof IClickable){
+							((IClickable)e).checkClick(mouseX, mouseY);
+						}
 					}
 				}
 			}
@@ -210,7 +194,7 @@ public class Window {
 	}
 	public void setMousePosCallback(){
 		glfwSetCursorPosCallback(window, (window, xPos, yPos) -> {
-			float[] newC = convertToWorldspace((float)xPos, (float)yPos);
+			float[] newC = UIUtils.convertToWorldspace((float)xPos, (float)yPos, this.width, this.height);
 			this.mouseX = newC[0];
 			this.mouseY = newC[1];
 		});
@@ -252,10 +236,12 @@ public class Window {
 		input.update();
 		
 	}
-	
-	public void renderButtons(){
-		for (Button b : buttonList){
-			b.render();
+	/**
+	 * Renders all UI elements in elementList
+	 */
+	public void renderElements(){
+		for (UIElement e : elementList){
+			e.render();
 		}
 	}
 	

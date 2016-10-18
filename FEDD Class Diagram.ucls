@@ -2,422 +2,479 @@
 <class-diagram version="1.1.11" icons="true" automaticImage="PNG" always-add-relationships="false" 
   generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true" 
   router="FAN">  
-  <class id="1" language="java" name="edu.ncsu.feddgame.ReflectionCalculation" project="FEDD Game" 
-    file="/FEDD Game/src/edu/ncsu/feddgame/ReflectionCalculation.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="243" width="267" x="141" y="47"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="2" language="java" name="edu.ncsu.feddgame.level.TestLevel" project="FEDD Game" 
+  <class id="1" language="java" name="edu.ncsu.feddgame.level.TestLevel" project="FEDD Game" 
     file="/FEDD Game/src/edu/ncsu/feddgame/level/TestLevel.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="171" width="126" x="1501" y="330"/>    
+    <position height="-1" width="-1" x="1552" y="436"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="edu.ncsu.feddgame.render.LaserStop" project="FEDD Game" 
-    file="/FEDD Game/src/edu/ncsu/feddgame/render/LaserStop.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="161" x="1884" y="1310"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="4" language="java" name="edu.ncsu.feddgame.level.ILevel" project="FEDD Game" 
-    file="/FEDD Game/src/edu/ncsu/feddgame/level/ILevel.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="117" width="126" x="1720" y="919"/>    
+  <interface id="2" language="java" name="gui.UIElement" project="FEDD Game" file="/FEDD Game/src/gui/UIElement.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2703" y="1672"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="5" language="java" name="edu.ncsu.feddgame.render.Shader" project="FEDD Game" 
-    file="/FEDD Game/src/edu/ncsu/feddgame/render/Shader.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="243" width="179" x="448" y="47"/>    
+  <class id="3" language="java" name="edu.ncsu.feddgame.render.MovableModel" project="FEDD Game" 
+    file="/FEDD Game/src/edu/ncsu/feddgame/render/MovableModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2223" y="1452"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="edu.ncsu.feddgame.FEDDGameLaunch" project="FEDD Game" 
-    file="/FEDD Game/src/edu/ncsu/feddgame/FEDDGameLaunch.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="128" x="667" y="47"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="7" language="java" name="edu.ncsu.feddgame.ObjectManager" project="FEDD Game" 
+  <class id="4" language="java" name="edu.ncsu.feddgame.ObjectManager" project="FEDD Game" 
     file="/FEDD Game/src/edu/ncsu/feddgame/ObjectManager.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="315" width="223" x="2087" y="330"/>    
+    <position height="-1" width="-1" x="2484" y="508"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <package id="8" language="java" name="edu.ncsu.feddgame.level" project="FEDD Game" 
-    file="/FEDD Game/src/edu/ncsu/feddgame/level" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="50" width="165" x="835" y="47"/>    
-    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
-  </package>  
-  <class id="9" language="java" name="edu.ncsu.feddgame.Input" project="FEDD Game" 
+  <class id="5" language="java" name="edu.ncsu.feddgame.Input" project="FEDD Game" 
     file="/FEDD Game/src/edu/ncsu/feddgame/Input.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="207" width="197" x="2148" y="919"/>    
+    <position height="-1" width="-1" x="2532" y="1007"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="edu.ncsu.feddgame.render.Wall" project="FEDD Game" 
+  <class id="6" language="java" name="edu.ncsu.feddgame.render.Wall" project="FEDD Game" 
     file="/FEDD Game/src/edu/ncsu/feddgame/render/Wall.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="81" width="131" x="1438" y="1310"/>    
+    <position height="-1" width="-1" x="1491" y="1353"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="edu.ncsu.feddgame.Window" project="FEDD Game" 
-    file="/FEDD Game/src/edu/ncsu/feddgame/Window.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="549" width="260" x="2350" y="330"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="12" language="java" name="edu.ncsu.feddgame.LaserWrapper" project="FEDD Game" 
+  <class id="7" language="java" name="edu.ncsu.feddgame.LaserWrapper" project="FEDD Game" 
     file="/FEDD Game/src/edu/ncsu/feddgame/LaserWrapper.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="171" width="160" x="1885" y="1539"/>    
+    <position height="-1" width="-1" x="1953" y="1717"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="edu.ncsu.feddgame.render.Camera" project="FEDD Game" 
+  <class id="8" language="java" name="edu.ncsu.feddgame.render.Camera" project="FEDD Game" 
     file="/FEDD Game/src/edu/ncsu/feddgame/render/Camera.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="171" width="151" x="1040" y="47"/>    
+    <position height="-1" width="-1" x="86" y="98"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="edu.ncsu.feddgame.TextureManager" project="FEDD Game" 
+  <class id="9" language="java" name="edu.ncsu.feddgame.TextureManager" project="FEDD Game" 
     file="/FEDD Game/src/edu/ncsu/feddgame/TextureManager.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="117" width="193" x="2385" y="919"/>    
+    <position height="-1" width="-1" x="2788" y="962"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="edu.ncsu.feddgame.render.LaserStart" project="FEDD Game" 
+  <class id="10" language="java" name="edu.ncsu.feddgame.render.Model" project="FEDD Game" 
+    file="/FEDD Game/src/edu/ncsu/feddgame/render/Model.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2144" y="1088"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="edu.ncsu.feddgame.render.Texture" project="FEDD Game" 
+    file="/FEDD Game/src/edu/ncsu/feddgame/render/Texture.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2753" y="1407"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="edu.ncsu.feddgame.ReflectionCalculation" project="FEDD Game" 
+    file="/FEDD Game/src/edu/ncsu/feddgame/ReflectionCalculation.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="335" y="134"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="edu.ncsu.feddgame.render.LaserStop" project="FEDD Game" 
+    file="/FEDD Game/src/edu/ncsu/feddgame/render/LaserStop.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1952" y="1362"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="14" language="java" name="edu.ncsu.feddgame.level.ILevel" project="FEDD Game" 
+    file="/FEDD Game/src/edu/ncsu/feddgame/level/ILevel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1951" y="962"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="15" language="java" name="edu.ncsu.feddgame.render.Shader" project="FEDD Game" 
+    file="/FEDD Game/src/edu/ncsu/feddgame/render/Shader.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="598" y="134"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="edu.ncsu.feddgame.FEDDGameLaunch" project="FEDD Game" 
+    file="/FEDD Game/src/edu/ncsu/feddgame/FEDDGameLaunch.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="792" y="62"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="gui.CreateUI" project="FEDD Game" file="/FEDD Game/src/gui/CreateUI.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1031" y="62"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="edu.ncsu.feddgame.Window" project="FEDD Game" 
+    file="/FEDD Game/src/edu/ncsu/feddgame/Window.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2723" y="607"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="gui.UIUtils" project="FEDD Game" file="/FEDD Game/src/gui/UIUtils.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1328" y="71"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="edu.ncsu.feddgame.render.LaserStart" project="FEDD Game" 
     file="/FEDD Game/src/edu/ncsu/feddgame/render/LaserStart.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="117" width="235" x="1609" y="1310"/>    
+    <position height="-1" width="-1" x="1714" y="1371"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="16" language="java" name="edu.ncsu.feddgame.GameInstance" project="FEDD Game" 
+  <interface id="21" language="java" name="gui.IClickable" project="FEDD Game" file="/FEDD Game/src/gui/IClickable.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2520" y="1681"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="22" language="java" name="edu.ncsu.feddgame.GameInstance" project="FEDD Game" 
     file="/FEDD Game/src/edu/ncsu/feddgame/GameInstance.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="153" width="123" x="2087" y="47"/>    
+    <position height="-1" width="-1" x="2434" y="90"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="17" language="java" name="edu.ncsu.feddgame.Button" project="FEDD Game" 
-    file="/FEDD Game/src/edu/ncsu/feddgame/Button.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="189" width="212" x="2398" y="1310"/>    
+  <class id="23" language="java" name="edu.ncsu.feddgame.render.CreateModel" project="FEDD Game" 
+    file="/FEDD Game/src/edu/ncsu/feddgame/render/CreateModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1712" y="162"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <package id="18" language="java" name="edu.ncsu.feddgame.render" project="FEDD Game" 
-    file="/FEDD Game/src/edu/ncsu/feddgame/render" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="50" width="177" x="1231" y="47"/>    
+  <class id="24" language="java" name="gui.Button" project="FEDD Game" file="/FEDD Game/src/gui/Button.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2529" y="1398"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <package id="25" language="java" name="gui" project="FEDD Game" file="/FEDD Game/src/gui" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1973" y="39"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <class id="19" language="java" name="edu.ncsu.feddgame.render.CreateModel" project="FEDD Game" 
-    file="/FEDD Game/src/edu/ncsu/feddgame/render/CreateModel.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="243" width="290" x="1448" y="47"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="20" language="java" name="edu.ncsu.feddgame.render.Model" project="FEDD Game" 
-    file="/FEDD Game/src/edu/ncsu/feddgame/render/Model.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="351" width="180" x="1886" y="919"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="21" language="java" name="edu.ncsu.feddgame.Timer" project="FEDD Game" 
+  <class id="26" language="java" name="edu.ncsu.feddgame.Timer" project="FEDD Game" 
     file="/FEDD Game/src/edu/ncsu/feddgame/Timer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="106" x="1778" y="47"/>    
+    <position height="-1" width="-1" x="2117" y="63"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="22" language="java" name="edu.ncsu.feddgame.level.Level" project="FEDD Game" 
+  <class id="27" language="java" name="edu.ncsu.feddgame.level.Level" project="FEDD Game" 
     file="/FEDD Game/src/edu/ncsu/feddgame/level/Level.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="123" x="1924" y="47"/>    
+    <position height="-1" width="-1" x="2271" y="81"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="23" language="java" name="edu.ncsu.feddgame.render.LaserModel" project="FEDD Game" 
+  <class id="28" language="java" name="edu.ncsu.feddgame.render.LaserModel" project="FEDD Game" 
     file="/FEDD Game/src/edu/ncsu/feddgame/render/LaserModel.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="351" width="236" x="2066" y="1750"/>    
+    <position height="-1" width="-1" x="2291" y="2018"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="24" language="java" name="edu.ncsu.feddgame.render.Texture" project="FEDD Game" 
-    file="/FEDD Game/src/edu/ncsu/feddgame/render/Texture.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="189" width="122" x="2148" y="1310"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <association id="25">    
-    <bendpoint x="2096" y="919"/>    
-    <bendpoint x="2096" y="1310"/>    
-    <bendpoint x="2096" y="1539"/>    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="26" name="lasers"/>      
-      <multiplicity id="27" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="23" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="28">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="4"/>  
-  </realization>  
   <association id="29">    
-    <bendpoint x="1564" y="919"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="30" name="laswrap"/>      
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="30" name="box1"/>      
       <multiplicity id="31" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="15" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="32">    
     <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="33" name="models"/>      
+      <attribute id="33" name="laserList"/>      
       <multiplicity id="34" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="20" navigable="true"/>    
+    <end type="TARGET" refId="28" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="35">    
-    <bendpoint x="1489" y="919"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="36" name="bottom"/>      
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="36" name="tex"/>      
       <multiplicity id="37" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="38">    
-    <bendpoint x="2075" y="1539"/>    
-    <bendpoint x="2075" y="1310"/>    
-    <end type="SOURCE" refId="23"/>    
-    <end type="TARGET" refId="20"/>  
-  </generalization>  
-  <association id="39">    
-    <end type="SOURCE" refId="20" navigable="false">      
-      <attribute id="40" name="tex"/>      
-      <multiplicity id="41" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="24" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="42">    
-    <bendpoint x="1510" y="919"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="43" name="right"/>      
-      <multiplicity id="44" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="45">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="46" name="input"/>      
-      <multiplicity id="47" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="48">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="49" name="addModels"/>      
-      <multiplicity id="50" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="20" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="51">    
-    <bendpoint x="2608" y="919"/>    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="52" name="buttonList"/>      
-      <multiplicity id="53" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="17" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="54">    
-    <bendpoint x="1447" y="919"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="55" name="top"/>      
-      <multiplicity id="56" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="57">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="58" name="laserList"/>      
-      <multiplicity id="59" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="23" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="60">    
-    <bendpoint x="1912" y="330"/>    
-    <end type="SOURCE" refId="16" navigable="false">      
-      <attribute id="61" name="level"/>      
-      <multiplicity id="62" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="63">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="20"/>  
-  </generalization>  
-  <association id="64">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="65" name="root"/>      
-      <multiplicity id="66" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="23" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="67">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="68" name="textures"/>      
-      <multiplicity id="69" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="24" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="70">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="71" name="box1"/>      
-      <multiplicity id="72" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="20" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="73">    
-    <end type="SOURCE" refId="16" navigable="false">      
-      <attribute id="74" name="window"/>      
-      <multiplicity id="75" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="76">    
-    <bendpoint x="2117" y="919"/>    
-    <bendpoint x="2117" y="1310"/>    
-    <bendpoint x="2117" y="1539"/>    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="77" name="addLasers"/>      
-      <multiplicity id="78" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="23" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="79">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="20"/>  
-  </generalization>  
-  <generalization id="80">    
-    <end type="SOURCE" refId="17"/>    
-    <end type="TARGET" refId="20"/>  
-  </generalization>  
-  <association id="81">    
-    <bendpoint x="1468" y="919"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="82" name="left"/>      
-      <multiplicity id="83" minimum="0" maximum="1"/>    
+  <association id="38">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="39" name="models"/>      
+      <multiplicity id="40" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="84">    
-    <bendpoint x="1689" y="919"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="85" name="lasstop"/>      
-      <multiplicity id="86" minimum="0" maximum="1"/>    
+  <association id="41">    
+    <bendpoint x="1477" y="904"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="42" name="right"/>      
+      <multiplicity id="43" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
+    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="87">    
-    <end type="SOURCE" refId="16" navigable="false">      
-      <attribute id="88" name="objectManager"/>      
-      <multiplicity id="89" minimum="0" maximum="1"/>    
+  <association id="44">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="45" name="objectManager"/>      
+      <multiplicity id="46" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="47">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <association id="48">    
+    <bendpoint x="1456" y="904"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="49" name="top"/>      
+      <multiplicity id="50" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="51">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="52" name="addModels"/>      
+      <multiplicity id="53" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="54">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="2"/>  
+  </realization>  
+  <association id="55">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="56" name="root"/>      
+      <multiplicity id="57" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="58">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="59" name="input"/>      
+      <multiplicity id="60" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="61">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <association id="62">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="63" name="textures"/>      
+      <multiplicity id="64" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="65">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <association id="66">    
+    <bendpoint x="1690" y="904"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="67" name="lasstop"/>      
+      <multiplicity id="68" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="69">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <association id="70">    
+    <bendpoint x="2661" y="904"/>    
+    <bendpoint x="2661" y="1313"/>    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="71" name="elementList"/>      
+      <multiplicity id="72" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="73">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="74" name="laser"/>      
+      <multiplicity id="75" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="90">    
-    <end type="SOURCE" refId="15" navigable="false">      
-      <attribute id="91" name="laser"/>      
-      <multiplicity id="92" minimum="0" maximum="1"/>    
+  <association id="76">    
+    <bendpoint x="1435" y="904"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="77" name="left"/>      
+      <multiplicity id="78" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
+    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="93">    
-    <end type="SOURCE" refId="15"/>    
-    <end type="TARGET" refId="20"/>  
+  <generalization id="79">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="10"/>  
   </generalization>  
+  <association id="80">    
+    <bendpoint x="2382" y="904"/>    
+    <bendpoint x="2382" y="1313"/>    
+    <bendpoint x="2382" y="1632"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="81" name="addLasers"/>      
+      <multiplicity id="82" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="83">    
+    <bendpoint x="2403" y="904"/>    
+    <bendpoint x="2403" y="1313"/>    
+    <bendpoint x="2403" y="1632"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="84" name="lasers"/>      
+      <multiplicity id="85" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="86">    
+    <bendpoint x="2063" y="1632"/>    
+    <bendpoint x="2063" y="1313"/>    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <association id="87">    
+    <bendpoint x="1498" y="904"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="88" name="bottom"/>      
+      <multiplicity id="89" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="90">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <realization id="91">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <generalization id="92">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <association id="93">    
+    <bendpoint x="1552" y="904"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="94" name="laswrap"/>      
+      <multiplicity id="95" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="96">    
+    <bendpoint x="2139" y="351"/>    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="97" name="level"/>      
+      <multiplicity id="98" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="99">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="100" name="window"/>      
+      <multiplicity id="101" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

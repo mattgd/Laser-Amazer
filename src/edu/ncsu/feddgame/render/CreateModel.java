@@ -39,6 +39,39 @@ public class CreateModel {
 	}
 	
 	/**
+	 * Creates a movable box model and stores it in the objectManager
+	 * @param xOffset
+	 * @param yOffset
+	 * @param size
+	 * @return
+	 */
+	public static MovableModel createMovableBox(float xOffset, float yOffset, float size){
+		// Vertices for a quadrilateral
+		float[] vertices = new float[] {
+			-size/2f, size/2f, 0, // TOP LEFT - 0
+			size/2f, size/2f, 0, // TOP RIGHT - 1
+			size/2f, -size/2f, 0, // BOTTOM RIGHT - 2
+			-size/2f, -size/2f, 0, // BOTTOM LEFT - 3
+		};
+		
+		float[] texture = new float[] {
+			0, 0, // TOP LEFT
+			1, 0, // TOP RIGHT
+			1, 1, // BOTTOM RIGHT
+			0, 1, // BOTTOM LEFT
+		};
+		
+		int[] indices = new int[] {
+				0, 1, 2,
+				2, 3, 0
+				};
+		return (MovableModel)GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset));
+	}
+	public static MovableModel createMovableBox(float xOffset, float yOffset){
+		return createMovableBox(xOffset, yOffset, 1);
+	}
+	
+	/**
 	 * Creates a trapezoid with the bases on top and bottom, and a vertical height between them
 	 * @param xOffset
 	 * @param yOffset
@@ -68,6 +101,29 @@ public class CreateModel {
 				2, 3, 0
 		};
 		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices)); 	//Add the model to the objectManager
+	}
+	
+	public static MovableModel createMovableTrapezoid(float xOffset, float yOffset, float topBase, float bottomBase, float height){
+		// Vertices for a trapezoid
+				float[] vertices = new float[] {
+					-topBase/2f, height/2f, 0, // TOP LEFT - 0
+					topBase/2f, height/2f, 0, // TOP RIGHT - 1
+					bottomBase/2f, -height/2f, 0, // BOTTOM RIGHT - 2
+					-bottomBase/2f, -height/2f, 0, // BOTTOM LEFT - 3
+				};
+				
+				float[] texture = new float[] {
+					0, 0, // TOP LEFT
+					1, 0, // TOP RIGHT
+					1, 1, // BOTTOM RIGHT
+					0, 1, // BOTTOM LEFT
+				};
+				
+				int[] indices = new int[] {
+						0, 1, 2,
+						2, 3, 0
+				};
+				return (MovableModel)GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset)); 	//Add the model to the objectManager
 	}
 	
 	public static Wall createWall(float xOffset, float yOffset, float width, float height){

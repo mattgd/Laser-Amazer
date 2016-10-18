@@ -128,7 +128,7 @@ public class GameInstance {
 				tex.bind(0);
 				objectManager.renderAll();
 				level.renderLoop();
-				window.renderButtons();
+				window.renderElements();
 				window.swapBuffers(); // Swap the render buffers
 				frames++;
 			}

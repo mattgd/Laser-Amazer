@@ -144,4 +144,8 @@ public class Model {
 		this.vertices[11] += z;
 	}
 	
+	public void setVertices(float[] vertices){
+		this.vertices = vertices;
+	}
+	
 }
