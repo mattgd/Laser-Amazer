@@ -5,7 +5,7 @@ import edu.ncsu.feddgame.LaserWrapper;
 public class LaserStart extends Model{
 	private LaserWrapper laser;
 	public LaserStart(float[] vertices, float[] tCoords, int[] indices, LaserWrapper laser) {
-		super(vertices, tCoords, indices);
+		super(vertices, tCoords, indices, "start.png");
 		this.laser = laser;
 	}
 	

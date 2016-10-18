@@ -3,7 +3,7 @@ package edu.ncsu.feddgame.render;
 public class LaserStop extends Model{
 
 	public LaserStop(float[] vertices, float[] tCoords, int[] indices) {
-		super(vertices, tCoords, indices);
+		super(vertices, tCoords, indices, "finish.png");
 	}
 	
 	/**
