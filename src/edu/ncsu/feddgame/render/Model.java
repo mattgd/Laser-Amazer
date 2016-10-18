@@ -20,21 +20,22 @@ public class Model {
 	private float[] tCoords;
 	private int[] indices;
 	private Texture tex;
-	private String texString;
+	private String texStr;
 	
-	private String defaultTexString = "bound.png";
+	private String defaultTexString = "box.png";
 	/**
 	 * Create and bind the vertices, texture coordinates, and indices to the graphics shader.
 	 * @param vertices
 	 * @param tCoords
 	 * @param indices
+	 * @param texture
 	 */
 	public Model(float[] vertices, float[] tCoords, int[] indices, String texture) {
 		this.indices = indices;
 		this.tCoords = tCoords;
 		this.vertices = vertices;
 		drawCount = indices.length;
-		this.texString = texture;
+		this.texStr = texture;
 	}
 	
 	/**
@@ -48,7 +49,7 @@ public class Model {
 		this.tCoords = tCoords;
 		this.vertices = vertices;
 		drawCount = indices.length;
-		this.texString = defaultTexString;
+		this.texStr = defaultTexString;
 	}
 	
 	protected void finalize() throws Throwable {
@@ -64,7 +65,7 @@ public class Model {
 		//System.out.println("red");
 		
 		if (!generated) {
-			tex = new Texture(texString);
+			tex = new Texture(texStr);
 			glDeleteBuffers(vertexId);
 			glDeleteBuffers(textureId);
 			glDeleteBuffers(indexId);

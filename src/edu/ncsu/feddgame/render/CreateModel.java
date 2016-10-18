@@ -32,7 +32,7 @@ public class CreateModel {
 				0, 1, 2,
 				2, 3, 0
 				};
-		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices)); 	//Add the model to the objectManager
+		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, "box.png")); 	//Add the model to the objectManager
 	}
 	public static Model createBox(float xOffset, float yOffset){
 		return createBox(xOffset, yOffset, 1); 	//default size of 1
@@ -67,7 +67,7 @@ public class CreateModel {
 				0, 1, 2,
 				2, 3, 0
 		};
-		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices)); 	//Add the model to the objectManager
+		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, "box.png")); 	//Add the model to the objectManager
 	}
 	
 	public static Wall createWall(float xOffset, float yOffset, float width, float height){
