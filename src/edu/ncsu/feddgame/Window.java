@@ -1,9 +1,6 @@
 package edu.ncsu.feddgame;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
 import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
@@ -27,19 +24,19 @@ import java.util.ArrayList;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 
+import edu.ncsu.feddgame.gui.CreateUI;
+import edu.ncsu.feddgame.gui.IClickable;
+import edu.ncsu.feddgame.gui.UIElement;
+import edu.ncsu.feddgame.gui.UIUtils;
 import edu.ncsu.feddgame.render.Model;
 import edu.ncsu.feddgame.render.MovableModel;
-import gui.CreateUI;
-import gui.IClickable;
-import gui.UIElement;
-import gui.UIUtils;
 
 public class Window {
 
 	public long window;
 	public int refreshRate;
 	private int width, height;
-	private boolean fullscreen, mouseHeld = false;
+	public boolean fullscreen, mouseHeld = false, ctrlHeld = false, shiftHeld = false;
 	private String title;
 	private float mouseX, mouseY;
 	
@@ -144,6 +141,23 @@ public class Window {
 		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> { 	//Key listener
 			if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) 	//on Escape, set the window to close
 				glfwSetWindowShouldClose(window, true);
+			if (key == GLFW_KEY_LEFT_CONTROL){
+				if (action == GLFW_PRESS){
+					ctrlHeld = true;
+					
+					System.out.println("Mouse: " + mouseX + ", " + mouseY);
+				}else if (action == GLFW_RELEASE){
+					ctrlHeld = false;
+				}
+			}
+			if (key == GLFW_KEY_LEFT_SHIFT){
+				if (action == GLFW_PRESS){
+					shiftHeld = true;
+				}else if (action == GLFW_RELEASE){
+					shiftHeld = false;
+				}
+			}
+				
 		});
 	}
 	
@@ -197,6 +211,7 @@ public class Window {
 			float[] newC = UIUtils.convertToWorldspace((float)xPos, (float)yPos, this.width, this.height);
 			this.mouseX = newC[0];
 			this.mouseY = newC[1];
+				
 		});
 	}
 	

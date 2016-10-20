@@ -26,6 +26,7 @@ public class LaserWrapper {
 	 * Runs recursively the reflection calculations on the last laser in the list
 	 */
 	private void calculateReflections(){
+		//if (GameInstance.window.shiftHeld) System.out.println("<< " + laserList.indexOf(laserList.getLast()) + " >>");
 		newL = ReflectionCalculation.reflect(laserList.getLast()); 	//reflect the last laser in the list
 		if (newL != null && (!(newL[1] instanceof Wall) && !(newL[1] instanceof LaserStop)) && laserList.size() < 20){ 	//if the returned reflection is neither null nor off a wall
 			laserList.add((LaserModel)newL[0]); 	//add the new laser and

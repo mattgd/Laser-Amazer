@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.joml.Vector2d;
 
+import edu.ncsu.feddgame.gui.UIUtils;
 import edu.ncsu.feddgame.render.CreateModel;
 import edu.ncsu.feddgame.render.LaserModel;
 import edu.ncsu.feddgame.render.LaserStop;
@@ -22,16 +23,16 @@ public class ReflectionCalculation {
 	 * @param models
 	 */
 	public static Object[] reflect(LaserModel laser){
+		//if (GameInstance.window.shiftHeld) System.out.println("Input: " + laser.getCoords()[0] + ", " + laser.getCoords()[1]);
 		findIntersects(laser, GameInstance.objectManager.getModels());
 		if (!intersects.isEmpty()){ 	//If there exists at least one valid intersection
 			Object[] closest = getClosestIntersection(); 	//Find the closest one
 			float length = (float) Math.hypot((float)closest[1] - coords[0], (float)closest[2] - coords[1]); 	//Pythagorean theorem to find length of vector
 			laser.setLength(length); 	//Modify the laser to the correct length
-			if (length > 0f){
-				Vector2d resultantV = reflectionVector(laser.vect, new Vector2d(10d, 10d * (float)closest[3])); 	//Calculates reflected vector using the laser's vector and then a new vector representing the side of the model
-				reflectionCallback((Model)closest[0], laser);
-				return new Object[]{CreateModel.createReflectedLaser((float)closest[1], (float)closest[2], resultantV), closest[0]};
-			}
+			Vector2d resultantV = reflectionVector(laser.vect, new Vector2d(10d, 10d * (float)closest[3])); 	//Calculates reflected vector using the laser's vector and then a new vector representing the side of the model
+			reflectionCallback((Model)closest[0], laser);
+			//if (GameInstance.window.shiftHeld) System.out.println("Final: " + closest[1] + ", " + closest[2]);
+			return new Object[]{CreateModel.createReflectedLaser((float)closest[1], (float)closest[2], resultantV), closest[0]};
 			
 		}
 		return null;
@@ -93,13 +94,12 @@ public class ReflectionCalculation {
 						yIntercept = slope * (xIntercept - coords[0]) + coords[1]; 	//If vertical, use easier methods for finding intersections
 					}
 					
-					
 					if (((xIntercept - coords[0])* xDir >= 0) && ((yIntercept - coords[1]) * yDir >= 0)){ 	//Check it the point of intersection is in the correct direction
-						//CreatePolygon.createBox(xIntercept, yIntercept, .5f); 	//Enable to visualize all possible intersections
+						if (GameInstance.window.shiftHeld) System.out.println("Potential: " + xIntercept + ", " + yIntercept);
 						if (((xIntercept <= v[0]) && (xIntercept >= v[2])) || ((xIntercept >= v[0]) && (xIntercept <= v[2]))){ 	//Check if the point lies on a side of the polygon
 							if (((yIntercept <= v[1]) && (yIntercept >= v[3])) || ((yIntercept >= v[1]) && (yIntercept <= v[3]))){ 	//TODO: check if this works for all polygons (it might, not sure)
-								intersects.add(new Object[]{m, xIntercept, yIntercept, sl});		
-							}
+								//if (GameInstance.window.shiftHeld) System.out.println("Added: " + xIntercept + ", " + yIntercept);
+								intersects.add(new Object[]{m, xIntercept, yIntercept, sl});							}
 						}
 					}
 				}
@@ -116,7 +116,7 @@ public class ReflectionCalculation {
 		for(Object[] b : intersects){ 	//For all intersecting points
 			length = (float) Math.hypot((float)b[1] - coords[0], (float)b[2] - coords[1]);
 			if ((Math.hypot((float)b[1] - coords[0], (float)b[2] - coords[1])) < (Math.hypot((float)closest[1] - coords[0], (float)closest[2] - coords[1]))) 	//if the new object is closer than the old one
-				if (length > 0f) 	//Ensure that the new intersection point isn't at the exact same spot
+				if (length > 0.05f) 	//Ensure that the new intersection point isn't at the exact same spot
 					closest = b; 	//set the new one to the closest
 		}
 		return closest;

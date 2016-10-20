@@ -1,4 +1,4 @@
-package gui;
+package edu.ncsu.feddgame.gui;
 
 import edu.ncsu.feddgame.render.Model;
 

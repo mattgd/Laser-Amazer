@@ -1,7 +1,7 @@
 package edu.ncsu.feddgame.render;
 
-import gui.IClickable;
-import gui.UIUtils;
+import edu.ncsu.feddgame.gui.IClickable;
+import edu.ncsu.feddgame.gui.UIUtils;
 
 public class MovableModel extends Model implements IClickable{
 	public float[] xCoords; 	//Top Left, Top Right, Bottom Right, Bottom Left
@@ -38,6 +38,7 @@ public class MovableModel extends Model implements IClickable{
 		};
 		splitCoords();
 		super.setVertices(coords);
+		//System.out.println(xOffset + ", "  + yOffset);
 	}
 	private void splitCoords(){
 		this.xCoords = new float[]{coords[0], coords[3], coords[6], coords[9]};
