@@ -11,13 +11,13 @@ public class MovableModel extends Model implements IClickable{
 	private float[] coords;
 	private Runnable callback = null;
 	public MovableModel(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset) {
-		super(vertices, tCoords, indices, "bound.png");
+		super(vertices, tCoords, indices, 4, "bound.png");
 		coords = vertices;
 		this.vertices = coords;
 		adjustOffset(xOffset, yOffset);
 	}
 	public MovableModel(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset, String tex){
-		super(vertices, tCoords, indices, tex);
+		super(vertices, tCoords, indices, 4, tex);
 		coords = vertices;
 		this.vertices = coords;
 		adjustOffset(xOffset, yOffset);

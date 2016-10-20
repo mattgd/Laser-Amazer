@@ -1,5 +1,6 @@
 package edu.ncsu.feddgame.level;
 
+import edu.ncsu.feddgame.GameInstance;
 import edu.ncsu.feddgame.render.CreateModel;
 import edu.ncsu.feddgame.render.LaserStart;
 import edu.ncsu.feddgame.render.LaserStop;
@@ -20,9 +21,10 @@ public class TestLevel implements ILevel{
 		laswrap = CreateModel.createLaserStart(7.5f, 9, 3, Math.toRadians(251));
 		lasstop = CreateModel.createLaserStop(3, -9f);
 		box1 = CreateModel.createBox(0,0);
-		box2 = CreateModel.createMovableBox(3.05f, -5.925f, 5);
+		box2 = CreateModel.createMovableBox(3.05f, -5.925f);
 		CreateModel.createMovableTrapezoid(-5.5f, 0.1f, 1.5f, 1, 1);
 		CreateModel.createBox(3.4f, -8);
+		CreateModel.createTriangle(-4, -4, -1, -2);
 		
 		{ 	//Walls
 			top = CreateModel.createWall(0f, 10f, 25f, .5f);
@@ -39,7 +41,7 @@ public class TestLevel implements ILevel{
 	public void logicLoop() {
 		laswrap.reflect();
 			if (i < 160) {
-				//GameInstance.objectManager.moveModel(GameInstance.objectManager.indexOf(box1), 0.05f * dir, 0f, 0f); 	//Test animation of models, this pings the box back and forth
+				GameInstance.objectManager.moveModel(GameInstance.objectManager.indexOf(box1), 0.05f * dir, 0f, 0f); 	//Test animation of models, this pings the box back and forth
 				i++;
 			} else {
 				

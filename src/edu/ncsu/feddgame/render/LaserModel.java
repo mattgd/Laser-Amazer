@@ -22,7 +22,7 @@ public class LaserModel extends Model{
 	 * @param y1
 	 */
 	public LaserModel(float[] tCoords, int[] indices, float x0, float y0, float angle, float length) {
-		super(getVertices(x0, y0, angle, length, w), tCoords, indices, "laser.png");
+		super(getVertices(x0, y0, angle, length, w), tCoords, indices, 4, "laser.png");
 		this.angle = angle;
 		this.vect = new Vector2d(length * Math.cos(angle), length * Math.sin(angle));
 		coords[0] = x0;
@@ -38,7 +38,7 @@ public class LaserModel extends Model{
 	 * @param vect
 	 */
 	public LaserModel(float[] tCoords, int[] indices, float x0, float y0, Vector2d vect){
-		super(getVertices(x0, y0, (float)originV.angle(vect), (float)vect.length(), w), tCoords, indices, "laser.png");
+		super(getVertices(x0, y0, (float)originV.angle(vect), (float)vect.length(), w), tCoords, indices, 4, "laser.png");
 		this.angle = (float)originV.angle(vect);
 		this.vect = vect;
 		coords[0] = x0;

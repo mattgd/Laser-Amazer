@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.joml.Vector2d;
 
+import edu.ncsu.feddgame.gui.UIElement;
 import edu.ncsu.feddgame.gui.UIUtils;
 import edu.ncsu.feddgame.render.CreateModel;
 import edu.ncsu.feddgame.render.LaserModel;
@@ -67,13 +68,14 @@ public class ReflectionCalculation {
 		coords = laser.getCoords();
 		int xDir = laser.xDir;
 		int yDir = laser.yDir;
+		/*
 		List<Model> mods = new ArrayList<Model>();
 		for(Model m : models){ 	//Crude way to avoid concurrentModification errors when testing by adding objects to the scene
 			mods.add(m);
-		}
-		for (Model m : mods){ 	//For all Models in the scene
-			if (!(m instanceof LaserModel)){ 	//Don't intersect with lasers
-				for (int side = 0; side < 4; side++){
+		}*/
+		for (Model m : models){ 	//For all Models in the scene
+			if (!(m instanceof LaserModel) && !(m instanceof UIElement)){ 	//Don't intersect with lasers nor UI Elements
+				for (int side = 0; side < m.sideCount; side++){
 					float[] v = getY1X1(m, side);
 					float sl = getSlope(v);
 					float xIntercept;
@@ -123,24 +125,19 @@ public class ReflectionCalculation {
 	}
 	
 	/**
-	 * Returns an array of the correct vertices for the given side
+	 * Returns an array of the correct vertices for the given side of any n-sided polygon model
 	 * @param mod
 	 * @param side
 	 * @return
 	 */
 	private static float[] getY1X1(Model mod, int side){
-		float[] vertices = null;
-		switch (side){
-		case 0: vertices = new float[]{mod.vertices[9], mod.vertices[10], mod.vertices[0], mod.vertices[1]}; 	//Left side
-		break;
-		case 1: vertices = new float[]{mod.vertices[0], mod.vertices[1], mod.vertices[3], mod.vertices[4]}; 	//Top side
-		break;
-		case 2: vertices = new float[]{mod.vertices[3], mod.vertices[4], mod.vertices[6], mod.vertices[7]}; 	//Right side 	//flipped so that the vector isn't facing upwards
-		break;
-		case 3: vertices = new float[]{mod.vertices[6], mod.vertices[7], mod.vertices[9], mod.vertices[10]}; 	//Bottom side
-		break;
+		if (side == 0){
+			return new float[]{mod.vertices[mod.vertices.length - 3], mod.vertices[mod.vertices.length - 2], mod.vertices[0], mod.vertices[1]}; 	//If the first side, use last vertex and first
+		}else if (side > 0){
+			return new float[]{mod.vertices[side * 3 - 3], mod.vertices[side * 3 - 2], mod.vertices[side * 3], mod.vertices[side * 3 + 1]}; 	//else use the set determined by side number
+		}else{
+			return null;
 		}
-		return vertices;
 	}
 	
 	/**

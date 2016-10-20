@@ -14,7 +14,7 @@ public class Button extends Model implements UIElement, IClickable{
 	 * @param r
 	 */
 	public Button(float[] coords, float[] tCoords, int[] indices, Runnable r){
-		super(coords, tCoords, indices, "bgtile.png");
+		super(coords, tCoords, indices, 4, "bgtile.png");
 		callback = r;
 		xCoords = new float[]{coords[0], coords[3], coords[6], coords[9]};
 		yCoords = new float[]{coords[1], coords[4], coords[7], coords[10]};

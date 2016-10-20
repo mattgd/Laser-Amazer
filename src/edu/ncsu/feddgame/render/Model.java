@@ -15,6 +15,7 @@ public class Model {
 	private int vertexId;
 	private int textureId;
 	private int indexId;
+	public int sideCount;
 	private boolean generated = false;
 	public float[] vertices;
 	private float[] tCoords;
@@ -30,10 +31,11 @@ public class Model {
 	 * @param indices
 	 * @param texture
 	 */
-	public Model(float[] vertices, float[] tCoords, int[] indices, String texture) {
+	public Model(float[] vertices, float[] tCoords, int[] indices, int sideNum, String texture) {
 		this.indices = indices;
 		this.tCoords = tCoords;
 		this.vertices = vertices;
+		this.sideCount = sideNum;
 		drawCount = indices.length;
 		this.texStr = texture;
 	}
@@ -44,10 +46,11 @@ public class Model {
 	 * @param tCoords
 	 * @param indices
 	 */
-	public Model(float[] vertices, float[] tCoords, int[] indices){
+	public Model(float[] vertices, float[] tCoords, int[] indices, int sideNum){
 		this.indices = indices;
 		this.tCoords = tCoords;
 		this.vertices = vertices;
+		this.sideCount = sideNum;
 		drawCount = indices.length;
 		this.texStr = defaultTexString;
 	}

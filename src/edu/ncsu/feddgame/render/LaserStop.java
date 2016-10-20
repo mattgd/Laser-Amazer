@@ -1,9 +1,11 @@
 package edu.ncsu.feddgame.render;
 
-public class LaserStop extends Model{
+import edu.ncsu.feddgame.gui.UIElement;
+
+public class LaserStop extends Model implements UIElement{
 
 	public LaserStop(float[] vertices, float[] tCoords, int[] indices) {
-		super(vertices, tCoords, indices, "finish.png");
+		super(vertices, tCoords, indices, 4, "finish.png");
 	}
 	
 	/**
