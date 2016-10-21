@@ -86,7 +86,7 @@ public class CreateModel {
 				0, 1, 2,
 				2, 3, 0
 				};
-		return (MovableModel)GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset));
+		return (MovableModel)GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset, 4));
 	}
 	public static MovableModel createMovableBox(float xOffset, float yOffset){
 		return createMovableBox(xOffset, yOffset, 1);
@@ -144,7 +144,7 @@ public class CreateModel {
 						0, 1, 2,
 						2, 3, 0
 				};
-				return (MovableModel)GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset)); 	//Add the model to the objectManager
+				return (MovableModel)GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset, 4)); 	//Add the model to the objectManager
 	}
 	
 	public static Wall createWall(float xOffset, float yOffset, float width, float height){
