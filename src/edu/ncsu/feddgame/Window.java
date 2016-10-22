@@ -34,6 +34,8 @@ import edu.ncsu.feddgame.gui.CreateUI;
 import edu.ncsu.feddgame.gui.IClickable;
 import edu.ncsu.feddgame.gui.UIElement;
 import edu.ncsu.feddgame.gui.UIUtils;
+import edu.ncsu.feddgame.render.FloatColor;
+import edu.ncsu.feddgame.render.Font;
 import edu.ncsu.feddgame.render.Model;
 import edu.ncsu.feddgame.render.MovableModel;
 
@@ -121,14 +123,18 @@ public class Window {
 		glfwSwapInterval(1); 	// Set Vsync (swap the double buffer from drawn to displayed every refresh cycle)
 		//input = new Input(window);
 		
+		
+		
+		
+	}
+	
+	public void addElements(){
 		elementList.add(CreateUI.createButton(-8f, 1f, 1, 1, () -> {
 			System.out.println("Click");
 		}));
-		elementList.add(CreateUI.createButton(4f, 8f, 1, 1, () -> {
+		elementList.add(CreateUI.createButton(0f, 2f, 2, 1, () -> {
 			System.out.println("Click2");
-		}));
-		
-		
+		}, new Font("Test 11", new FloatColor(255,25,0))));
 	}
 	
 	/**

@@ -28,6 +28,7 @@ public class GameInstance {
 	public static ObjectManager objectManager;
 	boolean canRender;
 	public ILevel level;
+	public static Shader shader;
 	
 	private static State state;
 	private volatile boolean gameState; // Boolean value to pause logic Thread when state != GAME
@@ -78,8 +79,9 @@ public class GameInstance {
 		
 		level.renderObjects(); 	//Add all objects to the scene from the level class
 		objectManager.updateModels();
+		window.addElements();
 		
-		Shader shader = new Shader("shader");
+		shader = new Shader("shader");
 		Texture tex = new Texture("bound.png");
 		
 		Matrix4f scale = new Matrix4f()
