@@ -147,11 +147,11 @@ public class GameInstance {
 				} else if (state.equals(State.MAIN_MENU)) {
 					gameState = false;
 					shader.unbind();
-					menuTitle.renderString(menuTitle.getRenderString(), 16, -0.58f, 0.3f, 0.3f, 0.225f);
-					menuItem.renderString("> Start Game", 16, -0.65f, 0f, 0.3f, 0.225f);
-					menuItem.renderString("> How to Play", 16, -0.65f, -0.1f, 0.3f, 0.225f);
-					menuItem.renderString("> Credits", 16, -0.65f, -0.2f, 0.3f, 0.225f);
-					startGame.renderString("(Press Space.)", 16, -0.72f, -0.45f, 0.3f, 0.225f);
+					menuTitle.renderString(menuTitle.getRenderString(), 16, -0.82f, 0.3f, 0.4f);
+					menuItem.renderString("> Start Game", 16, -0.64f, 0.1f, 0.3f);
+					menuItem.renderString("> How to Play", 16, -0.64f, 0.02f, 0.3f);
+					menuItem.renderString("> Credits", 16, -0.64f, -0.06f, 0.3f);
+					startGame.renderString("(Press Space.)", 16, -0.72f, -0.45f, 0.3f);
 				}
 				
 				window.swapBuffers(); // Swap the render buffers

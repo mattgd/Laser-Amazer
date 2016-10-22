@@ -76,7 +76,9 @@ public class Font {
     }
 	
 	public void renderString(String string, int gridSize, float x, float y,
-            float characterWidth, float characterHeight) {
+            float characterWidth) {
+		float characterHeight = 0.52f * characterWidth; // Automatically calculate the height from aspect ratio
+		
 		glPushAttrib(GL_TEXTURE_BIT | GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT);
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_TEXTURE_2D);
