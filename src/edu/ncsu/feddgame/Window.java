@@ -1,6 +1,12 @@
 package edu.ncsu.feddgame;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_CONTROL;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_SHIFT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
+import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
 import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
@@ -40,15 +46,14 @@ public class Window {
 	private String title;
 	private float mouseX, mouseY;
 	
-	private Input input;
+	//private GLFWKeyCallback keyCallback; // Prevents our window from crashing later on
+	
+	//private Input input;
 	
 	public ArrayList<UIElement> elementList = new ArrayList<UIElement>();
 	
 	public Window () {
-		this.width = 800;
-		this.height = 600;
-		this.title = "Game Window";
-		createWindow();
+		this(800, 800, "FEDD Game", false);
 	}
 	/**
 	 * 
@@ -81,10 +86,29 @@ public class Window {
 		
 		if (window == 0)
 			throw new IllegalStateException("Failed to create window.");
+		
 		GLFWVidMode vidMode = glfwGetVideoMode(monitor);
 		refreshRate = vidMode.refreshRate();
 		
-		if (!fullscreen) {
+		if (fullscreen) {
+			float aspect = 4.0f / 3.0f;
+
+			int screenWidth = vidMode.width();
+			int screenHeight = vidMode.height();
+
+			int viewWidth = screenWidth;
+			int viewHeight = (int) (screenWidth / aspect);
+
+			if (viewHeight > screenHeight) {
+				viewHeight = screenHeight;
+				viewWidth = (int) (screenHeight * aspect);
+			}
+
+			int vportX = (screenWidth - viewWidth) / 2;
+			int vportY = (screenHeight - viewHeight) / 2;
+			
+			glViewport(vportX, vportY, viewWidth, viewHeight);
+		} else {
 			glfwSetWindowPos(window, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2); // Show window in center of screen
 			glfwShowWindow(window);
 		}
@@ -95,7 +119,7 @@ public class Window {
 		setMousePosCallback();
 		glfwMakeContextCurrent(window);
 		glfwSwapInterval(1); 	// Set Vsync (swap the double buffer from drawn to displayed every refresh cycle)
-		input = new Input(window);
+		//input = new Input(window);
 		
 		elementList.add(CreateUI.createButton(-8f, 1f, 1, 1, () -> {
 			System.out.println("Click");
@@ -105,18 +129,6 @@ public class Window {
 		}));
 		
 		
-	}
-	
-	
-	
-	
-	
-	
-	/**
-	 * Sets the error callback for the game
-	 */
-	public static void setCallbacks() {
-		glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err));
 	}
 	
 	/**
@@ -134,6 +146,13 @@ public class Window {
 	}
 	
 	/**
+	 * Sets the error callback for the game
+	 */
+	public static void setCallbacks() {
+		glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err));
+	}
+
+	/**
 	 * Sets the key callback to be checked
 	 * when glfwPollEvents is called
 	 */
@@ -141,7 +160,7 @@ public class Window {
 		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> { 	//Key listener
 			if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) 	//on Escape, set the window to close
 				glfwSetWindowShouldClose(window, true);
-			if (key == GLFW_KEY_LEFT_CONTROL){
+			if (key == GLFW_KEY_LEFT_CONTROL) {
 				if (action == GLFW_PRESS){
 					ctrlHeld = true;
 					
@@ -155,6 +174,22 @@ public class Window {
 					shiftHeld = true;
 				}else if (action == GLFW_RELEASE){
 					shiftHeld = false;
+				}
+			}
+			if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE) {
+				State state = GameInstance.getState();
+				switch (state) {
+				case CREDITS:
+					GameInstance.setState(State.MAIN_MENU);
+					break;
+				case GAME:
+					GameInstance.setState(State.CREDITS);
+					break;
+				case MAIN_MENU:
+					GameInstance.setState(State.GAME);
+					break;
+				default:
+					GameInstance.setState(State.MAIN_MENU);
 				}
 			}
 				
@@ -248,7 +283,7 @@ public class Window {
 	 */
 	public void update() {
 		glfwPollEvents();
-		input.update();
+		//input.update();
 		
 	}
 	/**

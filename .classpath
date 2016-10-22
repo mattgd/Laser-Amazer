@@ -14,5 +14,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-opengl.jar" sourcepath="lib/lwjgl/lwjgl-opengl-sources.jar"/>
+	<classpathentry kind="lib" path="lib/TWL.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -119,7 +119,7 @@ public class Shader {
 		BufferedReader reader;
 		
 		try {
-			reader = new BufferedReader(new FileReader(new File("./shaders/" + path)));
+			reader = new BufferedReader(new FileReader(new File("./res/shaders/" + path)));
 			String line;
 			
 			while ((line = reader.readLine()) != null) {

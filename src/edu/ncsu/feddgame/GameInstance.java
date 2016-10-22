@@ -17,6 +17,8 @@ import org.lwjgl.opengl.GL;
 import edu.ncsu.feddgame.level.ILevel;
 import edu.ncsu.feddgame.level.TestLevel;
 import edu.ncsu.feddgame.render.Camera;
+import edu.ncsu.feddgame.render.FloatColor;
+import edu.ncsu.feddgame.render.Font;
 import edu.ncsu.feddgame.render.Shader;
 import edu.ncsu.feddgame.render.Texture;
 
@@ -27,6 +29,8 @@ public class GameInstance {
 	boolean canRender;
 	public ILevel level;
 	
+	private static State state;
+	private volatile boolean gameState; // Boolean value to pause logic Thread when state != GAME
 	
 	// Game begins here
 	public GameInstance() {
@@ -50,7 +54,9 @@ public class GameInstance {
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); 	// Set window resizable and visible (set at defaults right now)
 		glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
 		
-		window = new Window(800, 800, "FEDD Game", false);
+		window = new Window(800, 800, "Laser Amazer", false);
+		
+		state = State.MAIN_MENU; // Set the game state
 		
 		level = new TestLevel();
 	}
@@ -60,6 +66,12 @@ public class GameInstance {
 		
 		//TODO Should probably throw exception and exit here if window is null
 		
+		//TODO: Move this to it's own class, and have Fonts instantiated with location info
+		// Set up main menu text
+		Font menuTitle = new Font("Laser Amazer", new FloatColor(255, 25, 0));
+		Font menuItem = new Font("Start Game", new FloatColor(25, 255, 0));
+		Font startGame = new Font("Press Space to Start Game", new FloatColor(0, 25, 255));
+		
 		Camera camera = new Camera(window.getWidth(), window.getHeight());
 		
 		glEnable(GL_TEXTURE_2D);
@@ -68,14 +80,11 @@ public class GameInstance {
 		objectManager.updateModels();
 		
 		Shader shader = new Shader("shader");
-		TextureManager texManager = new TextureManager();
-		//System.out.println(texManager.getTextures());
 		Texture tex = new Texture("bound.png");
 		
 		Matrix4f scale = new Matrix4f()
 				.translate(new Vector3f(100, 0, 0))
 				.scale(40);
-		
 		Matrix4f target = new Matrix4f();
 		
 		camera.setPosition(new Vector3f(-100, 0, 0));
@@ -83,9 +92,10 @@ public class GameInstance {
 		double frameCap = 1.0 / 60; // 60 FPS
 		
 		double frameTime = 0;
+		@SuppressWarnings("unused")
 		int frames = 0;
 		
-		double time = Timer.getTime();
+		double time = getTime();
 		double unprocessed = 0;
 		
 		new Thread(() -> logicLoop()).start(); 	//Run the logic in a separate thread
@@ -93,25 +103,26 @@ public class GameInstance {
 		while (!window.shouldClose()) { 	// Poll window while window isn't about to close
 			canRender = false;
 			
+			// Control frames per second
 			{
-				double timeNow = Timer.getTime();
+				double timeNow = getTime();
 				double elapsed = timeNow - time;
 				unprocessed += elapsed;
 				frameTime += elapsed;
 				time = timeNow;
 			}
+			
 			// Run all non-render related tasks
 			while (unprocessed >= frameCap) {
 				unprocessed -= frameCap;
 				canRender = true;
 				target = scale;
 				
-				//TODO Put key/mouse events here
 				window.update();
 				
 				if (frameTime >= 1.0) {
 					frameTime = 0;
-					// Uncomment to display FPS counter
+					// Display FPS counter in console
 					//System.out.println("FPS: " + frames);
 					frames = 0;
 				}
@@ -119,19 +130,34 @@ public class GameInstance {
 			
 			// Render when scene changes
 			if (canRender) {
-				//glClearColor(1, 1, 1, 1);
 				glClear(GL_COLOR_BUFFER_BIT);
+				//glClearColor(1, 1, 1, 1);
 				
-				shader.bind();
-				shader.setUniform("sampler", 0);
-				shader.setUniform("projection", camera.getProjection().mul(target));
-				tex.bind(0);
-				objectManager.renderAll();
-				level.renderLoop();
-				window.renderElements();
+				if (state.equals(State.CREDITS)) {
+					gameState = false;
+				} else if (state.equals(State.GAME)) {
+					gameState = true;
+					shader.bind();
+					shader.setUniform("sampler", 0);
+					shader.setUniform("projection", camera.getProjection().mul(target));
+					tex.bind(0);
+					objectManager.renderAll();
+					level.renderLoop();
+					window.renderElements();
+				} else if (state.equals(State.MAIN_MENU)) {
+					gameState = false;
+					shader.unbind();
+					menuTitle.renderString(menuTitle.getRenderString(), 16, -0.58f, 0.3f, 0.3f, 0.225f);
+					menuItem.renderString("> Start Game", 16, -0.65f, 0f, 0.3f, 0.225f);
+					menuItem.renderString("> How to Play", 16, -0.65f, -0.1f, 0.3f, 0.225f);
+					menuItem.renderString("> Credits", 16, -0.65f, -0.2f, 0.3f, 0.225f);
+					startGame.renderString("(Press Space.)", 16, -0.72f, -0.45f, 0.3f, 0.225f);
+				}
+				
 				window.swapBuffers(); // Swap the render buffers
 				frames++;
 			}
+			
 		}
 	}
 	
@@ -139,12 +165,14 @@ public class GameInstance {
 		long timing = Math.round(1f / 60 * 1000f); 	//Get the number of milliseconds between frames based on 60 times a second
 		
 		while (!window.shouldClose()){
-			double timeNow = Timer.getTime(); 	//Get time at the start of the loop
+			if (!gameState) continue;
 			
-				level.logicLoop(); 	//Run the logic necessary for the level
+			double timeNow = getTime(); 	//Get time at the start of the loop
+			
+			level.logicLoop(); 	//Run the logic necessary for the level
 			
 			{
-				long sleeptime = timing - (long)(Timer.getTime() - timeNow); 	//Sync the game loop to update at the refresh rate
+				long sleeptime = timing - (long)(getTime() - timeNow); 	//Sync the game loop to update at the refresh rate
 				//System.out.println(sleeptime);
 				try {
 					Thread.sleep(sleeptime);
@@ -155,4 +183,20 @@ public class GameInstance {
 				
 		}
 	}
+	
+	/**
+	 * @return System time in seconds
+	 */
+	public double getTime() {
+		return (double) System.nanoTime() / (double) 1000000000L;
+	}
+	
+	public static void setState(State s) {
+		state = s;
+	}
+	
+	public static State getState() {
+		return state;
+	}
+	
 }
