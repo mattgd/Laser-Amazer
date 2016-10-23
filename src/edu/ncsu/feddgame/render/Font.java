@@ -38,6 +38,7 @@ import java.nio.ByteBuffer;
 import org.lwjgl.BufferUtils;
 
 import de.matthiasmann.twl.utils.PNGDecoder;
+import edu.ncsu.feddgame.GameInstance;
 
 public class Font {
 
@@ -77,6 +78,7 @@ public class Font {
 	
 	public void renderString(String string, int gridSize, float x, float y,
             float characterWidth) {
+		GameInstance.shader.unbind();
 		float characterHeight = 0.52f * characterWidth; // Automatically calculate the height from aspect ratio
 		
 		glPushAttrib(GL_TEXTURE_BIT | GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT);
@@ -126,6 +128,7 @@ public class Font {
 		glEnd();
 		glPopMatrix();
 		glPopAttrib();
+		GameInstance.shader.bind();
 	}
 	
 	public int getFontTexture() {

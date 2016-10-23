@@ -148,7 +148,7 @@ public class GameInstance {
 					window.renderElements();
 				} else if (state.equals(State.MAIN_MENU)) {
 					gameState = false;
-					shader.unbind();
+					//shader.unbind();
 					menuTitle.renderString(menuTitle.getRenderString(), 16, -0.82f, 0.3f, 0.4f);
 					menuItem.renderString("> Start Game", 16, -0.64f, 0.1f, 0.3f);
 					menuItem.renderString("> How to Play", 16, -0.64f, 0.02f, 0.3f);

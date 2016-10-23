@@ -21,6 +21,13 @@ public class UIUtils {
 	    return c;
 	}
 	
+	/**
+	 * Determines whether the test coordinates passed are within the coordinates of the polygon passed
+	 * @param coords
+	 * @param testX
+	 * @param testY
+	 * @return
+	 */
 	public static boolean checkIntersection(float[] coords, float testX, float testY){
 		float[] xCoords = new float[]{coords[0], coords[3], coords[6], coords[9]};
 		float[] yCoords = new float[]{coords[1], coords[4], coords[7], coords[10]};

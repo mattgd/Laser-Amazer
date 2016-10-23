@@ -127,7 +127,9 @@ public class Window {
 		
 		
 	}
-	
+	/**
+	 * Adds all specified elements to the Window's array and scene
+	 */
 	public void addElements(){
 		elementList.add(CreateUI.createButton(-8f, 1f, 1, 1, () -> {
 			System.out.println("Click");
@@ -135,6 +137,21 @@ public class Window {
 		elementList.add(CreateUI.createButton(0f, 2f, 2, 1, () -> {
 			System.out.println("Click2");
 		}, new Font("Test 11", new FloatColor(255,25,0))));
+		elementList.add(CreateUI.createDropdown(-3f, 0, 2f, 1, new Font("Dropdown", new FloatColor(25,  255,  0)), new Font[]{
+				new Font("Option 1", new FloatColor(25,  255,  0)),
+				new Font("Op 2", new FloatColor(25,  255,  0)),
+				new Font("Test 3", new FloatColor(25,  255,  0))
+		}, new Runnable[]{
+				() -> {
+					System.out.println("Ahoy 1");
+				},
+				() -> {
+					System.out.println("Test 2");
+				},
+				() -> {
+					System.out.println("3");
+				}
+		}));
 	}
 	
 	/**
