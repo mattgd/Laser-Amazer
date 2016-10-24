@@ -76,7 +76,7 @@ public class Button extends Model implements UIElement, IClickable{
 	public void render(){
 		super.render();
 		float w = width /(float)label.getRenderString().length() / 3.5f;
-		label.renderString(label.getRenderString(), 16, xCoords[0] / 10, (yOffset - w * 2f) / 20, w);
+		label.renderString(label.getRenderString(), xCoords[0] / 10, (yOffset - w * 2f) / 20, w);
 	}
 	
 	@Override

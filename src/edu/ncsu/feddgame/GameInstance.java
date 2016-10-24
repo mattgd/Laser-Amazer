@@ -10,6 +10,8 @@ import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glEnable;
 
+import java.awt.Color;
+
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
@@ -69,9 +71,9 @@ public class GameInstance {
 		
 		//TODO: Move this to it's own class, and have Fonts instantiated with location info
 		// Set up main menu text
-		Font menuTitle = new Font("Laser Amazer", new FloatColor(255, 25, 0));
-		Font menuItem = new Font("Start Game", new FloatColor(25, 255, 0));
-		Font startGame = new Font("Press Space to Start Game", new FloatColor(0, 25, 255));
+		Font menuTitle = new Font("Laser Amazer", new FloatColor(Color.RED));
+		Font menuItem = new Font("Start Game", new FloatColor(Color.GREEN));
+		Font startGame = new Font("Press Space to Start Game", new FloatColor(Color.BLUE));
 		
 		Camera camera = new Camera(window.getWidth(), window.getHeight());
 		
@@ -133,10 +135,11 @@ public class GameInstance {
 			// Render when scene changes
 			if (canRender) {
 				glClear(GL_COLOR_BUFFER_BIT);
-				//glClearColor(1, 1, 1, 1);
 				
 				if (state.equals(State.CREDITS)) {
 					gameState = false;
+					menuItem.renderString("Made by", -0.34f, 0.2f, 0.3f);
+					menuItem.renderString("thejereman13 and mattgd", -0.9f, 0.1f, 0.23f);
 				} else if (state.equals(State.GAME)) {
 					gameState = true;
 					shader.bind();
@@ -149,13 +152,12 @@ public class GameInstance {
 				} else if (state.equals(State.MAIN_MENU)) {
 					gameState = false;
 					//shader.unbind();
-					menuTitle.renderString(menuTitle.getRenderString(), 16, -0.82f, 0.3f, 0.4f);
-					menuItem.renderString("> Start Game", 16, -0.64f, 0.1f, 0.3f);
-					menuItem.renderString("> How to Play", 16, -0.64f, 0.02f, 0.3f);
-					menuItem.renderString("> Credits", 16, -0.64f, -0.06f, 0.3f);
-					startGame.renderString("(Press Space.)", 16, -0.72f, -0.45f, 0.3f);
+					menuTitle.renderString(menuTitle.getRenderString(), -0.82f, 0.3f, 0.4f);
+					menuItem.renderString("> Start Game", -0.64f, 0.1f, 0.3f);
+					menuItem.renderString("> How to Play", -0.64f, 0.02f, 0.3f);
+					menuItem.renderString("> Credits", -0.64f, -0.06f, 0.3f);
+					startGame.renderString("(Press Space.)", -0.72f, -0.45f, 0.3f);
 				}
-				
 				
 				window.swapBuffers(); // Swap the render buffers
 				frames++;

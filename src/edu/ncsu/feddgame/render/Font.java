@@ -46,6 +46,7 @@ public class Font {
 	private FloatColor color;
 	private final String renderStr;
 	
+	private final static int GRID_SIZE = 16;
 	
 	public Font(String str, FloatColor color) {
 		this.renderStr = str;
@@ -76,8 +77,7 @@ public class Font {
         glBindTexture(GL_TEXTURE_2D, 0); // Unbind the texture
     }
 	
-	public void renderString(String string, int gridSize, float x, float y,
-            float characterWidth) {
+	public void renderString(String string, float x, float y, float characterWidth) {
 		GameInstance.shader.unbind();
 		float characterHeight = 0.52f * characterWidth; // Automatically calculate the height from aspect ratio
 		
@@ -107,14 +107,14 @@ public class Font {
 			int asciiCode = (int) string.charAt(i);
 			
 			// There are 16 cells in a texture, and a texture coordinate ranges from 0.0 to 1.0.
-			final float cellSize = 1.0f / gridSize;
+			final float cellSize = 1.0f / GRID_SIZE;
 			
 			// The cell's x-coordinate is the greatest integer smaller than remainder of the ASCII-code divided by the
 			// amount of cells on the x-axis, times the cell size.
-			float cellX = ((int) asciiCode % gridSize) * cellSize;
+			float cellX = ((int) asciiCode % GRID_SIZE) * cellSize;
 			// The cell's y-coordinate is the greatest integer smaller than the ASCII-code divided by the amount of
 			// cells on the y-axis.
-			float cellY = ((int) asciiCode / gridSize) * cellSize;
+			float cellY = ((int) asciiCode / GRID_SIZE) * cellSize;
 			
 			glTexCoord2f(cellX, cellY + cellSize);
 			glVertex2f(i * characterWidth / 3, y);
@@ -137,6 +137,10 @@ public class Font {
 	
 	public String getRenderString() {
 		return renderStr;
+	}
+	
+	public void setColor(FloatColor color) {
+		this.color = color;
 	}
 	
 }
