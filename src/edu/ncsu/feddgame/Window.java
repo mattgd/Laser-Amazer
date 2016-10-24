@@ -43,7 +43,8 @@ public class Window {
 
 	public long window;
 	public int refreshRate;
-	private int width, height;
+	public int width;
+	public int height;
 	public boolean fullscreen, mouseHeld = false, ctrlHeld = false, shiftHeld = false;
 	private String title;
 	private float mouseX, mouseY;

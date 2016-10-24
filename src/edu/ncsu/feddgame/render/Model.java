@@ -9,6 +9,8 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 
+import edu.ncsu.feddgame.GameInstance;
+
 public class Model {
 	
 	private int drawCount;
@@ -65,22 +67,23 @@ public class Model {
 	 * Render all of the vertices on screen.
 	 */
 	public void render() {
-		//System.out.println("red");
 		
 		if (!generated) {
 			tex = new Texture(texStr);
-			glDeleteBuffers(vertexId);
-			glDeleteBuffers(textureId);
-			glDeleteBuffers(indexId);
 			vertexId = glGenBuffers();
+			textureId = glGenBuffers();
+			indexId = glGenBuffers();
+			generated = true;
+		}
+			
 			glBindBuffer(GL_ARRAY_BUFFER, vertexId);
 			glBufferData(GL_ARRAY_BUFFER, createBuffer(vertices), GL_STATIC_DRAW);
 			
-			textureId = glGenBuffers();
+			
 			glBindBuffer(GL_ARRAY_BUFFER, textureId);
 			glBufferData(GL_ARRAY_BUFFER, createBuffer(tCoords), GL_STATIC_DRAW);
 			
-			indexId = glGenBuffers();
+			
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
 			
 			IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
@@ -91,8 +94,6 @@ public class Model {
 
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
-			generated = false;
-		}
 		tex.bind(0);
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
@@ -112,6 +113,7 @@ public class Model {
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		tex.unbind();
+		
 	}
 	
 	/**

@@ -156,6 +156,7 @@ public class GameInstance {
 					startGame.renderString("(Press Space.)", 16, -0.72f, -0.45f, 0.3f);
 				}
 				
+				
 				window.swapBuffers(); // Swap the render buffers
 				frames++;
 			}
@@ -163,7 +164,8 @@ public class GameInstance {
 		}
 	}
 	
-	private void logicLoop() {	
+	private void logicLoop() {
+		Thread.currentThread().setName("Logic");
 		long timing = Math.round(1f / 60 * 1000f); 	//Get the number of milliseconds between frames based on 60 times a second
 		
 		while (!window.shouldClose()){
