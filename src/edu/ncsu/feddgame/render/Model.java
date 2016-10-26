@@ -24,6 +24,7 @@ public class Model {
 	private int[] indices;
 	private Texture tex;
 	private String texStr;
+	private float xOffset, yOffset;
 	
 	private String defaultTexString = "box.png";
 	/**
@@ -33,6 +34,16 @@ public class Model {
 	 * @param indices
 	 * @param texture
 	 */
+	public Model(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset, int sideNum, String texture) {
+		this.indices = indices;
+		this.tCoords = tCoords;
+		this.vertices = vertices;
+		this.sideCount = sideNum;
+		drawCount = indices.length;
+		this.texStr = texture;
+		this.xOffset = xOffset;
+		this.yOffset = yOffset;
+	}
 	public Model(float[] vertices, float[] tCoords, int[] indices, int sideNum, String texture) {
 		this.indices = indices;
 		this.tCoords = tCoords;
@@ -48,6 +59,16 @@ public class Model {
 	 * @param tCoords
 	 * @param indices
 	 */
+	public Model(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset, int sideNum){
+		this.indices = indices;
+		this.tCoords = tCoords;
+		this.vertices = vertices;
+		this.sideCount = sideNum;
+		drawCount = indices.length;
+		this.texStr = defaultTexString;
+		this.xOffset = xOffset;
+		this.yOffset = yOffset;
+	}
 	public Model(float[] vertices, float[] tCoords, int[] indices, int sideNum){
 		this.indices = indices;
 		this.tCoords = tCoords;
@@ -152,6 +173,15 @@ public class Model {
 	
 	public void setVertices(float[] vertices){
 		this.vertices = vertices;
+	}
+	
+	public void rotate(float angle){
+			for (int i = 0; i < sideCount; i++){
+				float newX = (float) (xOffset + (this.vertices[i * 3]-xOffset)*Math.cos(angle) - (this.vertices[i * 3 + 1]-yOffset)*Math.sin(angle));
+				float newY = (float) (yOffset + (this.vertices[i * 3]-xOffset)*Math.sin(angle) + (this.vertices[i * 3 + 1]-yOffset)*Math.cos(angle));
+				vertices[i * 3] = newX;
+				vertices[i * 3 + 1] = newY;
+			}
 	}
 	
 }
