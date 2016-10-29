@@ -96,9 +96,14 @@ public class Model {
 			indexId = glGenBuffers();
 			generated = true;
 		}
-			
+		float[] newv = vertices.clone();
+		float ratio = GameInstance.window.ratio;
+		//System.out.println(ratio);
+		for (int i = 0; i < this.sideCount; i++){
+			newv[i * 3] /= ratio;
+		}
 			glBindBuffer(GL_ARRAY_BUFFER, vertexId);
-			glBufferData(GL_ARRAY_BUFFER, createBuffer(vertices), GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, createBuffer(newv), GL_STATIC_DRAW);
 			
 			
 			glBindBuffer(GL_ARRAY_BUFFER, textureId);

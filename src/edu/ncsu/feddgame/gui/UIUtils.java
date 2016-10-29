@@ -1,5 +1,7 @@
 package edu.ncsu.feddgame.gui;
 
+import edu.ncsu.feddgame.GameInstance;
+
 public class UIUtils {
 	/**
 	 * Shamelessly stolen code from Randolph Franklin
@@ -8,9 +10,13 @@ public class UIUtils {
 	 * @param nvert
 	 * @return
 	 */
-	public static boolean pnpoly(float[] vertx, float[] verty, float testx, float testy)
-	{
-	    int nvert = vertx.length;
+	public static boolean pnpoly(float[] vertX, float[] verty, float testx, float testy){
+		float[] vertx = vertX.clone();
+		float ratio = GameInstance.window.ratio;
+		for (int i = 0; i < vertx.length; i++){ 	//Convert passed coordinates into scaled worldspace coords with the window ratio
+			vertx[i] /= ratio;
+		}
+		int nvert = vertx.length;
 	    int i, j;
 	    boolean c = false;
 	    for (i = 0, j = nvert-1; i < nvert; j = i++) {

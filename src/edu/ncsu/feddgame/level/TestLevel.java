@@ -1,6 +1,5 @@
 package edu.ncsu.feddgame.level;
 
-import edu.ncsu.feddgame.GameInstance;
 import edu.ncsu.feddgame.render.CreateModel;
 import edu.ncsu.feddgame.render.LaserStart;
 import edu.ncsu.feddgame.render.LaserStop;
@@ -27,10 +26,10 @@ public class TestLevel implements ILevel{
 		tri1 = CreateModel.createTriangle(-4, -4, -1, -2);
 		box1.rotate((float)Math.toRadians(45));
 		{ 	//Walls
-			top = CreateModel.createWall(0f, 10f, 25f, .5f);
-			bottom = CreateModel.createWall(0f, -10f, 25f, .5f);
-			left = CreateModel.createWall(-10f, 0f, .5f, 25f);
-			right = CreateModel.createWall(10f, 0f, .5f, 25f);
+			top = CreateModel.createWall(0f, 10f, 20f, .5f);
+			bottom = CreateModel.createWall(0f, -10f, 20f, .5f);
+			left = CreateModel.createWall(-10f, 0f, .5f, 20f);
+			right = CreateModel.createWall(10f, 0f, .5f, 20f);
 		}
 		tri1.rotate(.3f);
 	}

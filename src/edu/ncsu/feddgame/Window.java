@@ -42,6 +42,7 @@ import edu.ncsu.feddgame.render.MovableModel;
 public class Window {
 
 	public long window;
+	public float ratio;
 	public int refreshRate;
 	public int width;
 	public int height;
@@ -68,6 +69,7 @@ public class Window {
 	public Window (int width, int height, String title, boolean fullscreen) {
 		this.width = width;
 		this.height = height;
+		this.ratio = (float)width / (float)height;
 		this.title = title;
 		this.fullscreen = fullscreen;
 		createWindow();
@@ -110,7 +112,7 @@ public class Window {
 			int vportX = (screenWidth - viewWidth) / 2;
 			int vportY = (screenHeight - viewHeight) / 2;
 			
-			glViewport(vportX, vportY, viewWidth, viewHeight);
+			glViewport(0, 0, viewWidth, viewHeight);
 		} else {
 			glfwSetWindowPos(window, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2); // Show window in center of screen
 			glfwShowWindow(window);
@@ -135,7 +137,7 @@ public class Window {
 		elementList.add(CreateUI.createButton(-8f, 1f, 1, 1, () -> {
 			System.out.println("Click");
 		}));
-		elementList.add(CreateUI.createButton(0f, 2f, 2, 1, () -> {
+		elementList.add(CreateUI.createButton(10f, 2f, 2, 1, () -> {
 			System.out.println("Click2");
 		}, new Font("Test 11", new FloatColor(255,25,0))));
 		elementList.add(CreateUI.createDropdown(-3f, 0, 2f, 1, new Font("Dropdown", new FloatColor(25,  255,  0)), new Font[]{
@@ -228,6 +230,7 @@ public class Window {
 			glViewport(0,0,width, height); 	//Reset the viewport to the correct size
 			this.width = width;
 			this.height = height;
+			this.ratio = (float)width / (float)height;
 		});
 	}
 	
