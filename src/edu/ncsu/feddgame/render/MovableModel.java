@@ -1,5 +1,6 @@
 package edu.ncsu.feddgame.render;
 
+import edu.ncsu.feddgame.GameInstance;
 import edu.ncsu.feddgame.gui.IClickable;
 import edu.ncsu.feddgame.gui.UIUtils;
 
@@ -68,7 +69,7 @@ public class MovableModel extends Model implements IClickable{
 	 * @param yPos
 	 */
 	public void followCursor(float xPos, float yPos){
-		adjustOffset(xPos, yPos);
+		adjustOffset(xPos * GameInstance.window.ratio, yPos);
 	}
 
 }

@@ -8,6 +8,7 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL15;
 
 import edu.ncsu.feddgame.GameInstance;
 
@@ -102,24 +103,25 @@ public class Model {
 		for (int i = 0; i < this.sideCount; i++){
 			newv[i * 3] /= ratio;
 		}
-			glBindBuffer(GL_ARRAY_BUFFER, vertexId);
-			glBufferData(GL_ARRAY_BUFFER, createBuffer(newv), GL_STATIC_DRAW);
-			
-			
-			glBindBuffer(GL_ARRAY_BUFFER, textureId);
-			glBufferData(GL_ARRAY_BUFFER, createBuffer(tCoords), GL_STATIC_DRAW);
-			
-			
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
-			
-			IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
-			buffer.put(indices);
-			buffer.flip();
-			
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, vertexId);
+		glBufferData(GL_ARRAY_BUFFER, createBuffer(newv), GL_STATIC_DRAW);
+		
+		
+		glBindBuffer(GL_ARRAY_BUFFER, textureId);
+		glBufferData(GL_ARRAY_BUFFER, createBuffer(tCoords), GL_STATIC_DRAW);
+		
+		
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
+		
+		IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
+		buffer.put(indices);
+		buffer.flip();
+		
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
 
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		tex.bind(0);
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);

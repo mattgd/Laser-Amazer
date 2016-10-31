@@ -140,5 +140,10 @@ public class ObjectManager {
 		// ReflectionCalculation.reflect((LaserModel)getModels().get(index),
 		// getModels());
 	}
+	
+	public void clearAll(){
+		models.clear();
+		lasers.clear();
+	}
 
 }

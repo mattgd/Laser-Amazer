@@ -56,7 +56,7 @@ public class LaserModel extends Model{
 	 * @return
 	 */
 	public static float[] getVertices(float begX, float begY, float angle, float length, float width){
-		
+		length += .05f;
 		float endX = length * (float)Math.cos(angle) + begX;
 		float endY = length * (float)Math.sin(angle) + begY;
 		float dy = endY - begY;
@@ -65,10 +65,10 @@ public class LaserModel extends Model{
 		float yS = (width * dx / length) / 2;
 		
 		float[] vertices = new float[] {
-				begX - xS, begY + yS, 0,
-				begX + xS, begY - yS, 0,
-				endX + xS, endY - yS, 0,
-				endX - xS, endY + yS, 0,
+				begX - xS, begY + yS, 0f,
+				begX + xS, begY - yS, 0f,
+				endX + xS, endY - yS, 0f,
+				endX - xS, endY + yS, 0f,
 			};
 		
 		return vertices;

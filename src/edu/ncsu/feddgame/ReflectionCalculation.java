@@ -14,15 +14,7 @@ import edu.ncsu.feddgame.render.Wall;
 
 public class ReflectionCalculation {
 
-	static List<Object[]> intersects = new ArrayList<Object[]>(); // list of
-																	// arrays :
-																	// [Model,
-																	// xIntercept,
-																	// yIntercept,
-																	// slope of
-																	// intersected
-																	// line
-																	// segment]
+	static List<Object[]> intersects = new ArrayList<Object[]>(); // list of arrays : [Model, xIntercept, yIntercept, slope of intersected line segment]
 	static float coords[];
 
 	/**
@@ -220,8 +212,9 @@ public class ReflectionCalculation {
 
 	private static void reflectionCallback(Model m, LaserModel l) {
 		if (m instanceof Wall) {
-			// System.out.println("wall, dude");
+			//System.out.println("wall, dude");
 		} else if (m instanceof LaserStop) {
+			//System.out.println("Stahp");
 			((LaserStop) m).laserIntersection();
 		}
 	}

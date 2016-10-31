@@ -157,6 +157,10 @@ public class Window {
 		}));
 	}
 	
+	public void clearElements(){
+		elementList.clear();
+	}
+	
 	/**
 	 * @return close flag of the window
 	 */
