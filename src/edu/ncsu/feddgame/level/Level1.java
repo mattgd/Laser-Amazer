@@ -17,8 +17,10 @@ public class Level1 implements ILevel{
 			CreateModel.createWall(0, 1f, .25f, 18f);
 		}
 		laswrap = CreateModel.createLaserStart(-10f, -1f, 2, Math.toRadians(-45));
+		//CreateModel.createLaserStop(10, 7);
 		m = CreateModel.createMovableBox(4, 0);
 		CreateModel.createMovableBox(2, 4);
+		m.rotate(-.5f);
 		
 	}
 
