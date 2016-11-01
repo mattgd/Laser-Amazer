@@ -8,19 +8,13 @@ public class MovableModel extends Model implements IClickable{
 	public float[] xCoords; 	//Top Left, Top Right, Bottom Right, Bottom Left
 	public float[] yCoords;
 	
-	private float[] vertices;
-	private float[] coords;
 	private Runnable callback = null;
 	public MovableModel(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset, int sides) {
 		super(vertices, tCoords, indices, sides, "bound.png");
-		coords = vertices;
-		this.vertices = coords;
 		adjustOffset(xOffset, yOffset);
 	}
 	public MovableModel(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset, int sides, String tex){
 		super(vertices, tCoords, indices, sides, tex);
-		coords = vertices;
-		this.vertices = coords;
 		adjustOffset(xOffset, yOffset);
 	}
 
@@ -31,17 +25,19 @@ public class MovableModel extends Model implements IClickable{
 	}
 	
 	private void adjustOffset(float xOffset,float yOffset){
-		coords = new float[]{
-			vertices[0] + xOffset, vertices[1] + yOffset, 0, // TOP LEFT - 0
-			vertices[3] + xOffset, vertices[4] + yOffset, 0, // TOP RIGHT - 1
-			vertices[6] + xOffset, vertices[7] + yOffset, 0, // BOTTOM RIGHT - 2
-			vertices[9] + xOffset, vertices[10] + yOffset, 0, // BOTTOM LEFT - 3
+		float[] coords = new float[]{
+			super.vertices[0] + xOffset - super.xOffset, super.vertices[1] + yOffset - super.yOffset, 0, // TOP LEFT - 0
+			super.vertices[3] + xOffset - super.xOffset, super.vertices[4] + yOffset - super.yOffset, 0, // TOP RIGHT - 1
+			super.vertices[6] + xOffset - super.xOffset, super.vertices[7] + yOffset - super.yOffset, 0, // BOTTOM RIGHT - 2
+			super.vertices[9] + xOffset - super.xOffset, super.vertices[10] + yOffset - super.yOffset, 0, // BOTTOM LEFT - 3
 		};
-		splitCoords();
+		splitCoords(coords);
 		super.setVertices(coords);
+		super.xOffset = xOffset;
+		super.yOffset = yOffset;
 		//System.out.println(xOffset + ", "  + yOffset);
 	}
-	private void splitCoords(){
+	private void splitCoords(float[] coords){
 		this.xCoords = new float[]{coords[0], coords[3], coords[6], coords[9]};
 		this.yCoords = new float[]{coords[1], coords[4], coords[7], coords[10]};
 	}

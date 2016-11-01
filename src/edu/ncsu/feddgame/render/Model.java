@@ -25,7 +25,7 @@ public class Model {
 	private int[] indices;
 	private Texture tex;
 	private String texStr;
-	private float xOffset, yOffset;
+	protected float xOffset, yOffset;
 	
 	private String defaultTexString = "box.png";
 	/**

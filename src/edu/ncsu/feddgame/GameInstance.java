@@ -37,7 +37,7 @@ public class GameInstance {
 		new TestLevel(),
 		new Level1()
 	};
-	private static int levNum = 0;
+	private static int levNum = 1; 	//Start with 0
 	private static boolean hasLevel = false;
 	public static Shader shader;
 	

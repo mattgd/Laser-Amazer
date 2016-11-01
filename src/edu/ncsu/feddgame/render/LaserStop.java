@@ -4,8 +4,8 @@ import edu.ncsu.feddgame.GameInstance;
 
 public class LaserStop extends Model{
 
-	public LaserStop(float[] vertices, float[] tCoords, int[] indices) {
-		super(vertices, tCoords, indices, 4, "finish.png");
+	public LaserStop(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset) {
+		super(vertices, tCoords, indices, xOffset, yOffset, 4, "finish.png");
 	}
 	
 	/**

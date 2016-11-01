@@ -20,7 +20,7 @@ public class TestLevel implements ILevel{
 		laswrap = CreateModel.createLaserStart(7.5f, 9, 3, Math.toRadians(251));
 		lasstop = CreateModel.createLaserStop(3, -9f);
 		box1 = CreateModel.createBox(0,0);
-		box2 = CreateModel.createMovableBox(3.05f, -5.925f);
+		box2 = CreateModel.createMovableBox(4.05f, -5.925f);
 		CreateModel.createMovableTrapezoid(-.9f, 5.8f, 1.5f, 1, 1);
 		CreateModel.createBox(3.4f, -8);
 		tri1 = CreateModel.createTriangle(-4, -4, -1, -2);

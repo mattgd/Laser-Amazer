@@ -251,12 +251,14 @@ public class CreateModel {
 			case 2:
 				x = xOffset + width/2f;
 				y = yOffset;
+				break;
 			case 3:
 				x = xOffset;
 				y = yOffset - height/2f;
 				break;
 			}
-		LaserStart l = new LaserStart(vertices, texture, indices, newLaser(x, y, angle, 1));
+		LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, newLaser(x, y, angle, 1));
+		l.rotate((float)Math.toRadians(-90 - 90 * side));
 		GameInstance.objectManager.addModel(l);
 		return l;
 	}
@@ -282,7 +284,7 @@ public class CreateModel {
 				0, 1, 2,
 				2, 3, 0
 		};
-		LaserStop l = new LaserStop(vertices, texture, indices);
+		LaserStop l = new LaserStop(vertices, texture, indices, xOffset, yOffset);
 		GameInstance.objectManager.addModel(l);
 		return l;
 				
