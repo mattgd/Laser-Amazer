@@ -6,13 +6,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwInit;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
-import static org.lwjgl.opengl.GL11.GL_FALSE;
-import static org.lwjgl.opengl.GL11.GL_LESS;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glDepthFunc;
-import static org.lwjgl.opengl.GL11.glDepthMask;
 import static org.lwjgl.opengl.GL11.glEnable;
 
 import java.awt.Color;
@@ -21,7 +16,10 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
 
-import edu.ncsu.feddgame.level.*;
+import edu.ncsu.feddgame.level.ILevel;
+import edu.ncsu.feddgame.level.Level1;
+import edu.ncsu.feddgame.level.Level2;
+import edu.ncsu.feddgame.level.TestLevel;
 import edu.ncsu.feddgame.render.Camera;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.Font;
@@ -33,11 +31,14 @@ public class GameInstance {
 	public static Window window;
 	public static ObjectManager objectManager;
 	boolean canRender;
-	public ILevel[] levels = new ILevel[]{
+	
+	public ILevel[] levels = new ILevel[] {
 		new TestLevel(),
-		new Level1()
+		new Level1(),
+		new Level2()
 	};
-	private static int levNum = 1; 	//Start with 0
+	
+	private static int levNum = 2; 	// Start with 0
 	private static boolean hasLevel = false;
 	public static Shader shader;
 	
@@ -153,7 +154,14 @@ public class GameInstance {
 					shader.setUniform("projection", camera.getProjection().mul(target));
 					tex.bind(0);
 					objectManager.renderAll();
+					
+					// If all levels complete, reset to level 0
+					if (levNum > levels.length) {
+						levNum = 0;
+					}
+					
 					levels[levNum].renderLoop();
+					
 					window.renderElements();
 				} else if (state.equals(State.MAIN_MENU)) {
 					gameState = false;
@@ -180,6 +188,11 @@ public class GameInstance {
 			if (!gameState) continue;
 			
 			double timeNow = getTime(); 	//Get time at the start of the loop
+			
+			// If all levels complete, reset to level 0
+			if (levNum > levels.length) {
+				levNum = 0;
+			}
 			
 			levels[levNum].logicLoop(); 	//Run the logic necessary for the level
 			
