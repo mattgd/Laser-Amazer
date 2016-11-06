@@ -15,5 +15,7 @@ public interface ILevel {
 	 * Extra rendering that needs to be done, primarily for laser rendering
 	 */
 	public void renderLoop();
+	
+	public String getName();
 
 }

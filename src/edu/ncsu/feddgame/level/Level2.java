@@ -55,5 +55,10 @@ public class Level2 implements ILevel {
 	public void renderLoop() {
 		laswrap.render();
 	}
+	
+	@Override
+	public String getName() {
+		return "Level 2";
+	}
 
 }

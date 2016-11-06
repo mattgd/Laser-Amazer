@@ -35,7 +35,15 @@ public class CreateUI {
 		};
 		return new Button(vertices, texture, indices, r, f, xOffset, yOffset, height, width);
 	}
-	
+	/**
+	 * 
+	 * @param xOffset
+	 * @param yOffset
+	 * @param width
+	 * @param height
+	 * @param r
+	 * @return
+	 */
 	public static Button createButton(float xOffset, float yOffset, float width, float height, Runnable r){
 		// Vertices for a trapezoid
 		float[] vertices = new float[] {
@@ -72,11 +80,19 @@ public class CreateUI {
 	 * @return
 	 */
 	public static Dropdown createDropdown(float xOffset, float yOffset, float width, float height, Font f, Font[] fs, Runnable[] rs){
+		Dropdown d = createDropdown(xOffset, yOffset, width, height, f);
+		for (int i = 0; i < rs.length; i++){
+			d.addButton(createButton(xOffset, yOffset, width, height, rs[i], fs[i]));
+		}
+		return d;
+	}
+	
+	public static Dropdown createDropdown(float xOffset, float yOffset, float width, float height, Font f){
 		float[] vertices = new float[] {
-			-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
-			width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
-			width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
-			-width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
+				-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
+				width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
+				width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
+				-width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
 		};
 		
 		float[] texture = new float[] {
@@ -91,9 +107,6 @@ public class CreateUI {
 				2, 3, 0
 		};
 		Dropdown d = new Dropdown(vertices, texture, indices, f, xOffset, yOffset, height, width);
-		for (int i = 0; i < rs.length; i++){
-			d.addButton(createButton(xOffset, yOffset, width, height, rs[i], fs[i]));
-		}
 		return d;
 	}
 

@@ -30,10 +30,13 @@ import java.util.ArrayList;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 
+import edu.ncsu.feddgame.gui.Button;
 import edu.ncsu.feddgame.gui.CreateUI;
 import edu.ncsu.feddgame.gui.IClickable;
 import edu.ncsu.feddgame.gui.UIElement;
 import edu.ncsu.feddgame.gui.UIUtils;
+import edu.ncsu.feddgame.level.ILevel;
+import edu.ncsu.feddgame.render.Dropdown;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.Font;
 import edu.ncsu.feddgame.render.Model;
@@ -140,7 +143,7 @@ public class Window {
 		elementList.add(CreateUI.createButton(10f, 2f, 2, 1, () -> {
 			System.out.println("Click2");
 		}, new Font("Test 11", new FloatColor(255,25,0))));
-		elementList.add(CreateUI.createDropdown(-3f, 0, 2f, 1, new Font("Dropdown", new FloatColor(25,  255,  0)), new Font[]{
+		Dropdown dp = CreateUI.createDropdown(-3f, 0, 2f, 1f, new Font("Dropdown", new FloatColor(25,  255,  0)), new Font[]{
 				new Font("Option 1", new FloatColor(25,  255,  0)),
 				new Font("Op 2", new FloatColor(25,  255,  0)),
 				new Font("Test 3", new FloatColor(25,  255,  0))
@@ -154,7 +157,15 @@ public class Window {
 				() -> {
 					System.out.println("3");
 				}
-		}));
+		});
+		elementList.add(dp);
+		Dropdown du = CreateUI.createDropdown(-12f, 8f, 2f, 1f, new Font("Select Level", new FloatColor(25,  255,  0)));
+		for (ILevel l : GameInstance.levels){
+			du.addButton(CreateUI.createButton(-12f, 8f, 2f, 1, () -> {
+				GameInstance.setLevel(GameInstance.levels.indexOf(l));
+			}, new Font(l.getName(), new FloatColor(25, 255, 0))));
+		}
+		elementList.add(du);
 	}
 	
 	public void clearElements(){

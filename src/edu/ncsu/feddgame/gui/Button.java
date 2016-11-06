@@ -30,7 +30,18 @@ public class Button extends Model implements UIElement, IClickable{
 		xCoords = new float[]{coords[0], coords[3], coords[6], coords[9]};
 		yCoords = new float[]{coords[1], coords[4], coords[7], coords[10]};
 	}
-	
+	/**
+	 * 
+	 * @param coords
+	 * @param tCoords
+	 * @param indices
+	 * @param r
+	 * @param f
+	 * @param xOffset
+	 * @param yOffset
+	 * @param height
+	 * @param width
+	 */
 	public Button(float[] coords, float[] tCoords, int[] indices, Runnable r, Font f, float xOffset, float yOffset, float height, float width){
 		super(coords, tCoords, indices, 4, "bgtile.png");
 		callbacks.add(r);

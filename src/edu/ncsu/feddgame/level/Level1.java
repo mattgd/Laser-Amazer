@@ -36,4 +36,9 @@ public class Level1 implements ILevel {
 		laswrap.render();
 	}
 
+	@Override
+	public String getName() {
+		return "Level 1";
+	}
+
 }

@@ -4,6 +4,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
 import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
 import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwInit;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowSize;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
@@ -11,15 +12,13 @@ import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glEnable;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
 
-import edu.ncsu.feddgame.level.ILevel;
-import edu.ncsu.feddgame.level.Level1;
-import edu.ncsu.feddgame.level.Level2;
-import edu.ncsu.feddgame.level.TestLevel;
+import edu.ncsu.feddgame.level.*;
 import edu.ncsu.feddgame.render.Camera;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.Font;
@@ -32,11 +31,13 @@ public class GameInstance {
 	public static ObjectManager objectManager;
 	boolean canRender;
 	
-	public ILevel[] levels = new ILevel[] {
-		new TestLevel(),
-		new Level1(),
-		new Level2()
-	};
+	public static ArrayList<ILevel> levels = new ArrayList<ILevel>() {
+		private static final long serialVersionUID = 525308338634565467L;
+	{
+		add(new TestLevel());
+		add(new Level1());
+		add(new Level2());
+	}};
 	
 	private static int levNum = 2; 	// Start with 0
 	private static boolean hasLevel = false;
@@ -70,12 +71,10 @@ public class GameInstance {
 		window = new Window(800, 800, "Laser Amazer", false);
 		
 		state = State.MAIN_MENU; // Set the game state
-		
 	}
 	
 	private void renderLoop() { 	// Render Loop
 		GL.createCapabilities();
-		
 		//TODO Should probably throw exception and exit here if window is null
 		
 		//TODO: Move this to it's own class, and have Fonts instantiated with location info
@@ -109,7 +108,7 @@ public class GameInstance {
 		double unprocessed = 0;
 		
 		new Thread(() -> logicLoop()).start(); 	//Run the logic in a separate thread
-		
+		glfwSetWindowSize(window.window, 1200, 800);
 		while (!window.shouldClose()) { 	// Poll window while window isn't about to close
 			canRender = false;
 			
@@ -156,11 +155,11 @@ public class GameInstance {
 					objectManager.renderAll();
 					
 					// If all levels complete, reset to level 0
-					if (levNum > levels.length) {
+					if (levNum > levels.size()) {
 						levNum = 0;
 					}
 					
-					levels[levNum].renderLoop();
+					levels.get(levNum).renderLoop();
 					
 					window.renderElements();
 				} else if (state.equals(State.MAIN_MENU)) {
@@ -190,11 +189,11 @@ public class GameInstance {
 			double timeNow = getTime(); 	//Get time at the start of the loop
 			
 			// If all levels complete, reset to level 0
-			if (levNum > levels.length) {
+			if (levNum > levels.size()) {
 				levNum = 0;
 			}
 			
-			levels[levNum].logicLoop(); 	//Run the logic necessary for the level
+			levels.get(levNum).logicLoop(); 	//Run the logic necessary for the level
 			
 			{
 				long sleeptime = timing - (long)(getTime() - timeNow); 	//Sync the game loop to update at the refresh rate
@@ -228,12 +227,16 @@ public class GameInstance {
 		levNum++;
 		hasLevel = false;
 	}
+	public static void setLevel(int lev){
+		levNum = lev;
+		hasLevel = false;
+	}
 	
 	public void renderLevel(){
-		if (levNum < levels.length && !hasLevel){
+		if (levNum < levels.size() && !hasLevel){
 			objectManager.clearAll();
 			window.clearElements();
-			levels[levNum].renderObjects(); 	//Add all objects to the scene from the level class
+			levels.get(levNum).renderObjects(); 	//Add all objects to the scene from the level class
 			objectManager.updateModels();
 			window.addElements();
 			hasLevel = true;

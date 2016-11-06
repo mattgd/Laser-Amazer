@@ -14,6 +14,8 @@ public class TestLevel implements ILevel{
 	Wall top, bottom, left, right;
 	LaserStart laswrap;
 	LaserStop lasstop;
+	int i;
+	float dir;
 	
 	@Override
 	public void renderObjects() {
@@ -32,10 +34,9 @@ public class TestLevel implements ILevel{
 			right = CreateModel.createWall(10f, 0f, .5f, 20f);
 		}
 		tri1.rotate(.3f);
+		i = 0;
+		dir = 1;
 	}
-
-	int i = 0;
-	float dir = 1;
 	
 	@Override
 	public void logicLoop() {
@@ -55,6 +56,11 @@ public class TestLevel implements ILevel{
 	@Override
 	public void renderLoop(){
 		laswrap.render();
+	}
+	
+	@Override
+	public String getName() {
+		return "Test Level";
 	}
 
 }

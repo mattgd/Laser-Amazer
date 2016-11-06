@@ -9,16 +9,14 @@ public class Dropdown extends Button{
 	
 	LinkedList<Button> options = new LinkedList<Button>();
 	Boolean open = false;
-	float length;
+	float length = 0;
 
 	public Dropdown(float[] coords, float[] tCoords, int[] indices, float xOffset, float yOffset, float height, float width) {
 		super(coords, tCoords, indices, null, xOffset, yOffset, height, width);
-		length = yOffset - height / 2f;
 	}
 	
 	public Dropdown(float[] coords, float[] tCoords, int[] indices, Font f, float xOffset, float yOffset, float height, float width) {
 		super(coords, tCoords, indices, null, f, xOffset, yOffset, height, width);
-		length = yOffset;
 	}
 	
 	/**
@@ -29,7 +27,7 @@ public class Dropdown extends Button{
 		b.addCallback(() -> {
 			choiceClicked();
 		});
-		length -= (b.height + .1f);
+		length -= (b.height + .05f);
 		b.move(0, length, 0);
 		options.add(b);
 	}
@@ -46,8 +44,10 @@ public class Dropdown extends Button{
 	
 	@Override
 	public Boolean checkClick(float xPos, float yPos){
-		for (Button b : options){ 	//Check click on all buttons in the dropdown first
-			b.checkClick(xPos, yPos);
+		if (open){
+			for (Button b : options){ 	//Check click on all buttons in the dropdown first
+				b.checkClick(xPos, yPos);
+			}
 		}
 		if (UIUtils.pnpoly(super.xCoords, super.yCoords, xPos, yPos)){ 	//Then check if the dropdown was clicked
 			choiceClicked();
@@ -67,6 +67,7 @@ public class Dropdown extends Button{
 		super.render();
 		if (open){
 			for(Button b : options){
+				//System.out.println(b);
 				b.render();
 			}
 		}
