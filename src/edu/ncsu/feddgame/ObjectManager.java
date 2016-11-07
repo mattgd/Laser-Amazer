@@ -23,6 +23,10 @@ public class ObjectManager {
 		return m;
 	}
 
+	/**
+	 * Returns the models arraylist
+	 * @return
+	 */
 	public ArrayList<Model> getModels() {
 		return models;
 	}

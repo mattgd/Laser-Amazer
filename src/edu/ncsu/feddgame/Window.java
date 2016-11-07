@@ -52,6 +52,7 @@ public class Window {
 	public boolean fullscreen, mouseHeld = false, ctrlHeld = false, shiftHeld = false;
 	private String title;
 	private float mouseX, mouseY;
+	public static boolean isclicked = false;
 	
 	//private GLFWKeyCallback keyCallback; // Prevents our window from crashing later on
 	
@@ -260,10 +261,11 @@ public class Window {
 					mouseHeld = false;
 				}else if (action == GLFW_PRESS){
 					mouseHeld = true;
-					for(Model b : GameInstance.objectManager.getModels()){ 	//Iterate over all models in the scene
+					for(int j = GameInstance.objectManager.getModels().size()-1; j >= 0; j--){ 	//Iterate over all models in the scene
+						Model b = GameInstance.objectManager.getModel(j);
 						if (b instanceof MovableModel){
 							MovableModel m = (MovableModel)b;
-							if (m.checkClick(mouseX, mouseY)) 	//If the object is movable and is the one clicked
+							if (m.checkClick(mouseX, mouseY)){ 	//If the object is movable and is the one clicked
 								new Thread(() -> { 	//Start a new thread to move it while the mouse is being held
 								while (mouseHeld){
 									try{
@@ -272,6 +274,8 @@ public class Window {
 									m.followCursor(mouseX, mouseY);
 								}
 								}).start();
+								break;
+							}
 						}
 					}
 					for (UIElement e : elementList){
