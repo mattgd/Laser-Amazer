@@ -133,6 +133,25 @@ public class Font {
 		GameInstance.shader.bind();
 	}
 	
+	public void renderString(String string, Justification just, float y, float characterWidth) {
+		float x = 0;
+		
+		switch (just) {
+		case LEFT:
+			//TODO: implement
+			break;
+		case CENTER:
+			x = -0.05f / (0.3f / characterWidth);
+			x *= string.length();
+			break;
+		case RIGHT:
+			//TODO: implement
+			break;
+		}
+
+		renderString(string, x, y, characterWidth);
+	}
+	
 	public int getFontTexture() {
 		return fontTexture;
 	}
