@@ -18,7 +18,11 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
 
-import edu.ncsu.feddgame.level.*;
+import edu.ncsu.feddgame.level.Level;
+import edu.ncsu.feddgame.level.Level1;
+import edu.ncsu.feddgame.level.Level2;
+import edu.ncsu.feddgame.level.Level3;
+import edu.ncsu.feddgame.level.TestLevel;
 import edu.ncsu.feddgame.render.Camera;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.Font;
@@ -31,15 +35,16 @@ public class GameInstance {
 	public static ObjectManager objectManager;
 	boolean canRender;
 	
-	public static ArrayList<ILevel> levels = new ArrayList<ILevel>() {
+	public static ArrayList<Level> levels = new ArrayList<Level>() {
 		private static final long serialVersionUID = 525308338634565467L;
 	{
 		add(new TestLevel());
 		add(new Level1());
 		add(new Level2());
+		add(new Level3());
 	}};
 	
-	private static int levNum = 2; 	// Start with 0
+	private static int levNum = 2; // Start with 0
 	private static boolean hasLevel = false;
 	public static Shader shader;
 	
@@ -107,6 +112,8 @@ public class GameInstance {
 		double time = getTime();
 		double unprocessed = 0;
 		
+		setLevel(2); // Set the level
+		
 		new Thread(() -> logicLoop()).start(); 	//Run the logic in a separate thread
 		glfwSetWindowSize(window.window, 1200, 800);
 		while (!window.shouldClose()) { 	// Poll window while window isn't about to close
@@ -154,13 +161,10 @@ public class GameInstance {
 					tex.bind(0);
 					objectManager.renderAll();
 					
-					// If all levels complete, reset to level 0
-					if (levNum > levels.size()) {
-						levNum = 0;
-					}
-					
-					levels.get(levNum).renderLoop();
-					
+					// Make sure it's the active level
+					if (levels.get(levNum).isActiveLevel())
+						levels.get(levNum).logicLoop();
+
 					window.renderElements();
 				} else if (state.equals(State.MAIN_MENU)) {
 					gameState = false;
@@ -183,17 +187,14 @@ public class GameInstance {
 		Thread.currentThread().setName("Logic");
 		long timing = Math.round(1f / 60 * 1000f); 	//Get the number of milliseconds between frames based on 60 times a second
 		
-		while (!window.shouldClose()){
+		while (!window.shouldClose()) {
 			if (!gameState) continue;
 			
 			double timeNow = getTime(); 	//Get time at the start of the loop
 			
-			// If all levels complete, reset to level 0
-			if (levNum > levels.size()) {
-				levNum = 0;
-			}
-			
-			levels.get(levNum).logicLoop(); 	//Run the logic necessary for the level
+			// Make sure it's the active level
+			if (levels.get(levNum).isActiveLevel())
+				levels.get(levNum).logicLoop();
 			
 			{
 				long sleeptime = timing - (long)(getTime() - timeNow); 	//Sync the game loop to update at the refresh rate
@@ -223,24 +224,36 @@ public class GameInstance {
 		return state;
 	}
 	
-	public static void nextLevel(){
+	public static void nextLevel() {
+		levels.get(levNum).setActiveLevel(false); // No longer the active level
+		
+		// If all levels complete, reset to level 0
 		levNum++;
-		hasLevel = false;
-	}
-	public static void setLevel(int lev){
-		levNum = lev;
+		
+		if (levNum > levels.size() - 1) {
+			//TODO: Maybe display a "YOU WIN" text instead
+			levNum = 0;
+		}
+		
+		levels.get(levNum).setActiveLevel(true); // Set new active level
 		hasLevel = false;
 	}
 	
-	public void renderLevel(){
-		if (levNum < levels.size() && !hasLevel){
+	public static void setLevel(int lev) {
+		levNum = lev;
+		levels.get(levNum).setActiveLevel(true); // Set active level
+		hasLevel = false;
+	}
+	
+	public void renderLevel() {
+		if (levNum < levels.size() && !hasLevel) {
 			objectManager.clearAll();
 			window.clearElements();
-			levels.get(levNum).renderObjects(); 	//Add all objects to the scene from the level class
+			levels.get(levNum).renderObjects(); // Add all objects to the scene from the level class
 			objectManager.updateModels();
 			window.addElements();
 			hasLevel = true;
-		}else if (!hasLevel){
+		} else if (!hasLevel) {
 			System.out.println("End of game");
 		}
 	}

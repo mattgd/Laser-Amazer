@@ -30,12 +30,11 @@ import java.util.ArrayList;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 
-import edu.ncsu.feddgame.gui.Button;
 import edu.ncsu.feddgame.gui.CreateUI;
 import edu.ncsu.feddgame.gui.IClickable;
 import edu.ncsu.feddgame.gui.UIElement;
 import edu.ncsu.feddgame.gui.UIUtils;
-import edu.ncsu.feddgame.level.ILevel;
+import edu.ncsu.feddgame.level.Level;
 import edu.ncsu.feddgame.render.Dropdown;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.Font;
@@ -161,10 +160,10 @@ public class Window {
 		});
 		elementList.add(dp);
 		Dropdown du = CreateUI.createDropdown(-12f, 8f, 2f, 1f, new Font("Select Level", new FloatColor(25,  255,  0)));
-		for (ILevel l : GameInstance.levels){
+		for (Level level : GameInstance.levels) {
 			du.addButton(CreateUI.createButton(-12f, 8f, 2f, 1, () -> {
-				GameInstance.setLevel(GameInstance.levels.indexOf(l));
-			}, new Font(l.getName(), new FloatColor(25, 255, 0))));
+				GameInstance.setLevel(GameInstance.levels.indexOf(level));
+			}, new Font(level.getName(), new FloatColor(25, 255, 0))));
 		}
 		elementList.add(du);
 	}

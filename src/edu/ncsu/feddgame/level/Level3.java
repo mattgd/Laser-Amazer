@@ -3,10 +3,10 @@ package edu.ncsu.feddgame.level;
 import edu.ncsu.feddgame.render.CreateModel;
 import edu.ncsu.feddgame.render.Model;
 
-public class Level2 extends Level {
-	
-	public Level2() {
-		super("Level 2");
+public class Level3 extends Level {
+
+	public Level3() {
+		super("Level 3");
 	}
 
 	@Override
@@ -18,12 +18,14 @@ public class Level2 extends Level {
 			CreateModel.createWall(-10f, 0f, .5f, 20f);
 			CreateModel.createWall(10f, 0f, .5f, 20f);
 			
-			// Inner bounds
-			CreateModel.createWall(-5f, 2f, .25f, 18f);
-			CreateModel.createWall(2f, -2f, .25f, 16f);
+			// Inner bounds 	   xOffset, yOffset, width, height
+			CreateModel.createWall(-4f, 2f, 12f, .25f);
+			CreateModel.createWall(2f, -1.37f, .25f, 7f);
 		}
 		laserWrap = CreateModel.createLaserStart(-10f, -1f, 2, Math.toRadians(-45));
-		CreateModel.createLaserStop(10, 7);
+		
+		Model laserStop = CreateModel.createLaserStop(-10, 7);
+		laserStop.rotate(1.55f);
 
 		Model model;
 		for (int i = 0; i < 7; i++) {

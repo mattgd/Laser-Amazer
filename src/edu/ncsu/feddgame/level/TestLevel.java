@@ -1,25 +1,27 @@
 package edu.ncsu.feddgame.level;
 
 import edu.ncsu.feddgame.render.CreateModel;
-import edu.ncsu.feddgame.render.LaserStart;
 import edu.ncsu.feddgame.render.LaserStop;
 import edu.ncsu.feddgame.render.Model;
 import edu.ncsu.feddgame.render.MovableModel;
 import edu.ncsu.feddgame.render.Wall;
 
-public class TestLevel implements ILevel{
+public class TestLevel extends Level {
 
-	Model box1, tri1;
-	MovableModel box2;
-	Wall top, bottom, left, right;
-	LaserStart laswrap;
-	LaserStop lasstop;
-	int i;
-	float dir;
+	private Model box1, tri1;
+	private MovableModel box2;
+	private Wall top, bottom, left, right;
+	private LaserStop lasstop;
+	private int i;
+	private float dir;
+	
+	public TestLevel() {
+		super("Test Level");
+	}
 	
 	@Override
 	public void renderObjects() {
-		laswrap = CreateModel.createLaserStart(7.5f, 9, 3, Math.toRadians(251));
+		laserWrap = CreateModel.createLaserStart(7.5f, 9, 3, Math.toRadians(251));
 		lasstop = CreateModel.createLaserStop(3, -9f);
 		box1 = CreateModel.createBox(0,0);
 		box2 = CreateModel.createMovableBox(4.05f, -5.925f);
@@ -40,27 +42,19 @@ public class TestLevel implements ILevel{
 	
 	@Override
 	public void logicLoop() {
-		laswrap.reflect();
-			if (i < 160) {
-				box1.move(0.05f * dir, 0f, 0f); 	//Test animation of models, this pings the box back and forth
-				
-				i++;
-			} else {
-				
-				i = 0;
-				dir *= -1f;
-			}
+		if (laserWrap != null)
+			laserWrap.reflect();
+		
+		if (i < 160) {
+			if (box1 != null)
+				box1.move(0.05f * dir, 0f, 0f); // Test animation of models, this pings the box back and forth
 			
-	}
-	
-	@Override
-	public void renderLoop(){
-		laswrap.render();
-	}
-	
-	@Override
-	public String getName() {
-		return "Test Level";
+			i++;
+		} else {
+			
+			i = 0;
+			dir *= -1f;
+		}
 	}
 
 }
