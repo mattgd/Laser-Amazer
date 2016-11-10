@@ -26,7 +26,7 @@ import edu.ncsu.feddgame.level.TestLevel;
 import edu.ncsu.feddgame.render.Camera;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.Font;
-import edu.ncsu.feddgame.render.Justification;
+import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.Shader;
 import edu.ncsu.feddgame.render.Texture;
 
@@ -167,23 +167,22 @@ public class GameInstance {
 					window.renderElements();
 				} else if (state.equals(State.GAME_COMPLETE)) {
 					gameState = false;
-					menuItem.renderString("Congratulations!", Justification.CENTER, 0.1f, 0.3f);
-					menuItem.renderString("You've completed the game.", Justification.CENTER, 0.02f, 0.3f);
-					menuTitle.renderString("Made by", Justification.CENTER, -0.1f, 0.3f);
-					menuTitle.renderString("thejereman13 and mattgd", Justification.CENTER, -0.17f, 0.23f);
-					startGame.renderString("(Press Space to return to the menu.)", Justification.CENTER, -0.45f, 0.23f);
+					menuItem.renderString("Congratulations!", Alignment.CENTER, 0.1f, 0.3f);
+					menuItem.renderString("You've completed the game.", Alignment.CENTER, 0.02f, 0.3f);
+					menuTitle.renderString("Made by", Alignment.CENTER, -0.1f, 0.3f);
+					menuTitle.renderString("thejereman13 and mattgd", Alignment.CENTER, -0.17f, 0.23f);
+					startGame.renderString("(Press Space to return to the menu.)", Alignment.CENTER, -0.45f, 0.23f);
 				} else if (state.equals(State.LEVEL_COMPLETE)) {
 					gameState = false;
-					menuItem.renderString("Congratulations!",  Justification.CENTER, 0.1f, 0.3f);
-					menuItem.renderString("You've completed " + levels.get(levNum - 1).getName() + ".", Justification.CENTER, 0.02f, 0.3f);
-					startGame.renderString("(Press Space to continue.)", Justification.CENTER, -0.45f, 0.3f);
+					menuItem.renderString("Congratulations!",  Alignment.CENTER, 0.1f, 0.3f);
+					menuItem.renderString("You've completed " + levels.get(levNum - 1).getName() + ".", Alignment.CENTER, 0.02f, 0.3f);
+					startGame.renderString("(Press Space to continue.)", Alignment.CENTER, -0.45f, 0.3f);
 				} else if (state.equals(State.MAIN_MENU)) {
 					gameState = false;
-					//shader.unbind();
-					menuTitle.renderString(menuTitle.getRenderString(), Justification.CENTER, 0.3f, 0.4f);
+					menuTitle.renderString(menuTitle.getRenderString(), Alignment.CENTER, 0.3f, 0.4f);
 					menuItem.renderString("> Start Game", -0.64f, 0.1f, 0.3f);
 					menuItem.renderString("> How to Play", -0.64f, 0.02f, 0.3f);
-					startGame.renderString("(Press Space to start.)", Justification.CENTER, -0.45f, 0.3f);
+					startGame.renderString("(Press Space to start.)", Alignment.CENTER, -0.45f, 0.3f);
 				}
 				
 				window.swapBuffers(); // Swap the render buffers

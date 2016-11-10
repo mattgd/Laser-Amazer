@@ -133,19 +133,21 @@ public class Font {
 		GameInstance.shader.bind();
 	}
 	
-	public void renderString(String string, Justification just, float y, float characterWidth) {
+	public void renderString(String string, Alignment align, float y, float characterWidth) {
 		float x = 0;
 		
-		switch (just) {
+		// Moderately arbitrary algorithms to get the desired text placement outcome
+		switch (align) {
 		case LEFT:
-			//TODO: implement
+			x = -1.5f;
 			break;
 		case CENTER:
 			x = -0.05f / (0.3f / characterWidth);
 			x *= string.length();
 			break;
 		case RIGHT:
-			//TODO: implement
+			float characterShift = string.length() * 2f + 1f;
+			x = 1.5f - ((string.length() + string.length() / characterShift) / 10f);
 			break;
 		}
 

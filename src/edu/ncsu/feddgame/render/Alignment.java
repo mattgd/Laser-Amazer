@@ -1,6 +1,6 @@
 package edu.ncsu.feddgame.render;
 
-public enum Justification {
+public enum Alignment {
 	LEFT,
 	CENTER,
 	RIGHT
