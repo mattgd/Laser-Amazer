@@ -129,9 +129,6 @@ public class Window {
 		glfwSwapInterval(1); 	// Set Vsync (swap the double buffer from drawn to displayed every refresh cycle)
 		//input = new Input(window);
 		
-		
-		
-		
 	}
 	/**
 	 * Adds all specified elements to the Window's array and scene
@@ -210,22 +207,21 @@ public class Window {
 					ctrlHeld = false;
 				}
 			}
-			if (key == GLFW_KEY_LEFT_SHIFT){
-				if (action == GLFW_PRESS){
+			if (key == GLFW_KEY_LEFT_SHIFT) {
+				if (action == GLFW_PRESS) {
 					shiftHeld = true;
-				}else if (action == GLFW_RELEASE){
+				} else if (action == GLFW_RELEASE) {
 					shiftHeld = false;
 				}
 			}
 			if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE) {
 				State state = GameInstance.getState();
 				switch (state) {
-				case CREDITS:
+				case GAME:
+				case GAME_COMPLETE:
 					GameInstance.setState(State.MAIN_MENU);
 					break;
-				case GAME:
-					GameInstance.setState(State.CREDITS);
-					break;
+				case LEVEL_COMPLETE:
 				case MAIN_MENU:
 					GameInstance.setState(State.GAME);
 					break;

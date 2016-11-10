@@ -86,7 +86,7 @@ public class GameInstance {
 		// Set up main menu text
 		Font menuTitle = new Font("Laser Amazer", new FloatColor(Color.RED));
 		Font menuItem = new Font("Start Game", new FloatColor(Color.GREEN));
-		Font startGame = new Font("Press Space to Start Game", new FloatColor(Color.BLUE));
+		Font startGame = new Font("Press Space to Start Game", new FloatColor(Color.YELLOW));
 		
 		Camera camera = new Camera(window.getWidth(), window.getHeight());
 		
@@ -149,11 +149,7 @@ public class GameInstance {
 			if (canRender) {
 				glClear(GL_COLOR_BUFFER_BIT);
 				
-				if (state.equals(State.CREDITS)) {
-					gameState = false;
-					menuItem.renderString("Made by", -0.34f, 0.2f, 0.3f);
-					menuItem.renderString("thejereman13 and mattgd", -0.9f, 0.1f, 0.23f);
-				} else if (state.equals(State.GAME)) {
+				if (state.equals(State.GAME)) {
 					gameState = true;
 					shader.bind();
 					shader.setUniform("sampler", 0);
@@ -166,14 +162,25 @@ public class GameInstance {
 						levels.get(levNum).logicLoop();
 
 					window.renderElements();
+				} else if (state.equals(State.GAME_COMPLETE)) {
+					gameState = false;
+					menuItem.renderString("Congratulations!", -0.8f, 0.1f, 0.3f);
+					menuItem.renderString("You've completed the game.", -1.26f, 0.02f, 0.3f);
+					menuTitle.renderString("Made by", -0.34f, -0.1f, 0.3f);
+					menuTitle.renderString("thejereman13 and mattgd", -0.9f, -0.17f, 0.23f);
+					startGame.renderString("(Press Space to return to the menu.)", -1.4f, -0.45f, 0.23f);
+				} else if (state.equals(State.LEVEL_COMPLETE)) {
+					gameState = false;
+					menuItem.renderString("Congratulations!", -0.8f, 0.1f, 0.3f);
+					menuItem.renderString("You've completed " + levels.get(levNum - 1).getName() + ".", -1.26f, 0.02f, 0.3f);
+					startGame.renderString("(Press Space to continue.)", -1.3f, -0.45f, 0.3f);
 				} else if (state.equals(State.MAIN_MENU)) {
 					gameState = false;
 					//shader.unbind();
 					menuTitle.renderString(menuTitle.getRenderString(), -0.82f, 0.3f, 0.4f);
 					menuItem.renderString("> Start Game", -0.64f, 0.1f, 0.3f);
 					menuItem.renderString("> How to Play", -0.64f, 0.02f, 0.3f);
-					menuItem.renderString("> Credits", -0.64f, -0.06f, 0.3f);
-					startGame.renderString("(Press Space.)", -0.72f, -0.45f, 0.3f);
+					startGame.renderString("(Press Space to start.)", -1.18f, -0.45f, 0.3f);
 				}
 				
 				window.swapBuffers(); // Swap the render buffers
@@ -225,6 +232,7 @@ public class GameInstance {
 	}
 	
 	public static void nextLevel() {
+		state = State.LEVEL_COMPLETE;
 		levels.get(levNum).setActiveLevel(false); // No longer the active level
 		
 		// If all levels complete, reset to level 0
@@ -233,6 +241,7 @@ public class GameInstance {
 		if (levNum > levels.size() - 1) {
 			//TODO: Maybe display a "YOU WIN" text instead
 			levNum = 0;
+			state = State.GAME_COMPLETE;
 		}
 		
 		levels.get(levNum).setActiveLevel(true); // Set new active level

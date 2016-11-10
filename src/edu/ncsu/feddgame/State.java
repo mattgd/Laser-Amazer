@@ -1,7 +1,8 @@
 package edu.ncsu.feddgame;
 
 public enum State {
-	CREDITS,
 	GAME,
+	GAME_COMPLETE,
+	LEVEL_COMPLETE,
 	MAIN_MENU
 }
