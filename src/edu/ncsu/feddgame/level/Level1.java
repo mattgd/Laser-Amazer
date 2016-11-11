@@ -1,6 +1,9 @@
 package edu.ncsu.feddgame.level;
 
+import java.awt.Color;
+
 import edu.ncsu.feddgame.render.CreateModel;
+import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.Model;
 
 public class Level1 extends Level {
@@ -22,10 +25,21 @@ public class Level1 extends Level {
 		}
 		
 		laserWrap = CreateModel.createLaserStart(-10f, -1f, 2, Math.toRadians(-45));
-		// CreateModel.createLaserStop(10, 7);
+		
+		CreateModel.createLaserStop(7, 10);
 		m = CreateModel.createMovableBox(4, 0);
 		CreateModel.createMovableBox(2, 4);
 		m.rotate(-.5f);
+		
+		m = CreateModel.createBox(7, 4, 1, new FloatColor(Color.red)); // Stationary box
+	}
+	
+	@Override
+	public void logicLoop() {
+		if (laserWrap != null)
+			laserWrap.reflect();
+		
+		m.rotate(.005f);
 	}
 
 }

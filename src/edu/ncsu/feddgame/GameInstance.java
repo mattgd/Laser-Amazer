@@ -12,7 +12,12 @@ import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glEnable;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.Timer;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -23,10 +28,10 @@ import edu.ncsu.feddgame.level.Level1;
 import edu.ncsu.feddgame.level.Level2;
 import edu.ncsu.feddgame.level.Level3;
 import edu.ncsu.feddgame.level.TestLevel;
+import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.Camera;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.Font;
-import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.Shader;
 import edu.ncsu.feddgame.render.Texture;
 
@@ -36,16 +41,16 @@ public class GameInstance {
 	public static ObjectManager objectManager;
 	boolean canRender;
 	
-	public static ArrayList<Level> levels = new ArrayList<Level>() {
+	public static List<Level> levels = new ArrayList<Level>() {
 		private static final long serialVersionUID = 525308338634565467L;
 	{
-		add(new TestLevel());
 		add(new Level1());
 		add(new Level2());
 		add(new Level3());
+		add(new TestLevel());
 	}};
 	
-	private static int levNum = 2; // Start with 0
+	private static int levNum = 0; // Start with 0
 	private static boolean hasLevel = false;
 	public static Shader shader;
 	
@@ -115,7 +120,7 @@ public class GameInstance {
 		double time = getTime();
 		double unprocessed = 0;
 		
-		setLevel(2); // Set the level
+		setLevel(0); // Set the level starting level
 		
 		new Thread(() -> logicLoop()).start(); 	//Run the logic in a separate thread
 		glfwSetWindowSize(window.window, 1200, 800);
@@ -234,20 +239,30 @@ public class GameInstance {
 	}
 	
 	public static void nextLevel() {
-		state = State.LEVEL_COMPLETE;
 		levels.get(levNum).setActiveLevel(false); // No longer the active level
 		
-		// If all levels complete, reset to level 0
-		levNum++;
-		
-		if (levNum > levels.size() - 1) {
-			//TODO: Maybe display a "YOU WIN" text instead
-			levNum = 0;
-			state = State.GAME_COMPLETE;
-		}
-		
-		levels.get(levNum).setActiveLevel(true); // Set new active level
-		hasLevel = false;
+		// This Timer ensures that the player can actually see the laser hit the stop point
+		Timer timer = new Timer(250, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				state = State.LEVEL_COMPLETE;
+				levels.get(levNum).setActiveLevel(false); // No longer the active level
+				
+				// If all levels complete, reset to level 0
+				levNum++;
+				
+				if (levNum > levels.size() - 1) {
+					levNum = 0;
+					state = State.GAME_COMPLETE;
+				}
+				
+				levels.get(levNum).setActiveLevel(true); // Set new active level
+				hasLevel = false;
+			}
+		});
+
+		timer.setRepeats(false); // Only execute once
+		timer.start();
 	}
 	
 	public static void setLevel(int lev) {

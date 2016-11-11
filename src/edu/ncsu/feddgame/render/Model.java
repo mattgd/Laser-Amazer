@@ -1,27 +1,33 @@
 package edu.ncsu.feddgame.render;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL11.glDrawElements;
+import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
+import static org.lwjgl.opengl.GL15.glBindBuffer;
+import static org.lwjgl.opengl.GL15.glBufferData;
+import static org.lwjgl.opengl.GL15.glDeleteBuffers;
+import static org.lwjgl.opengl.GL15.glGenBuffers;
+import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL15;
 
 import edu.ncsu.feddgame.GameInstance;
 
 public class Model {
 	
-	private int drawCount;
-	private int vertexId;
-	private int textureId;
-	private int indexId;
+	private int drawCount, vertexId, textureId, indexId;
 	public int sideCount;
 	private boolean generated = false;
-	public float[] vertices;
-	private float[] tCoords;
+	public float[] vertices, tCoords;
 	private int[] indices;
 	private Texture tex;
 	private String texStr;
@@ -45,6 +51,7 @@ public class Model {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 	}
+	
 	public Model(float[] vertices, float[] tCoords, int[] indices, int sideNum, String texture) {
 		this.indices = indices;
 		this.tCoords = tCoords;
@@ -70,6 +77,7 @@ public class Model {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 	}
+	
 	public Model(float[] vertices, float[] tCoords, int[] indices, int sideNum){
 		this.indices = indices;
 		this.tCoords = tCoords;
@@ -89,7 +97,6 @@ public class Model {
 	 * Render all of the vertices on screen.
 	 */
 	public void render() {
-		
 		if (!generated) {
 			tex = new Texture(texStr);
 			vertexId = glGenBuffers();
@@ -97,6 +104,7 @@ public class Model {
 			indexId = glGenBuffers();
 			generated = true;
 		}
+		
 		float[] newv = vertices.clone();
 		float ratio = GameInstance.window.ratio;
 		//System.out.println(ratio);
@@ -119,7 +127,7 @@ public class Model {
 		buffer.flip();
 		
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
-
+		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		tex.bind(0);

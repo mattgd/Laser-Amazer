@@ -2,6 +2,7 @@ package edu.ncsu.feddgame.render;
 
 import edu.ncsu.feddgame.GameInstance;
 
+
 public class LaserStop extends Model {
 
 	public LaserStop(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset) {
