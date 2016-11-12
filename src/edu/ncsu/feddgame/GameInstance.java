@@ -4,6 +4,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
 import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
 import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwInit;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowSize;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
@@ -128,6 +129,8 @@ public class GameInstance {
 		
 		new Thread(() -> logicLoop()).start(); 	//Run the logic in a separate thread
 		glfwSetWindowSize(window.window, 1200, 800);
+		window.centerWindow();
+
 		while (!window.shouldClose()) { 	// Poll window while window isn't about to close
 			canRender = false;
 			
