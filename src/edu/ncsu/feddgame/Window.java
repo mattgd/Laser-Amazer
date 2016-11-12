@@ -52,6 +52,7 @@ public class Window {
 	private String title;
 	private float mouseX, mouseY;
 	public static boolean isclicked = false;
+	GLFWVidMode vidMode;
 	
 	//private GLFWKeyCallback keyCallback; // Prevents our window from crashing later on
 	
@@ -95,7 +96,7 @@ public class Window {
 		if (window == 0)
 			throw new IllegalStateException("Failed to create window.");
 		
-		GLFWVidMode vidMode = glfwGetVideoMode(monitor);
+		vidMode = glfwGetVideoMode(monitor);
 		refreshRate = vidMode.refreshRate();
 		
 		if (fullscreen) {
@@ -134,12 +135,6 @@ public class Window {
 	 * Adds all specified elements to the Window's array and scene
 	 */
 	public void addElements(){
-		elementList.add(CreateUI.createButton(-8f, 1f, 1, 1, () -> {
-			System.out.println("Click");
-		}));
-		elementList.add(CreateUI.createButton(10f, 2f, 2, 1, () -> {
-			System.out.println("Click2");
-		}, new Font("Test 11", new FloatColor(255,25,0))));
 		Dropdown dp = CreateUI.createDropdown(-3f, 0, 2f, 1f, new Font("Dropdown", new FloatColor(25,  255,  0)), new Font[]{
 				new Font("Option 1", new FloatColor(25,  255,  0)),
 				new Font("Op 2", new FloatColor(25,  255,  0)),
@@ -167,6 +162,10 @@ public class Window {
 	
 	public void clearElements(){
 		elementList.clear();
+	}
+	
+	public void centerWindow(){
+		glfwSetWindowPos(window, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2); // Show window in center of screen
 	}
 	
 	/**
