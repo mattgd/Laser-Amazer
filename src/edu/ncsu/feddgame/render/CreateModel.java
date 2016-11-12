@@ -36,33 +36,8 @@ public class CreateModel {
 		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, "box.png")); 	//Add the model to the objectManager
 	}
 	
-	public static Model createBox(float xOffset, float yOffset, float size, FloatColor color) {
-		// Vertices for a quadrilateral
-		float[] vertices = new float[] {
-			-size/2f + xOffset, size/2f + yOffset, 0, // TOP LEFT - 0
-			size/2f + xOffset, size/2f + yOffset, 0, // TOP RIGHT - 1
-			size/2f + xOffset, -size/2f + yOffset, 0, // BOTTOM RIGHT - 2
-			-size/2f + xOffset, -size/2f + yOffset, 0, // BOTTOM LEFT - 3
-		};
-		
-		float[] texture = new float[] {
-			0, 0, // TOP LEFT
-			1, 0, // TOP RIGHT
-			1, 1, // BOTTOM RIGHT
-			0, 1, // BOTTOM LEFT
-		};
-		
-		int[] indices = new int[] {
-			0, 1, 2,
-			2, 3, 0
-		};
-		
-		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, "box.png")); 	//Add the model to the objectManager
-	}
-	
-	
-	public static Model createBox(float xOffset, float yOffset){
-		return createBox(xOffset, yOffset, 1); 	//default size of 1
+	public static Model createBox(float xOffset, float yOffset) {
+		return createBox(xOffset, yOffset, 1); 	// Default size of 1
 	}
 	
 	public static Model createTriangle(float xOffset, float yOffset, float xSide, float ySide){

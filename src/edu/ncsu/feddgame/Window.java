@@ -222,6 +222,8 @@ public class Window {
 					GameInstance.setState(State.MAIN_MENU);
 					break;
 				case LEVEL_COMPLETE:
+					GameInstance.setState(State.NEXT_LEVEL);
+					break;
 				case MAIN_MENU:
 					GameInstance.setState(State.GAME);
 					break;

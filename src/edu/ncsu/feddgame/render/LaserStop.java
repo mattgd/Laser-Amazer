@@ -1,6 +1,7 @@
 package edu.ncsu.feddgame.render;
 
 import edu.ncsu.feddgame.GameInstance;
+import edu.ncsu.feddgame.State;
 
 
 public class LaserStop extends Model {
@@ -13,7 +14,7 @@ public class LaserStop extends Model {
 	 * Called by ReflectionCalculation once a laser has its destination set to this object
 	 */
 	public void laserIntersection() {
-		GameInstance.nextLevel();
+		GameInstance.setState(State.LEVEL_COMPLETE);
 	}
 
 }

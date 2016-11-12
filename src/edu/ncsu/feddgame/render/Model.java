@@ -1,9 +1,6 @@
 package edu.ncsu.feddgame.render;
 
-import static org.lwjgl.opengl.GL11.GL_FLOAT;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
-import static org.lwjgl.opengl.GL11.glDrawElements;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
@@ -67,7 +64,7 @@ public class Model {
 	 * @param tCoords
 	 * @param indices
 	 */
-	public Model(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset, int sideNum){
+	public Model(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset, int sideNum) {
 		this.indices = indices;
 		this.tCoords = tCoords;
 		this.vertices = vertices;
@@ -78,7 +75,7 @@ public class Model {
 		this.yOffset = yOffset;
 	}
 	
-	public Model(float[] vertices, float[] tCoords, int[] indices, int sideNum){
+	public Model(float[] vertices, float[] tCoords, int[] indices, int sideNum) {
 		this.indices = indices;
 		this.tCoords = tCoords;
 		this.vertices = vertices;
@@ -149,7 +146,6 @@ public class Model {
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		tex.unbind();
-		
 	}
 	
 	/**

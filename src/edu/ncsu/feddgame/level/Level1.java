@@ -1,9 +1,6 @@
 package edu.ncsu.feddgame.level;
 
-import java.awt.Color;
-
 import edu.ncsu.feddgame.render.CreateModel;
-import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.Model;
 
 public class Level1 extends Level {
@@ -31,7 +28,7 @@ public class Level1 extends Level {
 		CreateModel.createMovableBox(2, 4);
 		m.rotate(-.5f);
 		
-		m = CreateModel.createBox(7, 4, 1, new FloatColor(Color.red)); // Stationary box
+		m = CreateModel.createBox(7, 4, 1); // Stationary box
 	}
 	
 	@Override

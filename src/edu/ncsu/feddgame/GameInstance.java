@@ -6,18 +6,20 @@ import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwInit;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowSize;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
 import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glRectf;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.Timer;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -99,6 +101,8 @@ public class GameInstance {
 		Camera camera = new Camera(window.getWidth(), window.getHeight());
 		
 		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		//glEnable(GL_DEPTH_TEST);
 		
 		shader = new Shader("shader");
@@ -179,15 +183,36 @@ public class GameInstance {
 					startGame.renderString("(Press Space to return to the menu.)", Alignment.CENTER, -0.45f, 0.23f);
 				} else if (state.equals(State.LEVEL_COMPLETE)) {
 					gameState = false;
+					
+					shader.bind();
+					shader.setUniform("sampler", 0);
+					shader.setUniform("projection", camera.getProjection().mul(target));
+					tex.bind(0);
+					objectManager.renderAll();
+					
+					window.renderElements();
+					
+					// Add rectangle to make text more readable
+					Texture text = new Texture("translucent.png");
+					text.bind(0);
+					glRectf(-10f, -10f, 10f, 10f);
+					glColor4f(1f, 0.2f, 0.5f, 0.2f);
+					text.unbind();
+					
 					menuItem.renderString("Congratulations!",  Alignment.CENTER, 0.1f, 0.3f);
-					menuItem.renderString("You've completed " + levels.get(levNum - 1).getName() + ".", Alignment.CENTER, 0.02f, 0.3f);
+					menuItem.renderString("You've completed " + levels.get(levNum).getName() + ".", Alignment.CENTER, 0.02f, 0.3f);
 					startGame.renderString("(Press Space to continue.)", Alignment.CENTER, -0.45f, 0.3f);
 				} else if (state.equals(State.MAIN_MENU)) {
 					gameState = false;
+
 					menuTitle.renderString(menuTitle.getRenderString(), Alignment.CENTER, 0.3f, 0.4f);
 					menuItem.renderString("> Start Game", -0.64f, 0.1f, 0.3f);
 					menuItem.renderString("> How to Play", -0.64f, 0.02f, 0.3f);
 					startGame.renderString("(Press Space to start.)", Alignment.CENTER, -0.45f, 0.3f);
+				} else if (state.equals(State.NEXT_LEVEL)) {
+					gameState = false;
+					state = State.GAME;
+					nextLevel();
 				}
 				
 				window.swapBuffers(); // Swap the render buffers
@@ -241,28 +266,16 @@ public class GameInstance {
 	public static void nextLevel() {
 		levels.get(levNum).setActiveLevel(false); // No longer the active level
 		
-		// This Timer ensures that the player can actually see the laser hit the stop point
-		Timer timer = new Timer(250, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				state = State.LEVEL_COMPLETE;
-				levels.get(levNum).setActiveLevel(false); // No longer the active level
-				
-				// If all levels complete, reset to level 0
-				levNum++;
-				
-				if (levNum > levels.size() - 1) {
-					levNum = 0;
-					state = State.GAME_COMPLETE;
-				}
-				
-				levels.get(levNum).setActiveLevel(true); // Set new active level
-				hasLevel = false;
-			}
-		});
-
-		timer.setRepeats(false); // Only execute once
-		timer.start();
+		// If all levels complete, reset to level 0
+		levNum++;
+		
+		if (levNum > levels.size() - 1) {
+			levNum = 0;
+			state = State.GAME_COMPLETE;
+		}
+		
+		levels.get(levNum).setActiveLevel(true); // Set new active level
+		hasLevel = false;
 	}
 	
 	public static void setLevel(int lev) {
