@@ -43,6 +43,7 @@ public class GameInstance {
 	public static Window window;
 	public static ObjectManager objectManager;
 	boolean canRender;
+	int t;
 	
 	public static List<Level> levels = new ArrayList<Level>() {
 		private static final long serialVersionUID = 525308338634565467L;
@@ -185,6 +186,9 @@ public class GameInstance {
 					menuTitle.renderString("thejereman13 and mattgd", Alignment.CENTER, -0.17f, 0.23f);
 					startGame.renderString("(Press Space to return to the menu.)", Alignment.CENTER, -0.45f, 0.23f);
 				} else if (state.equals(State.LEVEL_COMPLETE)) {
+					if (gameState){
+						t = (int)levels.get(levNum).getElapsedTime();
+					}
 					gameState = false;
 					
 					shader.bind();
@@ -202,8 +206,9 @@ public class GameInstance {
 					glColor4f(1f, 0.2f, 0.5f, 0.2f);
 					text.unbind();
 					
+					
 					menuItem.renderString("Congratulations!",  Alignment.CENTER, 0.1f, 0.3f);
-					menuItem.renderString("You've completed " + levels.get(levNum).getName() + ".", Alignment.CENTER, 0.02f, 0.3f);
+					menuItem.renderString("You've completed " + levels.get(levNum).getName() + " in " + t + " seconds.", Alignment.CENTER, 0.02f, 0.2f);
 					startGame.renderString("(Press Space to continue.)", Alignment.CENTER, -0.45f, 0.3f);
 				} else if (state.equals(State.MAIN_MENU)) {
 					gameState = false;
