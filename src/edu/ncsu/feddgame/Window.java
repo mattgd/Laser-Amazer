@@ -44,7 +44,7 @@ import edu.ncsu.feddgame.gui.UIUtils;
 import edu.ncsu.feddgame.level.Level;
 import edu.ncsu.feddgame.render.Dropdown;
 import edu.ncsu.feddgame.render.FloatColor;
-import edu.ncsu.feddgame.render.Font;
+import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.Model;
 import edu.ncsu.feddgame.render.MovableModel;
 
@@ -60,10 +60,6 @@ public class Window {
 	private float mouseX, mouseY;
 	public static boolean isclicked = false;
 	GLFWVidMode vidMode;
-	
-	//private GLFWKeyCallback keyCallback; // Prevents our window from crashing later on
-	
-	//private Input input;
 	
 	public ArrayList<UIElement> elementList = new ArrayList<UIElement>();
 	
@@ -136,43 +132,26 @@ public class Window {
 		setMousePosCallback();
 		glfwMakeContextCurrent(window);
 		glfwSwapInterval(1); 	// Set Vsync (swap the double buffer from drawn to displayed every refresh cycle)
-		//input = new Input(window);
-		
 	}
+	
 	/**
 	 * Adds all specified elements to the Window's array and scene
 	 */
 	public void addElements() {
-		/*Dropdown dp = CreateUI.createDropdown(-3f, 0, 2f, 1f, new Font("Dropdown", new FloatColor(25,  255,  0)), new Font[]{
-				new Font("Option 1", new FloatColor(25,  255,  0)),
-				new Font("Op 2", new FloatColor(25,  255,  0)),
-				new Font("Test 3", new FloatColor(25,  255,  0))
-		}, new Runnable[]{
-				() -> {
-					System.out.println("Ahoy 1");
-				},
-				() -> {
-					System.out.println("Test 2");
-				},
-				() -> {
-					System.out.println("3");
-				}
-		});
-		elementList.add(dp);*/
-		Dropdown du = CreateUI.createDropdown(-12f, 8f, 2f, 1f, new Font("Select Level", new FloatColor(25,  255,  0)));
+		Dropdown du = CreateUI.createDropdown(-12f, 8f, 2f, 1f, new GameFont("Select Level", new FloatColor(GameColor.GREEN.getColor())));
 		for (Level level : GameInstance.levels) {
 			du.addButton(CreateUI.createButton(-12f, 8f, 2f, 1, () -> {
 				GameInstance.setLevel(GameInstance.levels.indexOf(level));
-			}, new Font(level.getName(), new FloatColor(25, 255, 0))));
+			}, new GameFont(level.getName(), new FloatColor(GameColor.GREEN.getColor()))));
 		}
 		elementList.add(du);
 	}
 	
-	public void clearElements(){
+	public void clearElements() {
 		elementList.clear();
 	}
 	
-	public void centerWindow(){
+	public void centerWindow() {
 		glfwSetWindowPos(window, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2); // Show window in center of screen
 	}
 	

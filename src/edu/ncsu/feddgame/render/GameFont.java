@@ -5,7 +5,6 @@ import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
 import static org.lwjgl.opengl.GL11.GL_ENABLE_BIT;
 import static org.lwjgl.opengl.GL11.GL_LINEAR;
-import static org.lwjgl.opengl.GL11.GL_ONE;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.GL_RGB;
 import static org.lwjgl.opengl.GL11.GL_RGBA;
@@ -29,7 +28,10 @@ import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTexImage2D;
 import static org.lwjgl.opengl.GL11.glTexParameteri;
 import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex2f;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL31.*;
+import static org.lwjgl.opengl.GL13.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -40,7 +42,7 @@ import org.lwjgl.BufferUtils;
 import de.matthiasmann.twl.utils.PNGDecoder;
 import edu.ncsu.feddgame.GameInstance;
 
-public class Font {
+public class GameFont {
 
 	private int fontTexture;
 	private FloatColor color;
@@ -48,7 +50,7 @@ public class Font {
 	
 	private final static int GRID_SIZE = 16;
 	
-	public Font(String str, FloatColor color) {
+	public GameFont(String str, FloatColor color) {
 		this.renderStr = str;
 		this.color = color;
 		
@@ -61,11 +63,12 @@ public class Font {
 	
 	public void setUpTextures() throws IOException {
         fontTexture = glGenTextures(); // Create new texture for the bitmap font
-        // Bind the texture object to the GL_TEXTURE_2D target, specifying that it will be a 2D texture.
+        
+        // Bind the texture object to the GL_TEXTURE_2D target, specifying that it will be a 2D texture
         glBindTexture(GL_TEXTURE_2D, fontTexture);
         
         // Use TWL's utility classes to load the png file
-        PNGDecoder decoder = new PNGDecoder(new FileInputStream("res/font.png"));
+        PNGDecoder decoder = new PNGDecoder(new FileInputStream("res/font2.png"));
         ByteBuffer buffer = BufferUtils.createByteBuffer(4 * decoder.getWidth() * decoder.getHeight());
         decoder.decode(buffer, decoder.getWidth() * 4, PNGDecoder.Format.RGBA);
         buffer.flip();
@@ -79,28 +82,33 @@ public class Font {
 	
 	public void renderString(String string, float x, float y, float characterWidth) {
 		GameInstance.shader.unbind();
+		//glClearColor(0f, 0f, 0f, 0f);
 		
 		float ratio = GameInstance.window.ratio;
 		float characterHeight = 0.52f * characterWidth; // Automatically calculate the height from aspect ratio
 		characterWidth /= ratio;
 		x /= ratio;
+		
 		glPushAttrib(GL_TEXTURE_BIT | GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT);
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, fontTexture);
+		
 		// Enable linear texture filtering for smoothed results.
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		
 		// Enable additive blending. This means that the colors will be added to already existing colors in the
 		// frame buffer. In practice, this makes the black parts of the texture become invisible.
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_ONE, GL_ONE);
-		// Store the current model-view matrix.
-		glPushMatrix();
+
+		glPushMatrix(); // Store the current model-view matrix
+		
 		// Offset all subsequent (at least up until 'glPopMatrix') vertex coordinates.
 		glTranslatef(x, y, 0);
 		
-		glColor4f(color.red(), color.green(), color.blue(), 0.5f); // Set Font color
+		glColor4f(color.red(), color.green(), color.blue(), 1f); // Set Font color
 		
 		glBegin(GL_QUADS);
 		
@@ -128,6 +136,7 @@ public class Font {
 			glTexCoord2f(cellX, cellY);
 			glVertex2f(i * characterWidth / 3, y + characterHeight);
 		}
+		
 		glEnd();
 		glPopMatrix();
 		glPopAttrib();

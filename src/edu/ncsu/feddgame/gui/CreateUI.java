@@ -1,7 +1,7 @@
 package edu.ncsu.feddgame.gui;
 
 import edu.ncsu.feddgame.render.Dropdown;
-import edu.ncsu.feddgame.render.Font;
+import edu.ncsu.feddgame.render.GameFont;
 
 public class CreateUI {
 	
@@ -13,7 +13,7 @@ public class CreateUI {
 	 * @param width
 	 * @param r
 	 */
-	public static Button createButton(float xOffset, float yOffset, float width, float height, Runnable r, Font f){
+	public static Button createButton(float xOffset, float yOffset, float width, float height, Runnable r, GameFont f){
 		// Vertices for a trapezoid
 		float[] vertices = new float[] {
 			-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
@@ -79,7 +79,7 @@ public class CreateUI {
 	 * @param rs
 	 * @return
 	 */
-	public static Dropdown createDropdown(float xOffset, float yOffset, float width, float height, Font f, Font[] fs, Runnable[] rs){
+	public static Dropdown createDropdown(float xOffset, float yOffset, float width, float height, GameFont f, GameFont[] fs, Runnable[] rs){
 		Dropdown d = createDropdown(xOffset, yOffset, width, height, f);
 		for (int i = 0; i < rs.length; i++){
 			d.addButton(createButton(xOffset, yOffset, width, height, rs[i], fs[i]));
@@ -87,7 +87,7 @@ public class CreateUI {
 		return d;
 	}
 	
-	public static Dropdown createDropdown(float xOffset, float yOffset, float width, float height, Font f){
+	public static Dropdown createDropdown(float xOffset, float yOffset, float width, float height, GameFont f){
 		float[] vertices = new float[] {
 				-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
 				width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1

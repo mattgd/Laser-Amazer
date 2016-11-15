@@ -15,7 +15,7 @@ public class Dropdown extends Button{
 		super(coords, tCoords, indices, null, xOffset, yOffset, height, width);
 	}
 	
-	public Dropdown(float[] coords, float[] tCoords, int[] indices, Font f, float xOffset, float yOffset, float height, float width) {
+	public Dropdown(float[] coords, float[] tCoords, int[] indices, GameFont f, float xOffset, float yOffset, float height, float width) {
 		super(coords, tCoords, indices, null, f, xOffset, yOffset, height, width);
 	}
 	
@@ -43,7 +43,7 @@ public class Dropdown extends Button{
 	}
 	
 	@Override
-	public Boolean checkClick(float xPos, float yPos){
+	public boolean checkClick(float xPos, float yPos){
 		if (open){
 			for (Button b : options){ 	//Check click on all buttons in the dropdown first
 				b.checkClick(xPos, yPos);

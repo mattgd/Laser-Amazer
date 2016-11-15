@@ -49,7 +49,7 @@ public class MovableModel extends Model implements IClickable{
 	 * @param yPos
 	 * @return
 	 */
-	public Boolean checkClick(float xPos, float yPos){
+	public boolean checkClick(float xPos, float yPos){
 		if (UIUtils.pnpoly(xCoords, yCoords, xPos, yPos)){
 			if (callback != null)
 				callback.run();

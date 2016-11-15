@@ -33,7 +33,7 @@ public class CreateModel {
 			2, 3, 0
 		};
 		
-		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, "bound.png")); 	//Add the model to the objectManager
+		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, "bgtile.png")); 	//Add the model to the objectManager
 	}
 	
 	public static Model createBox(float xOffset, float yOffset) {
@@ -58,7 +58,7 @@ public class CreateModel {
 				0, 1, 2,
 				2
 				};
-		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 3, "bound.png"));
+		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 3, "bgtile.png"));
 	}
 	
 	public static MovableModel createMovableTrangle(float xOffset, float yOffset, float xSide, float ySide) {

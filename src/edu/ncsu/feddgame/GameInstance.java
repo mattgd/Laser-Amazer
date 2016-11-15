@@ -18,7 +18,6 @@ import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glRectf;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +33,7 @@ import edu.ncsu.feddgame.level.TestLevel;
 import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.Camera;
 import edu.ncsu.feddgame.render.FloatColor;
-import edu.ncsu.feddgame.render.Font;
+import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.Shader;
 import edu.ncsu.feddgame.render.Texture;
 
@@ -43,7 +42,7 @@ public class GameInstance {
 	public static Window window;
 	public static ObjectManager objectManager;
 	boolean canRender;
-	int t;
+	private int levelTime;
 	
 	public static List<Level> levels = new ArrayList<Level>() {
 		private static final long serialVersionUID = 525308338634565467L;
@@ -97,31 +96,19 @@ public class GameInstance {
 		
 		//TODO: Move this to it's own class, and have Fonts instantiated with location info
 		// Set up main menu text
-		Font menuTitle = new Font("Laser Amazer", new FloatColor(Color.RED));
-		Font menuItem = new Font("Start Game", new FloatColor(Color.GREEN));
-		Font startGame = new Font("Press Space to Start Game", new FloatColor(Color.YELLOW));
+		GameFont menuTitle = new GameFont("Laser Amazer", new FloatColor(GameColor.RED.getColor()));
+		GameFont menuItem = new GameFont("Start Game", new FloatColor(GameColor.ORANGE.getColor()));
+		GameFont startGame = new GameFont("Press Space to Start Game", new FloatColor(GameColor.YELLOW.getColor()));
 		
 		Camera camera = new Camera(window.getWidth(), window.getHeight());
-		
-		
-		// Texture
-		/*glEnable(GL_TEXTURE_2D);
-		// Transparent Faces
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		// Transparent Textures
-		glEnable(GL_ALPHA_TEST);
-		glAlphaFunc(GL_GREATER, 0);*/
 		
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
-		FloatColor clearColor = new FloatColor(new Color(32, 32, 32));
-		//glClearColor(clearColor.red(), clearColor.blue(), clearColor.green(), 1);
-		glClearColor(0, 0, 0, 1);
-		
-		//glEnable(GL_DEPTH_TEST);
+		FloatColor clearColor = new FloatColor(GameColor.DARK_GREY.getColor());
+		glClearColor(clearColor.red(), clearColor.blue(), clearColor.green(), 1f);
+		//glClearColor(1f, 1f, 1f, 1f);
 		
 		shader = new Shader("shader");
 		Texture tex = new Texture("bound.png");
@@ -146,7 +133,7 @@ public class GameInstance {
 		
 		new Thread(() -> logicLoop()).start(); 	//Run the logic in a separate thread
 		glfwSetWindowSize(window.window, 1200, 800);
-		window.centerWindow();
+		window.centerWindow(); // Center window on screen
 
 		while (!window.shouldClose()) { 	// Poll window while window isn't about to close
 			canRender = false;
@@ -175,6 +162,7 @@ public class GameInstance {
 					frames = 0;
 				}
 			}
+			
 			renderLevel();
 			
 			// Render when scene changes
@@ -201,9 +189,10 @@ public class GameInstance {
 					menuTitle.renderString("thejereman13 and mattgd", Alignment.CENTER, -0.17f, 0.23f);
 					startGame.renderString("(Press Space to return to the menu.)", Alignment.CENTER, -0.45f, 0.23f);
 				} else if (state.equals(State.LEVEL_COMPLETE)) {
-					if (gameState){
-						t = (int)levels.get(levNum).getElapsedTime();
+					if (gameState) {
+						levelTime = (int)levels.get(levNum).getElapsedTime();
 					}
+					
 					gameState = false;
 					
 					shader.bind();
@@ -213,16 +202,16 @@ public class GameInstance {
 					
 					window.renderElements();
 					
-					// Add rectangle to make text more readable
-					Texture text = new Texture("translucent.png");
-					text.bind(0);
+					// Add dark rectangle to make text more readable
+					shader.unbind();
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					
+					glColor4f(clearColor.red(), clearColor.green(), clearColor.blue(), .5f);
 					glRectf(-10f, -10f, 10f, 10f);
-					glColor4f(1f, 0.2f, 0.5f, 0.2f);
-					text.unbind();
 					
-					
-					menuItem.renderString("Congratulations!",  Alignment.CENTER, 0.1f, 0.3f);
-					menuItem.renderString("You've completed " + levels.get(levNum).getName() + " in " + t + " seconds.", Alignment.CENTER, 0.02f, 0.2f);
+					menuItem.renderString("Congratulations!",  Alignment.CENTER, 0.1f, 0.45f);
+					menuItem.renderString("You've completed " + levels.get(levNum).getName() + " in " + levelTime + " seconds.", Alignment.CENTER, 0.02f, 0.2f);
 					startGame.renderString("(Press Space to continue.)", Alignment.CENTER, -0.45f, 0.3f);
 				} else if (state.equals(State.MAIN_MENU)) {
 					gameState = false;
