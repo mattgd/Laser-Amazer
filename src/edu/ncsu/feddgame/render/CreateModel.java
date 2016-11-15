@@ -33,14 +33,14 @@ public class CreateModel {
 			2, 3, 0
 		};
 		
-		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, "box.png")); 	//Add the model to the objectManager
+		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, "bound.png")); 	//Add the model to the objectManager
 	}
 	
 	public static Model createBox(float xOffset, float yOffset) {
 		return createBox(xOffset, yOffset, 1); 	// Default size of 1
 	}
 	
-	public static Model createTriangle(float xOffset, float yOffset, float xSide, float ySide){
+	public static Model createTriangle(float xOffset, float yOffset, float xSide, float ySide) {
 		//Right Triangle
 		float[] vertices = new float[] {
 			-xSide/2f + xOffset, ySide/2f + yOffset, 0, // TOP LEFT - 0
@@ -58,7 +58,29 @@ public class CreateModel {
 				0, 1, 2,
 				2
 				};
-		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 3));
+		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 3, "bound.png"));
+	}
+	
+	public static MovableModel createMovableTrangle(float xOffset, float yOffset, float xSide, float ySide) {
+		// Right Triangle
+		float[] vertices = new float[] {
+			-xSide/2f + xOffset, ySide/2f + yOffset, 0, // TOP LEFT - 0
+			xSide/2f + xOffset, ySide/2f + yOffset, 0, // TOP RIGHT - 1
+			xSide/2f + xOffset, -ySide/2f + yOffset, 0, // BOTTOM - 2
+		};
+				
+		float[] texture = new float[] {
+			0, 0, // TOP LEFT
+			1, 0, // TOP RIGHT
+			1, 1, // BOTTOM RIGHT
+		};
+		
+		int[] indices = new int[] {
+				0, 1, 2,
+				2
+		};
+		
+		return (MovableModel) GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset, 3));
 	}
 	
 	/**
@@ -91,6 +113,7 @@ public class CreateModel {
 		
 		return (MovableModel)GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset, 4));
 	}
+	
 	public static MovableModel createMovableBox(float xOffset, float yOffset) {
 		return createMovableBox(xOffset, yOffset, 1);
 	}

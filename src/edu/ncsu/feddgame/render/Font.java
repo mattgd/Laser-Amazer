@@ -79,6 +79,7 @@ public class Font {
 	
 	public void renderString(String string, float x, float y, float characterWidth) {
 		GameInstance.shader.unbind();
+		
 		float ratio = GameInstance.window.ratio;
 		float characterHeight = 0.52f * characterWidth; // Automatically calculate the height from aspect ratio
 		characterWidth /= ratio;

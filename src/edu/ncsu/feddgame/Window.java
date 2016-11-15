@@ -16,6 +16,7 @@ import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowIcon;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
@@ -25,11 +26,17 @@ import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.opengl.GL11.glViewport;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.glfw.GLFWVidMode;
 
+import de.matthiasmann.twl.utils.PNGDecoder;
 import edu.ncsu.feddgame.gui.CreateUI;
 import edu.ncsu.feddgame.gui.IClickable;
 import edu.ncsu.feddgame.gui.UIElement;
@@ -122,6 +129,7 @@ public class Window {
 			glfwShowWindow(window);
 		}
 		
+		setWindowIcon();
 		setKeyCallback();
 		setWindowSizeCallback();
 		setMouseButtonCallback();
@@ -134,8 +142,8 @@ public class Window {
 	/**
 	 * Adds all specified elements to the Window's array and scene
 	 */
-	public void addElements(){
-		Dropdown dp = CreateUI.createDropdown(-3f, 0, 2f, 1f, new Font("Dropdown", new FloatColor(25,  255,  0)), new Font[]{
+	public void addElements() {
+		/*Dropdown dp = CreateUI.createDropdown(-3f, 0, 2f, 1f, new Font("Dropdown", new FloatColor(25,  255,  0)), new Font[]{
 				new Font("Option 1", new FloatColor(25,  255,  0)),
 				new Font("Op 2", new FloatColor(25,  255,  0)),
 				new Font("Test 3", new FloatColor(25,  255,  0))
@@ -150,7 +158,7 @@ public class Window {
 					System.out.println("3");
 				}
 		});
-		elementList.add(dp);
+		elementList.add(dp);*/
 		Dropdown du = CreateUI.createDropdown(-12f, 8f, 2f, 1f, new Font("Select Level", new FloatColor(25,  255,  0)));
 		for (Level level : GameInstance.levels) {
 			du.addButton(CreateUI.createButton(-12f, 8f, 2f, 1, () -> {
@@ -198,11 +206,11 @@ public class Window {
 			if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) 	//on Escape, set the window to close
 				glfwSetWindowShouldClose(window, true);
 			if (key == GLFW_KEY_LEFT_CONTROL) {
-				if (action == GLFW_PRESS){
+				if (action == GLFW_PRESS) {
 					ctrlHeld = true;
 					
 					System.out.println("Mouse: " + mouseX + ", " + mouseY);
-				}else if (action == GLFW_RELEASE){
+				} else if (action == GLFW_RELEASE) {
 					ctrlHeld = false;
 				}
 			}
@@ -326,15 +334,44 @@ public class Window {
 	public void update() {
 		glfwPollEvents();
 		//input.update();
-		
 	}
+	
 	/**
 	 * Renders all UI elements in elementList
 	 */
-	public void renderElements(){
-		for (UIElement e : elementList){
+	public void renderElements() {
+		for (UIElement e : elementList)
 			e.render();
-		}
 	}
+	
+	private void setWindowIcon() {
+		GLFWImage image = GLFWImage.malloc();
+		image.set(32, 32, loadIcon("res/icon.png"));
+		GLFWImage.Buffer images = GLFWImage.malloc(1);
+		images.put(0, image);
+
+		glfwSetWindowIcon(window, images);
+
+		images.free();
+		image.free();
+	}
+	
+	private ByteBuffer loadIcon(String path) {
+		PNGDecoder dec = null;
+		ByteBuffer buf = null;
+		
+		try {
+		    dec = new PNGDecoder(new FileInputStream(path));
+		    int width = dec.getWidth();
+		    int height = dec.getHeight();
+		    buf = BufferUtils.createByteBuffer(width * height * 4);
+		    dec.decode(buf, width * 4, PNGDecoder.Format.RGBA);
+		    buf.flip();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		
+		return buf;
+    }
 	
 }

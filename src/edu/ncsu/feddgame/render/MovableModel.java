@@ -10,7 +10,7 @@ public class MovableModel extends Model implements IClickable{
 	
 	private Runnable callback = null;
 	public MovableModel(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset, int sides) {
-		super(vertices, tCoords, indices, sides, "bound.png");
+		super(vertices, tCoords, indices, sides, "box.png");
 		adjustOffset(xOffset, yOffset);
 	}
 	public MovableModel(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset, int sides, String tex){

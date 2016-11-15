@@ -23,9 +23,10 @@ public class Level2 extends Level {
 			CreateModel.createWall(2f, -2f, .25f, 16f);
 		}
 		laserWrap = CreateModel.createLaserStart(-10f, -1f, 2, Math.toRadians(-45));
-		CreateModel.createLaserStop(10, 7);
+		
+		Model model = CreateModel.createLaserStop(10, 7);
+		model.rotate(-1.55f);
 
-		Model model;
 		for (int i = 0; i < 7; i++) {
 			int x = randomInt(1, 9);
 			int y = randomInt(2, 8);
@@ -38,6 +39,8 @@ public class Level2 extends Level {
 			if (rotate)
 				model.rotate((float) Math.random());
 		}
+		
+		CreateModel.createTriangle(2, 7, 1, 1);
 	}
 
 }

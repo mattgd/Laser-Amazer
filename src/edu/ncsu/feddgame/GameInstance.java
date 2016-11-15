@@ -4,7 +4,6 @@ import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
 import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
 import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwInit;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowSize;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
@@ -14,6 +13,7 @@ import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBlendFunc;
 import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glRectf;
@@ -54,6 +54,7 @@ public class GameInstance {
 	}};
 	
 	private static int levNum = 0; // Start with 0
+	public static float fade = 90f; // Amount of fade in degrees (0-90)
 	private static boolean hasLevel = false;
 	public static Shader shader;
 	
@@ -101,9 +102,24 @@ public class GameInstance {
 		
 		Camera camera = new Camera(window.getWidth(), window.getHeight());
 		
+		
+		// Texture
+		/*glEnable(GL_TEXTURE_2D);
+		// Transparent Faces
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		// Transparent Textures
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, 0);*/
+		
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+		FloatColor clearColor = new FloatColor(new Color(32, 32, 32));
+		//glClearColor(clearColor.red(), clearColor.blue(), clearColor.green(), 1);
+		glClearColor(0, 0, 0, 1);
+		
 		//glEnable(GL_DEPTH_TEST);
 		
 		shader = new Shader("shader");
@@ -167,8 +183,7 @@ public class GameInstance {
 				if (state.equals(State.GAME)) {
 					gameState = true;
 					shader.bind();
-					shader.setUniform("sampler", 0);
-					shader.setUniform("projection", camera.getProjection().mul(target));
+					shader.updateUniforms(camera, target);
 					tex.bind(0);
 					objectManager.renderAll();
 					
@@ -188,8 +203,7 @@ public class GameInstance {
 					gameState = false;
 					
 					shader.bind();
-					shader.setUniform("sampler", 0);
-					shader.setUniform("projection", camera.getProjection().mul(target));
+					shader.updateUniforms(camera, target);
 					tex.bind(0);
 					objectManager.renderAll();
 					
@@ -214,10 +228,22 @@ public class GameInstance {
 					startGame.renderString("(Press Space to start.)", Alignment.CENTER, -0.45f, 0.3f);
 				} else if (state.equals(State.NEXT_LEVEL)) {
 					gameState = false;
-					state = State.GAME;
 					nextLevel();
+					setState(State.GAME);
 				}
 				
+				if (!state.equals(State.LEVEL_COMPLETE)) {
+					// Fading
+					shader.unbind();
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					if (fade > 0) {
+						fade -= 2.5f;
+						glColor4f(clearColor.red(), clearColor.blue(), clearColor.green(), (float) Math.sin(Math.toRadians(fade)));
+						glRectf(-10f, -10f, 10f, 10f);
+					}
+				}
+
 				window.swapBuffers(); // Swap the render buffers
 				frames++;
 			}
@@ -259,6 +285,7 @@ public class GameInstance {
 	}
 	
 	public static void setState(State s) {
+		fade = 90f;
 		state = s;
 	}
 	
@@ -274,7 +301,7 @@ public class GameInstance {
 		
 		if (levNum > levels.size() - 1) {
 			levNum = 0;
-			state = State.GAME_COMPLETE;
+			setState(State.GAME_COMPLETE);
 		}
 		
 		levels.get(levNum).setActiveLevel(true); // Set new active level

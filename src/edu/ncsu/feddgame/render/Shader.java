@@ -93,6 +93,7 @@ public class Shader {
 		glDeleteShader(vs);
 		glDeleteShader(fs);
 		glDeleteProgram(program);
+		super.finalize();
 	}
 	
 	/**
@@ -135,12 +136,17 @@ public class Shader {
 		return sb.toString();
 	}
 	
+	public void updateUniforms(Camera camera, Matrix4f target) {
+		setUniform("sampler", 0);
+		setUniform("projection", camera.getProjection().mul(target));
+	}
+	
 	/**
 	 * Load uniform variables defined in the shader files
 	 * @param name
 	 * @param value
 	 */
-	public void setUniform(String name, int value) {
+	private void setUniform(String name, int value) {
 		int location = glGetUniformLocation(program, name);
 		
 		if (location != -1)
@@ -152,9 +158,9 @@ public class Shader {
 	 * @param name
 	 * @param matrix
 	 */
-	public void setUniform(String name, Matrix4f matrix) {
+	private void setUniform(String name, Matrix4f matrix) {
 		int location = glGetUniformLocation(program, name);
-		FloatBuffer buffer = BufferUtils.createFloatBuffer(4 * 4);
+		FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
 		
 		matrix.get(buffer);
 		
