@@ -65,6 +65,14 @@ public class MovableModel extends Model implements IClickable{
 	 * @param yPos
 	 */
 	public void followCursor(float xPos, float yPos){
+		if (xPos > 10)
+			xPos = 10;
+		if (xPos < -10)
+			xPos = -10;
+		if (yPos > 10)
+			yPos = 10;
+		if (yPos < -10)
+			yPos = -10;
 		adjustOffset(xPos * GameInstance.window.ratio, yPos);
 	}
 
