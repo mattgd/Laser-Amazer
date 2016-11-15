@@ -22,7 +22,7 @@ public class Level3 extends Level {
 			CreateModel.createWall(-4f, 2f, 12f, .25f);
 			CreateModel.createWall(2f, -1.37f, .25f, 7f);
 		}
-		laserWrap = CreateModel.createLaserStart(-10f, -1f, 2, Math.toRadians(-45));
+		laserWrapers.add(CreateModel.createLaserStart(-10f, -1f, 2, Math.toRadians(-45)));
 		
 		Model laserStop = CreateModel.createLaserStop(-10, 7);
 		laserStop.rotate(1.55f);

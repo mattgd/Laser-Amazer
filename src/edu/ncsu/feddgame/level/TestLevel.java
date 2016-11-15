@@ -10,7 +10,6 @@ public class TestLevel extends Level {
 
 	private Model box1, tri1;
 	private MovableModel box2;
-	private Wall top, bottom, left, right;
 	private LaserStop lasstop;
 	private int i;
 	private float dir;
@@ -21,7 +20,7 @@ public class TestLevel extends Level {
 	
 	@Override
 	public void renderObjects() {
-		laserWrap = CreateModel.createLaserStart(7.5f, 9, 3, Math.toRadians(251));
+		laserWrapers.add(CreateModel.createLaserStart(7.5f, 9, 3, Math.toRadians(251)));
 		lasstop = CreateModel.createLaserStop(3, -9f);
 		box1 = CreateModel.createBox(0,0);
 		box2 = CreateModel.createMovableBox(4.05f, -5.925f);
@@ -30,10 +29,10 @@ public class TestLevel extends Level {
 		tri1 = CreateModel.createTriangle(-4, -4, -1, -2);
 		box1.rotate((float)Math.toRadians(45));
 		{ 	//Walls
-			top = CreateModel.createWall(0f, 10f, 20f, .5f);
-			bottom = CreateModel.createWall(0f, -10f, 20f, .5f);
-			left = CreateModel.createWall(-10f, 0f, .5f, 20f);
-			right = CreateModel.createWall(10f, 0f, .5f, 20f);
+			CreateModel.createWall(0f, 10f, 20f, .5f);
+			CreateModel.createWall(0f, -10f, 20f, .5f);
+			CreateModel.createWall(-10f, 0f, .5f, 20f);
+			CreateModel.createWall(10f, 0f, .5f, 20f);
 		}
 		tri1.rotate(.3f);
 		i = 0;
@@ -42,9 +41,7 @@ public class TestLevel extends Level {
 	
 	@Override
 	public void logicLoop() {
-		if (laserWrap != null)
-			laserWrap.reflect();
-		
+		super.logicLoop();
 		if (i < 160) {
 			if (box1 != null)
 				box1.move(0.05f * dir, 0f, 0f); // Test animation of models, this pings the box back and forth
