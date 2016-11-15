@@ -1,5 +1,6 @@
 package edu.ncsu.feddgame.level;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import edu.ncsu.feddgame.render.LaserStart;
@@ -7,7 +8,7 @@ import edu.ncsu.feddgame.render.LaserStop;
 
 public abstract class Level {
 
-	protected LaserStart laserWrap;
+	protected ArrayList<LaserStart> laserWrapers = new ArrayList<LaserStart>();
 	protected LaserStop laserStop;
 	private boolean activeLevel = false;
 	private String name;
@@ -24,13 +25,17 @@ public abstract class Level {
 	}
 
 	public void logicLoop() {
-		if (laserWrap != null)
-			laserWrap.reflect();
+		if (laserWrapers != null){
+			for (LaserStart l : laserWrapers)
+				l.reflect();
+		}
 	}
 
 	public void renderLoop() {
-		if (laserWrap != null)
-			laserWrap.render();
+		if (laserWrapers != null){
+			for (LaserStart l : laserWrapers)
+				l.render();
+		}
 	}
 	
 	public String getName() {

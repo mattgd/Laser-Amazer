@@ -263,7 +263,7 @@ public class Window {
 			if (button == GLFW_MOUSE_BUTTON_LEFT){ 	//If left mouse button
 				if (action == GLFW_RELEASE){ 	//Set a boolean variable based on state of mouse (GLFW won't poll mouse state again if already pressed, need to manually store state)
 					mouseHeld = false;
-				}else if (action == GLFW_PRESS){
+				}else if (action == GLFW_PRESS && GameInstance.gameState){
 					mouseHeld = true;
 					for(int j = GameInstance.objectManager.getModels().size()-1; j >= 0; j--){ 	//Iterate over all models in the scene
 						Model b = GameInstance.objectManager.getModel(j);
@@ -275,7 +275,11 @@ public class Window {
 									try{
 									wait(0); 			//Don't ask: the game breaks without some random code before the followCursor call
 									}catch (Exception e){}
-									m.followCursor(mouseX, mouseY);
+									if (GameInstance.gameState){ 	//Don't ask about this redundant code either...
+										m.followCursor(mouseX, mouseY);
+									}else{
+										return;
+									}
 								}
 								}).start();
 								break;

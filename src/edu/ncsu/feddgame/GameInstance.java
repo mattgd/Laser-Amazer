@@ -60,7 +60,7 @@ public class GameInstance {
 	public static Shader shader;
 	
 	private static State state;
-	private volatile boolean gameState; // Boolean value to pause logic Thread when state != GAME
+	public static volatile boolean gameState; // Boolean value to pause logic Thread when state != GAME
 	
 	// Game begins here
 	public GameInstance() {

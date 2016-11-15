@@ -21,7 +21,7 @@ public class Level1 extends Level {
 			CreateModel.createWall(0, 1f, .25f, 18f);
 		}
 		
-		laserWrap = CreateModel.createLaserStart(-10f, -1f, 2, Math.toRadians(-45));
+		laserWrapers.add(CreateModel.createLaserStart(-10f, -1f, 2, Math.toRadians(-45)));
 		
 		CreateModel.createLaserStop(7, 10);
 		m = CreateModel.createMovableBox(4, 0);
@@ -33,8 +33,7 @@ public class Level1 extends Level {
 	
 	@Override
 	public void logicLoop() {
-		if (laserWrap != null)
-			laserWrap.reflect();
+		super.logicLoop();
 		
 		m.rotate(.005f);
 	}
