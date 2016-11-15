@@ -11,6 +11,7 @@ public abstract class Level {
 	protected LaserStop laserStop;
 	private boolean activeLevel = false;
 	private String name;
+	double timeStart;
 	
 	public Level(String name) {
 		this.name = name;
@@ -42,6 +43,18 @@ public abstract class Level {
 	
 	public void setActiveLevel(boolean active) {
 		activeLevel = active;
+		timeStart = getTime();
+	}
+	
+	public double getElapsedTime(){
+		return getTime() - timeStart;
+	}
+	
+	/**
+	 * @return System time in seconds
+	 */
+	public double getTime() {
+		return (double) System.nanoTime() / (double) 1000000000L;
 	}
 	
 }

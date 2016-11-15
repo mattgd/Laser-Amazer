@@ -210,11 +210,14 @@ public class ReflectionCalculation {
 		return (vert[3] - vert[1]) / (vert[2] - vert[0]);
 	}
 
+	/**
+	 * Executes methods for certain objects in the scene specified below
+	 * @param m
+	 * @param l
+	 */
 	private static void reflectionCallback(Model m, LaserModel l) {
 		if (m instanceof Wall) {
-			//System.out.println("wall, dude");
 		} else if (m instanceof LaserStop) {
-			//System.out.println("Stahp");
 			((LaserStop) m).laserIntersection();
 		}
 	}

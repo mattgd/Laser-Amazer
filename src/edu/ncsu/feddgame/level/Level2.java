@@ -35,9 +35,9 @@ public class Level2 extends Level {
 			
 			boolean rotate = false;
 			if (Math.random() < 0.5) rotate = true;
-			
+			float r = (float)Math.random();
 			if (rotate)
-				model.rotate((float) Math.random());
+				model.rotate(r < .5f ? (-(float)Math.PI / 3f):((float)Math.PI /6f));
 		}
 		
 		CreateModel.createTriangle(2, 7, 1, 1);
