@@ -38,11 +38,11 @@ import org.lwjgl.glfw.GLFWVidMode;
 
 import de.matthiasmann.twl.utils.PNGDecoder;
 import edu.ncsu.feddgame.gui.CreateUI;
+import edu.ncsu.feddgame.gui.Dropdown;
 import edu.ncsu.feddgame.gui.IClickable;
 import edu.ncsu.feddgame.gui.UIElement;
 import edu.ncsu.feddgame.gui.UIUtils;
 import edu.ncsu.feddgame.level.Level;
-import edu.ncsu.feddgame.render.Dropdown;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.Model;

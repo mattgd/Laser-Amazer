@@ -6,6 +6,7 @@ import java.util.List;
 import org.joml.Vector2d;
 
 import edu.ncsu.feddgame.gui.UIElement;
+import edu.ncsu.feddgame.gui.UIUtils;
 import edu.ncsu.feddgame.render.CreateModel;
 import edu.ncsu.feddgame.render.LaserModel;
 import edu.ncsu.feddgame.render.LaserStop;
@@ -14,7 +15,7 @@ import edu.ncsu.feddgame.render.Wall;
 
 public class ReflectionCalculation {
 
-	static List<Object[]> intersects = new ArrayList<Object[]>(); // list of arrays : [Model, xIntercept, yIntercept, slope of intersected line segment]
+	static private ArrayList<Object[]> intersects = new ArrayList<Object[]>(); // list of arrays : [Model, xIntercept, yIntercept, slope of intersected line segment]
 	static float coords[];
 
 	/**
@@ -127,8 +128,8 @@ public class ReflectionCalculation {
 					
 					// Check if the point of intersection  is in the correct direction
 					if (((xIntercept - coords[0]) * xDir >= 0) && ((yIntercept - coords[1]) * yDir >= 0)) {
-						if (GameInstance.window.shiftHeld)
-							System.out.println("Potential: " + xIntercept + ", " + yIntercept);
+						//if (GameInstance.window.shiftHeld)
+							//System.out.println("Potential: " + xIntercept + ", " + yIntercept);
 						
 						// Check if the point lies on a side of the polygon
 						if (((xIntercept <= v[0]) && (xIntercept >= v[2]))
@@ -156,19 +157,30 @@ public class ReflectionCalculation {
 	 */
 	private static Object[] getClosestIntersection() {
 		// Start with a massive value
+		
 		Object[] closest = new Object[] { null, Float.MAX_VALUE / 2f, Float.MAX_VALUE / 2f, 0f };
 		float length;
-		
-		for (Object[] b : intersects) { // For all intersecting points
+		float midpoint[] = new float[2];
+		ArrayList<Object[]> inters = intersects;
+		for (Object[] b : inters) { // For all intersecting points
 			length = (float) Math.hypot((float) b[1] - coords[0], (float) b[2] - coords[1]);
 			
 			// If the new object is closer than the old one
 			if ((Math.hypot((float) b[1] - coords[0], (float) b[2] - coords[1])) < (Math
 					.hypot((float) closest[1] - coords[0], (float) closest[2] - coords[1]))) {
-				
+				midpoint[0] = ((float)b[1]+coords[0]) / 2f;
+				midpoint[1] = ((float)b[2]+coords[1]) /2f;
 				// Ensure that the new intersection point isn't at the exact same spot
-				if (length > 0.05f) { 
-					closest = b; // set the new one to the closest
+				if (length > 0.05f) {
+					boolean inside = false;
+					for(Model m : GameInstance.objectManager.getModels()){
+						if (UIUtils.checkIntersection(m.vertices, midpoint[0], midpoint[1])){
+							//System.out.println("Culling: " + midpoint[0] + " : " + midpoint[1]);
+							inside = true;
+						}
+					}
+					if (!inside)
+						closest = b; // set the new one to the closest
 				}
 			}
 		}

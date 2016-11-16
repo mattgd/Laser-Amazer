@@ -10,12 +10,7 @@ public class UIUtils {
 	 * @param nvert
 	 * @return
 	 */
-	public static boolean pnpoly(float[] vertX, float[] verty, float testx, float testy){
-		float[] vertx = vertX.clone();
-		float ratio = GameInstance.window.ratio;
-		for (int i = 0; i < vertx.length; i++){ 	//Convert passed coordinates into scaled worldspace coords with the window ratio
-			vertx[i] /= ratio;
-		}
+	public static boolean pnpoly(float[] vertx, float[] verty, float testx, float testy){
 		int nvert = vertx.length;
 	    int i, j;
 	    boolean c = false;
@@ -35,8 +30,15 @@ public class UIUtils {
 	 * @return
 	 */
 	public static boolean checkIntersection(float[] coords, float testX, float testY){
-		float[] xCoords = new float[]{coords[0], coords[3], coords[6], coords[9]};
-		float[] yCoords = new float[]{coords[1], coords[4], coords[7], coords[10]};
+		int sideCount = coords.length / 3;
+		float[] xCoords = new float[sideCount];
+		float[] yCoords = new float[sideCount];
+		for (int i = 0; i < sideCount; i++){
+			xCoords[i] = coords[i * 3];
+		}
+		for (int i = 0; i < sideCount; i++){
+			yCoords[i] = coords[i * 3 + 1];
+		}
 		return pnpoly(xCoords, yCoords, testX, testY);
 	}
 	
