@@ -113,7 +113,7 @@ public class ReflectionCalculation {
 							xIntercept = coords[0];
 						}
 					} else if (sl < Float.POSITIVE_INFINITY && sl > Float.NEGATIVE_INFINITY) {
-						// Make sure the line isn't verticle if unsure
+						// Make sure the line isn't vertical if unsure
 						
 						// Calculate intersection points of the two lines
 						xIntercept = (-sl * v[0] + slope * coords[0] + v[1] - coords[1]) / (slope - sl);
@@ -171,8 +171,6 @@ public class ReflectionCalculation {
 					closest = b; // set the new one to the closest
 				}
 			}
-				
-				
 		}
 		
 		return closest;

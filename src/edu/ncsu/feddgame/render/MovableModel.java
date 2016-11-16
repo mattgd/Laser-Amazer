@@ -4,13 +4,14 @@ import edu.ncsu.feddgame.GameInstance;
 import edu.ncsu.feddgame.gui.IClickable;
 import edu.ncsu.feddgame.gui.UIUtils;
 
-public class MovableModel extends Model implements IClickable{
+public class MovableModel extends Model implements IClickable {
+	
 	public float[] xCoords; 	//Top Left, Top Right, Bottom Right, Bottom Left
 	public float[] yCoords;
 	
 	private Runnable callback = null;
 	public MovableModel(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset, int sides) {
-		super(vertices, tCoords, indices, sides, "box.png");
+		super(vertices, tCoords, indices, sides, "moveablebox.png");
 		adjustOffset(xOffset, yOffset);
 	}
 	public MovableModel(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset, int sides, String tex){
@@ -24,7 +25,7 @@ public class MovableModel extends Model implements IClickable{
 		
 	}
 	
-	private void adjustOffset(float xOffset,float yOffset){
+	private void adjustOffset(float xOffset,float yOffset) {
 		float[] coords = new float[]{
 			super.vertices[0] + xOffset - super.xOffset, super.vertices[1] + yOffset - super.yOffset, 0, // TOP LEFT - 0
 			super.vertices[3] + xOffset - super.xOffset, super.vertices[4] + yOffset - super.yOffset, 0, // TOP RIGHT - 1

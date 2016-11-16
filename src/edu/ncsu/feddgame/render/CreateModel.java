@@ -33,7 +33,7 @@ public class CreateModel {
 			2, 3, 0
 		};
 		
-		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, "bgtile.png")); 	//Add the model to the objectManager
+		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, "unmoveablebox.png")); 	//Add the model to the objectManager
 	}
 	
 	public static Model createBox(float xOffset, float yOffset) {
@@ -148,7 +148,7 @@ public class CreateModel {
 				2, 3, 0
 		};
 		
-		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, "box.png")); 	//Add the model to the objectManager
+		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 4, "moveablebox.png")); 	//Add the model to the objectManager
 	}
 	
 	public static MovableModel createMovableTrapezoid(float xOffset, float yOffset, float topBase, float bottomBase, float height){

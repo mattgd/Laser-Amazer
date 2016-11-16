@@ -1,10 +1,11 @@
 package edu.ncsu.feddgame.render;
 
 import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
 import static org.lwjgl.opengl.GL11.GL_ENABLE_BIT;
 import static org.lwjgl.opengl.GL11.GL_LINEAR;
+import static org.lwjgl.opengl.GL11.GL_ONE;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.GL_RGB;
 import static org.lwjgl.opengl.GL11.GL_RGBA;
@@ -28,10 +29,7 @@ import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTexImage2D;
 import static org.lwjgl.opengl.GL11.glTexParameteri;
 import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL31.*;
-import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -68,7 +66,7 @@ public class GameFont {
         glBindTexture(GL_TEXTURE_2D, fontTexture);
         
         // Use TWL's utility classes to load the png file
-        PNGDecoder decoder = new PNGDecoder(new FileInputStream("res/font2.png"));
+        PNGDecoder decoder = new PNGDecoder(new FileInputStream("res/font3.png"));
         ByteBuffer buffer = BufferUtils.createByteBuffer(4 * decoder.getWidth() * decoder.getHeight());
         decoder.decode(buffer, decoder.getWidth() * 4, PNGDecoder.Format.RGBA);
         buffer.flip();
@@ -82,14 +80,13 @@ public class GameFont {
 	
 	public void renderString(String string, float x, float y, float characterWidth) {
 		GameInstance.shader.unbind();
-		//glClearColor(0f, 0f, 0f, 0f);
-		
+
 		float ratio = GameInstance.window.ratio;
 		float characterHeight = 0.52f * characterWidth; // Automatically calculate the height from aspect ratio
 		characterWidth /= ratio;
 		x /= ratio;
 		
-		glPushAttrib(GL_TEXTURE_BIT | GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT);
+		glPushAttrib(GL_TEXTURE_BIT | GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT | GL_ACCUM_BUFFER_BIT);
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, fontTexture);

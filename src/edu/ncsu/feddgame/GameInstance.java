@@ -27,6 +27,7 @@ import org.lwjgl.opengl.GL;
 
 import edu.ncsu.feddgame.level.Level;
 import edu.ncsu.feddgame.level.Level1;
+import edu.ncsu.feddgame.level.Level10;
 import edu.ncsu.feddgame.level.Level2;
 import edu.ncsu.feddgame.level.Level3;
 import edu.ncsu.feddgame.level.TestLevel;
@@ -35,7 +36,6 @@ import edu.ncsu.feddgame.render.Camera;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.Shader;
-import edu.ncsu.feddgame.render.Texture;
 
 public class GameInstance {
 	
@@ -51,6 +51,7 @@ public class GameInstance {
 		add(new Level2());
 		add(new Level3());
 		add(new TestLevel());
+		add(new Level10());
 	}};
 	
 	private static int levNum = 0; // Start with 0
@@ -111,8 +112,7 @@ public class GameInstance {
 		//glClearColor(1f, 1f, 1f, 1f);
 		
 		shader = new Shader("shader");
-		Texture tex = new Texture("bound.png");
-		
+
 		Matrix4f scale = new Matrix4f()
 				.translate(new Vector3f(100, 0, 0))
 				.scale(40);
@@ -173,7 +173,6 @@ public class GameInstance {
 					gameState = true;
 					shader.bind();
 					shader.updateUniforms(camera, target);
-					tex.bind(0);
 					objectManager.renderAll();
 					
 					// Make sure it's the active level
@@ -197,7 +196,6 @@ public class GameInstance {
 					
 					shader.bind();
 					shader.updateUniforms(camera, target);
-					tex.bind(0);
 					objectManager.renderAll();
 					
 					window.renderElements();

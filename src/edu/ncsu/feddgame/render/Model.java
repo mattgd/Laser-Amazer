@@ -30,7 +30,7 @@ public class Model {
 	private String texStr;
 	protected float xOffset, yOffset;
 	
-	private String defaultTexString = "box.png";
+	private String defaultTexString = "bgtile.png";
 	/**
 	 * Create and bind the vertices, texture coordinates, and indices to the graphics shader.
 	 * @param vertices
