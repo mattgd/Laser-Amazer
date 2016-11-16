@@ -62,6 +62,8 @@ public class CreateModel {
 	}
 	
 	public static MovableModel createMovableTrangle(float xOffset, float yOffset, float xSide, float ySide) {
+		xOffset += 4;
+		yOffset -= 2;
 		// Right Triangle
 		float[] vertices = new float[] {
 			-xSide/2f + xOffset, ySide/2f + yOffset, 0, // TOP LEFT - 0
@@ -76,8 +78,7 @@ public class CreateModel {
 		};
 		
 		int[] indices = new int[] {
-				0, 1, 2,
-				2
+				0, 1, 2
 		};
 		
 		return (MovableModel) GameInstance.objectManager.addModel(new MovableModel(vertices, texture, indices, xOffset, yOffset, 3));

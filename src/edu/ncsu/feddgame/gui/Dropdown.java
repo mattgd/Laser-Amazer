@@ -1,9 +1,9 @@
-package edu.ncsu.feddgame.render;
+package edu.ncsu.feddgame.gui;
 
 import java.util.LinkedList;
 
-import edu.ncsu.feddgame.gui.Button;
-import edu.ncsu.feddgame.gui.UIUtils;
+import edu.ncsu.feddgame.GameInstance;
+import edu.ncsu.feddgame.render.GameFont;
 
 public class Dropdown extends Button{
 	
@@ -49,7 +49,7 @@ public class Dropdown extends Button{
 				b.checkClick(xPos, yPos);
 			}
 		}
-		if (UIUtils.pnpoly(super.xCoords, super.yCoords, xPos, yPos)){ 	//Then check if the dropdown was clicked
+		if (UIUtils.pnpoly(super.xCoords, super.yCoords, xPos * GameInstance.window.ratio, yPos)){ 	//Then check if the dropdown was clicked
 			choiceClicked();
 			return true;
 		}else{

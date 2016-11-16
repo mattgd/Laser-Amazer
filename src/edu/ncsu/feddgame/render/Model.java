@@ -162,24 +162,21 @@ public class Model {
 	}
 	
 	/**
-	 * Adjusts the vertices of the model by the values passed
+	 * Adjusts the vertices of the model by the x, y, and z values passed
 	 * @param x
 	 * @param y
 	 * @param z
 	 */
-	public void move(float x, float y, float z){ 	//Moves the vertices by 
-		this.vertices[0] += x;
-		this.vertices[3] += x;
-		this.vertices[6] += x;
-		this.vertices[9] += x;
-		this.vertices[1] += y;
-		this.vertices[4] += y;
-		this.vertices[7] += y;
-		this.vertices[10] += y;
-		this.vertices[2] += z;
-		this.vertices[5] += z;
-		this.vertices[8] += z;
-		this.vertices[11] += z;
+	public void move(float x, float y, float z){ 	//Moves the vertices by x, y, and z
+		for (int i = 0; i < this.sideCount; i++){
+			this.vertices[i * 3] += x;
+		}
+		for (int i = 0; i < this.sideCount; i++){
+			this.vertices[i * 3 + 1] += y;
+		}
+		for (int i = 0; i < this.sideCount; i++){
+			this.vertices[i * 3 + 2] += z;
+		}
 	}
 	
 	public void setVertices(float[] vertices){

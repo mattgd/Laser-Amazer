@@ -25,12 +25,16 @@ public class MovableModel extends Model implements IClickable{
 	}
 	
 	private void adjustOffset(float xOffset,float yOffset){
-		float[] coords = new float[]{
-			super.vertices[0] + xOffset - super.xOffset, super.vertices[1] + yOffset - super.yOffset, 0, // TOP LEFT - 0
-			super.vertices[3] + xOffset - super.xOffset, super.vertices[4] + yOffset - super.yOffset, 0, // TOP RIGHT - 1
-			super.vertices[6] + xOffset - super.xOffset, super.vertices[7] + yOffset - super.yOffset, 0, // BOTTOM RIGHT - 2
-			super.vertices[9] + xOffset - super.xOffset, super.vertices[10] + yOffset - super.yOffset, 0, // BOTTOM LEFT - 3
-		};
+		float[] coords = new float[3 * super.sideCount];
+		for (int i = 0; i < this.sideCount; i++){
+			coords[i * 3] = super.vertices[i * 3] + xOffset - super.xOffset;
+		}
+		for (int i = 0; i < this.sideCount; i++){
+			coords[i * 3 + 1] = super.vertices[i * 3 + 1] + yOffset - super.yOffset;
+		}
+		for (int i = 0; i < this.sideCount; i++){
+			coords[i * 3 + 2] = 0;
+		}
 		splitCoords(coords);
 		super.setVertices(coords);
 		super.xOffset = xOffset;
@@ -38,8 +42,14 @@ public class MovableModel extends Model implements IClickable{
 		//System.out.println(xOffset + ", "  + yOffset);
 	}
 	private void splitCoords(float[] coords){
-		this.xCoords = new float[]{coords[0], coords[3], coords[6], coords[9]};
-		this.yCoords = new float[]{coords[1], coords[4], coords[7], coords[10]};
+		this.xCoords = new float[sideCount];
+		this.yCoords = new float[sideCount];
+		for (int i = 0; i < this.sideCount; i++){
+			this.xCoords[i] = coords[i * 3];
+		}
+		for (int i = 0; i < this.sideCount; i++){
+			this.yCoords[i] = coords[i * 3 + 1];
+		}
 	}
 
 	@Override
@@ -50,7 +60,8 @@ public class MovableModel extends Model implements IClickable{
 	 * @return
 	 */
 	public boolean checkClick(float xPos, float yPos){
-		if (UIUtils.pnpoly(xCoords, yCoords, xPos, yPos)){
+		splitCoords(super.vertices);
+		if (UIUtils.pnpoly(xCoords, yCoords, xPos * GameInstance.window.ratio, yPos)){
 			if (callback != null)
 				callback.run();
 			return true;

@@ -1,6 +1,5 @@
 package edu.ncsu.feddgame.gui;
 
-import edu.ncsu.feddgame.render.Dropdown;
 import edu.ncsu.feddgame.render.GameFont;
 
 public class CreateUI {

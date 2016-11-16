@@ -2,6 +2,7 @@ package edu.ncsu.feddgame.gui;
 
 import java.util.ArrayList;
 
+import edu.ncsu.feddgame.GameInstance;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.Model;
@@ -75,7 +76,7 @@ public class Button extends Model implements UIElement, IClickable{
 	 */
 	@Override
 	public boolean checkClick(float xPos, float yPos) {
-		if (UIUtils.pnpoly(xCoords, yCoords, xPos, yPos)) {
+		if (UIUtils.pnpoly(xCoords, yCoords, xPos * GameInstance.window.ratio, yPos)) {
 			if (callbacks != null)
 				for(Runnable r : callbacks) {
 					r.run();
