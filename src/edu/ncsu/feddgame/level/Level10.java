@@ -57,7 +57,7 @@ public class Level10 extends Level {
 			CreateModel.createWall(6f, -4f, .25f, 9f);
 			CreateModel.createWall(6f, 7.5f, .25f, 8f);
 		}
-		
+		CreateModel.createMovableTriangle(-1f, 1f, 1, 1);
 		Model model;
 		for (int i = 0; i < 7; i++) {
 			int x = randomInt(1, 9);

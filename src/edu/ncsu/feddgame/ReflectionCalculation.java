@@ -158,13 +158,13 @@ public class ReflectionCalculation {
 		// Start with a massive value
 		
 		Object[] closest = new Object[] { null, Float.MAX_VALUE / 2f, Float.MAX_VALUE / 2f, 0f };
-		float length;
+		float length = 0;
 		float midpoint[] = new float[2];
 		ArrayList<Object[]> inters = new ArrayList<Object[]>();
 		inters.addAll(intersects);
 		for (Object[] b : inters) { // For all intersecting points
-			length = (float) Math.hypot((float) b[1] - coords[0], (float) b[2] - coords[1]);
-			
+			try{
+				length = (float) Math.hypot((float) b[1] - coords[0], (float) b[2] - coords[1]);
 			// If the new object is closer than the old one
 			if ((Math.hypot((float) b[1] - coords[0], (float) b[2] - coords[1])) < (Math
 					.hypot((float) closest[1] - coords[0], (float) closest[2] - coords[1]))) {
@@ -183,6 +183,7 @@ public class ReflectionCalculation {
 						closest = b; // set the new one to the closest
 				}
 			}
+			}catch (Exception e){}
 		}
 		
 		return closest;

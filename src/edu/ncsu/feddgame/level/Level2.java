@@ -39,7 +39,7 @@ public class Level2 extends Level {
 			if (rotate)
 				model.rotate(r < .5f ? (-(float)Math.PI / 3f):((float)Math.PI /6f));
 		}
-		
+		CreateModel.createMovableTriangle(-1f, 1f, 1, 1);
 		CreateModel.createTriangle(2, 7, 1, 1);
 	}
 

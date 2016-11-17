@@ -63,14 +63,13 @@ public class CreateModel {
 	}
 	
 	public static MovableModel createMovableTriangle(float xOffset, float yOffset, float xSide, float ySide) {
-		xOffset += 4 - xSide / 6f;
-		yOffset -= 2 + ySide / 6f;
-		
+		float xO = xSide/6f;
+		float yO = ySide/6f;
 		// Right Triangle
 		float[] vertices = new float[] {
-				-xSide/2f + xOffset, ySide/2f + yOffset, 0, // TOP LEFT - 0
-				xSide/2f + xOffset, ySide/2f + yOffset, 0, // TOP RIGHT - 1
-				xSide/2f + xOffset, -ySide/2f + yOffset, 0, // BOTTOM - 2
+				xSide/2f + xO, -ySide/2f + yO, 0, // TOP LEFT - 0
+				-xSide/2f + xO, -ySide/2f + yO, 0, // TOP RIGHT - 1
+				-xSide/2f + xO, ySide/2f + yO, 0, // BOTTOM - 2
 		};
 				
 		float[] texture = new float[] {

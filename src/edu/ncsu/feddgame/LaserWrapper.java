@@ -57,15 +57,17 @@ public class LaserWrapper {
 	}
 	
 	public void rotateStart(float angle, float xOffset, float yOffset){
-		float[] c = laserList.getFirst().getCoords();
-		float x = c[0] - xOffset, y = c[1] - yOffset;
-		float[] g = new float[]{
-				 (float)(x * Math.cos(angle) - y * Math.sin(angle) + xOffset),
-				 (float)(x * Math.sin(angle) + y * Math.cos(angle) + yOffset)
-		};
-		laserList.getFirst().setCoords(g);
-		float ang = (float)(laserList.getFirst().getAngle() + angle) % ((float)Math.PI * 2f);
-		laserList.getFirst().setAngle(ang);
+		try{
+			float[] c = laserList.getFirst().getCoords();
+			float x = c[0] - xOffset, y = c[1] - yOffset;
+			float[] g = new float[]{
+					 (float)(x * Math.cos(angle) - y * Math.sin(angle) + xOffset),
+					 (float)(x * Math.sin(angle) + y * Math.cos(angle) + yOffset)
+			};
+			laserList.getFirst().setCoords(g);
+			float ang = (float)(laserList.getFirst().getAngle() + angle) % ((float)Math.PI * 2f);
+			laserList.getFirst().setAngle(ang);
+		}catch (Exception e){}
 	}
 
 }
