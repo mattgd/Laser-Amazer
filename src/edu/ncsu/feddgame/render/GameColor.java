@@ -21,4 +21,7 @@ public enum GameColor {
 	public Color getColor() {
 		return color;
 	}
+	public FloatColor getFloatColor(){
+		return new FloatColor(color);
+	}
 }
