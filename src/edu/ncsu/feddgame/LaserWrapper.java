@@ -55,5 +55,15 @@ public class LaserWrapper {
 		}
 		lock.readLock().unlock(); 	//Unlocks the list
 	}
+	
+	public void rotateStart(float angle, float xOffset, float yOffset){
+		float[] c = laserList.getFirst().getCoords();
+		float x = c[0] - xOffset, y = c[1] - yOffset;
+		float[] g = new float[]{
+				 (float)(x * Math.cos(angle) - y * Math.sin(angle) + xOffset),
+				 (float)(x * Math.sin(angle) + y * Math.cos(angle) + yOffset)
+		};
+		laserList.getFirst().setCoords(g);
+	}
 
 }

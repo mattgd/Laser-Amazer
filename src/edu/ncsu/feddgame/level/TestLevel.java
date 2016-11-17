@@ -21,7 +21,9 @@ public class TestLevel extends Level {
 		CreateModel.createMovableBox(4.05f, -5.925f);
 		CreateModel.createMovableTrapezoid(-.9f, 5.8f, 1.5f, 1, 1);
 		CreateModel.createBox(-4f, 2f);
-		CreateModel.createMovableTrangle(-4f, 2f, 2f, 2f);
+		CreateModel.createMovableTrangle(-4f, 2f, 3f, -1.4f);
+		CreateModel.createMovableTrangle(-4f, 2f, -1f, 1f);
+		
 		tri1 = CreateModel.createTriangle(-4, -4, -1, -2);
 		box1.rotate((float)Math.toRadians(45));
 		{ 	//Walls
@@ -33,6 +35,7 @@ public class TestLevel extends Level {
 		tri1.rotate(.3f);
 		i = 0;
 		dir = 1;
+		//laserWrapers.get(0).rotate((float)Math.PI * 2f/3f);
 	}
 	
 	@Override
@@ -41,7 +44,7 @@ public class TestLevel extends Level {
 		if (i < 160) {
 			if (box1 != null)
 				box1.move(0.05f * dir, 0f, 0f); // Test animation of models, this pings the box back and forth
-			
+			laserWrapers.get(0).rotate((float)Math.toRadians(1));
 			i++;
 		} else {
 			
