@@ -72,8 +72,7 @@ public class GameFont {
         buffer.flip();
         
         // Load the previously loaded texture data into the texture object.
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, decoder.getWidth(), decoder.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                buffer);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, decoder.getWidth(), decoder.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
         
         glBindTexture(GL_TEXTURE_2D, 0); // Unbind the texture
     }
@@ -86,7 +85,7 @@ public class GameFont {
 		characterWidth /= ratio;
 		x /= ratio;
 		
-		glPushAttrib(GL_TEXTURE_BIT | GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT | GL_ACCUM_BUFFER_BIT);
+		glPushAttrib(GL_TEXTURE_BIT | GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT);
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, fontTexture);

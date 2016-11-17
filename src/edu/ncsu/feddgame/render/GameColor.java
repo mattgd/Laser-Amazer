@@ -1,4 +1,4 @@
-package edu.ncsu.feddgame;
+package edu.ncsu.feddgame.render;
 
 import java.awt.Color;
 
@@ -12,7 +12,7 @@ public enum GameColor {
 	TEAL(50, 153, 187),
 	YELLOW(255, 196, 37);
 	
-	public final Color color;
+	private final Color color;
 	
 	GameColor(int r, int g, int b) {
 		this.color = new Color(r, g, b);
