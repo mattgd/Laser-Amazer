@@ -108,7 +108,6 @@ public class Model {
 		for (int i = 0; i < this.sideCount; i++){
 			newv[i * 3] /= ratio;
 		}
-		
 		glBindBuffer(GL_ARRAY_BUFFER, vertexId);
 		glBufferData(GL_ARRAY_BUFFER, createBuffer(newv), GL_STATIC_DRAW);
 		
