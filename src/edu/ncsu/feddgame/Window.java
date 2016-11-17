@@ -118,11 +118,11 @@ public class Window {
 	 * Adds all specified elements to the Window's array and scene
 	 */
 	public void addElements() {
-		Dropdown du = CreateUI.createDropdown(-12f, 8f, 2f, 1f, new GameFont("Select Level", GameColor.GREEN.getFloatColor()));
+		Dropdown du = CreateUI.createDropdown(-12f, 8f, 3f, 1f, new GameFont("Select Level", GameColor.RED.getFloatColor()));
 		for (Level level : GameInstance.levels) {
-			du.addButton(CreateUI.createButton(-12f, 8f, 2f, 1, () -> {
+			du.addButton(CreateUI.createButton(-12f, 8f, 3f, 1, () -> {
 				GameInstance.setLevel(GameInstance.levels.indexOf(level));
-			}, new GameFont(level.getName(), GameColor.GREEN.getFloatColor())));
+			}, new GameFont(level.getName(), GameColor.RED.getFloatColor())));
 		}
 		elementList.add(du);
 	}
