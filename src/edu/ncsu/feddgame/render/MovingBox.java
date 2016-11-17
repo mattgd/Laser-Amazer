@@ -4,27 +4,31 @@ public class MovingBox {
 
 	private Model model;
 	private int distance = 0, maxDistance;
-	private float velocity = 1f;
+	private float xVelocity = 1f, yVelocity = 0f;
 	
-	public MovingBox(float x, float y, int maxDistance) {
+	public MovingBox(float x, float y, int maxDistance, float xVelocity, float yVelocity) {
 		this.model = CreateModel.createBox(x, y);
 		this.maxDistance = maxDistance;
+		this.xVelocity = xVelocity;
+		this.yVelocity = yVelocity;
 	}
 	
-	public MovingBox(float x, float y, int maxDistance, int distance, float velocity) {
+	public MovingBox(float x, float y, int maxDistance, int distance, float xVelocity, float yVelocity) {
 		this.model = CreateModel.createBox(x, y);
 		this.maxDistance = maxDistance;
 		this.distance = distance;
-		this.velocity = velocity;
+		this.xVelocity = xVelocity;
+		this.yVelocity = yVelocity;
 	}
 	
 	public void logicLoop() {
 		if (distance < maxDistance) {
-			model.move(0.05f * velocity, 0f, 0f); // Moves the box back and forth
+			model.move(0.05f * xVelocity, 0.05f * yVelocity, 0f); // Moves the box back and forth
 			distance++;
 		} else {
 			distance = 0;
-			velocity *= -1f;
+			xVelocity *= -1f;
+			yVelocity *= -1f;
 		}
 	}
 	

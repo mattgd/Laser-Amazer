@@ -23,19 +23,20 @@ public class Level10 extends Level {
 		LaserStart start = CreateModel.createLaserStart(9.3f, 9.3f, 3, Math.toRadians(254));
 		laserWrappers.add(start);
 		
-		laserStop = CreateModel.createLaserStop(-9.3f, 9.3f);
+		laserStop = CreateModel.createLaserStop(-9f, 9.3f);
+		//CreateModel.createBox(-9.3f, 9.3f);
 		
 		// MovingBoxes
-		MovingBox movingBox1 = new MovingBox(2.85f, 2f, 123);
+		MovingBox movingBox1 = new MovingBox(2.85f, 2f, 123, 1f, 0f);
 		movingBox1.rotate(45);
 		
-		MovingBox movingBox2 = new MovingBox(-8f, 2f, 123);
+		MovingBox movingBox2 = new MovingBox(0f, 2f, 123, 0f, 1f);
 		
 		movingBoxes = new MovingBox[] { movingBox1, movingBox2 };
 		
 		box2 = CreateModel.createMovableBox(4.05f, -5.925f);
 		CreateModel.createMovableTrapezoid(-.9f, 5.8f, 1.5f, 1, 1);
-		CreateModel.createBox(3.4f, -8);
+		CreateModel.createBox(4f, 0f);
 		
 		tri1 = CreateModel.createTriangle(-4, -4, -1, -2);
 		tri1.rotate(.3f);
@@ -48,7 +49,10 @@ public class Level10 extends Level {
 			CreateModel.createWall(10f, 0f, .5f, 20f);
 			
 			// Inner walls
-			CreateModel.createWall(-5f, 2f, .25f, 18f);
+			CreateModel.createWall(-9.7f, 9.4f, .5f, 1f); // Wall to fill in gaps around LaserStop
+			CreateModel.createWall(-8.3f, 9.4f, .5f, 1f); // Wall to fill in gaps around LaserStop
+			
+			CreateModel.createWall(-8f, 2f, .25f, 18f);
 			CreateModel.createWall(2f, -2f, .25f, 16f);
 			CreateModel.createWall(6f, -4f, .25f, 9f);
 			CreateModel.createWall(6f, 7.5f, .25f, 8f);
@@ -73,9 +77,12 @@ public class Level10 extends Level {
 	public void logicLoop() {
 		super.logicLoop();
 		
-		for (MovingBox mBox : movingBoxes) {
-			if (mBox != null)
-				mBox.logicLoop();
+		//TODO: Logic loop is sometimes called first, so cancel the rest if Array is null
+		if (movingBoxes != null) {
+			for (MovingBox mBox : movingBoxes) {
+				if (mBox != null)
+					mBox.logicLoop();
+			}
 		}
 	}
 
