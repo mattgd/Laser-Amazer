@@ -1,16 +1,11 @@
 package edu.ncsu.feddgame.level;
 
 import edu.ncsu.feddgame.render.CreateModel;
-import edu.ncsu.feddgame.render.LaserStop;
 import edu.ncsu.feddgame.render.Model;
-import edu.ncsu.feddgame.render.MovableModel;
-import edu.ncsu.feddgame.render.Wall;
 
 public class TestLevel extends Level {
 
 	private Model box1, tri1;
-	private MovableModel box2;
-	private LaserStop lasstop;
 	private int i;
 	private float dir;
 	
@@ -21,9 +16,9 @@ public class TestLevel extends Level {
 	@Override
 	public void renderObjects() {
 		laserWrapers.add(CreateModel.createLaserStart(7.5f, 9, 3, Math.toRadians(251)));
-		//lasstop = CreateModel.createLaserStop(3, -9f);
+		//CreateModel.createLaserStop(3, -9f);
 		box1 = CreateModel.createBox(0,0);
-		box2 = CreateModel.createMovableBox(4.05f, -5.925f);
+		CreateModel.createMovableBox(4.05f, -5.925f);
 		CreateModel.createMovableTrapezoid(-.9f, 5.8f, 1.5f, 1, 1);
 		CreateModel.createBox(-4f, 2f);
 		CreateModel.createMovableTrangle(-4f, 2f, 2f, 2f);

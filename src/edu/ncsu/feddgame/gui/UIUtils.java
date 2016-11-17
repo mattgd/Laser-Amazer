@@ -1,7 +1,5 @@
 package edu.ncsu.feddgame.gui;
 
-import edu.ncsu.feddgame.GameInstance;
-
 public class UIUtils {
 	/**
 	 * Shamelessly stolen code from Randolph Franklin
@@ -43,7 +41,7 @@ public class UIUtils {
 	}
 	
 	/**
-	 * Converts cursor coordinates into coordinates on the cartesian coordinate system in-game
+	 * Converts cursor coordinates into coordinates on the Cartesian coordinate system in-game
 	 * @param xPos
 	 * @param yPos
 	 * @return

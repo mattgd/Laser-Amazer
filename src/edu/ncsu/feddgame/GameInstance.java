@@ -34,6 +34,7 @@ import edu.ncsu.feddgame.level.TestLevel;
 import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.Camera;
 import edu.ncsu.feddgame.render.FloatColor;
+import edu.ncsu.feddgame.render.GameColor;
 import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.Shader;
 

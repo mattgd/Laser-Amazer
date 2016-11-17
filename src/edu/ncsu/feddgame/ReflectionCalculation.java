@@ -1,7 +1,6 @@
 package edu.ncsu.feddgame;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.joml.Vector2d;
 
@@ -161,7 +160,8 @@ public class ReflectionCalculation {
 		Object[] closest = new Object[] { null, Float.MAX_VALUE / 2f, Float.MAX_VALUE / 2f, 0f };
 		float length;
 		float midpoint[] = new float[2];
-		ArrayList<Object[]> inters = intersects;
+		ArrayList<Object[]> inters = new ArrayList<Object[]>();
+		inters.addAll(intersects);
 		for (Object[] b : inters) { // For all intersecting points
 			length = (float) Math.hypot((float) b[1] - coords[0], (float) b[2] - coords[1]);
 			

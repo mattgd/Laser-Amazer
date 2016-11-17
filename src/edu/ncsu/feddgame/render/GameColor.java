@@ -1,4 +1,4 @@
-package edu.ncsu.feddgame;
+package edu.ncsu.feddgame.render;
 
 import java.awt.Color;
 
@@ -20,5 +20,8 @@ public enum GameColor {
 	
 	public Color getColor() {
 		return color;
+	}
+	public FloatColor getFloatColor(){
+		return new FloatColor(color);
 	}
 }

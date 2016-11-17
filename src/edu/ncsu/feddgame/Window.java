@@ -43,7 +43,7 @@ import edu.ncsu.feddgame.gui.IClickable;
 import edu.ncsu.feddgame.gui.UIElement;
 import edu.ncsu.feddgame.gui.UIUtils;
 import edu.ncsu.feddgame.level.Level;
-import edu.ncsu.feddgame.render.FloatColor;
+import edu.ncsu.feddgame.render.GameColor;
 import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.Model;
 import edu.ncsu.feddgame.render.MovableModel;
@@ -102,28 +102,8 @@ public class Window {
 		vidMode = glfwGetVideoMode(monitor);
 		refreshRate = vidMode.refreshRate();
 		
-		if (fullscreen) {
-			float aspect = 4.0f / 3.0f;
-
-			int screenWidth = vidMode.width();
-			int screenHeight = vidMode.height();
-
-			int viewWidth = screenWidth;
-			int viewHeight = (int) (screenWidth / aspect);
-
-			if (viewHeight > screenHeight) {
-				viewHeight = screenHeight;
-				viewWidth = (int) (screenHeight * aspect);
-			}
-
-			int vportX = (screenWidth - viewWidth) / 2;
-			int vportY = (screenHeight - viewHeight) / 2;
-			
-			glViewport(0, 0, viewWidth, viewHeight);
-		} else {
-			glfwSetWindowPos(window, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2); // Show window in center of screen
-			glfwShowWindow(window);
-		}
+		glfwSetWindowPos(window, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2); // Show window in center of screen
+		glfwShowWindow(window);
 		
 		setWindowIcon();
 		setKeyCallback();
@@ -138,11 +118,11 @@ public class Window {
 	 * Adds all specified elements to the Window's array and scene
 	 */
 	public void addElements() {
-		Dropdown du = CreateUI.createDropdown(-12f, 8f, 2f, 1f, new GameFont("Select Level", new FloatColor(GameColor.GREEN.getColor())));
+		Dropdown du = CreateUI.createDropdown(-12f, 8f, 2f, 1f, new GameFont("Select Level", GameColor.GREEN.getFloatColor()));
 		for (Level level : GameInstance.levels) {
 			du.addButton(CreateUI.createButton(-12f, 8f, 2f, 1, () -> {
 				GameInstance.setLevel(GameInstance.levels.indexOf(level));
-			}, new GameFont(level.getName(), new FloatColor(GameColor.GREEN.getColor()))));
+			}, new GameFont(level.getName(), GameColor.GREEN.getFloatColor())));
 		}
 		elementList.add(du);
 	}
