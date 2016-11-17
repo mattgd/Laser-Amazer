@@ -23,7 +23,6 @@ public class TestLevel extends Level {
 		CreateModel.createBox(-4f, 2f);
 		CreateModel.createMovableTrangle(-4f, 2f, 3f, -1.4f);
 		CreateModel.createMovableTrangle(-4f, 2f, -1f, 1f);
-		
 		tri1 = CreateModel.createTriangle(-4, -4, -1, -2);
 		box1.rotate((float)Math.toRadians(45));
 		{ 	//Walls
