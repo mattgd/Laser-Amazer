@@ -62,7 +62,7 @@ public class CreateModel {
 		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 3, GameTexture.WALL.getPath()));
 	}
 	
-	public static MovableModel createMovableTrangle(float xOffset, float yOffset, float xSide, float ySide) {
+	public static MovableModel createMovableTriangle(float xOffset, float yOffset, float xSide, float ySide) {
 		xOffset += 4 - xSide / 6f;
 		yOffset -= 2 + ySide / 6f;
 		
