@@ -65,7 +65,7 @@ public class LaserWrapper {
 		};
 		laserList.getFirst().setCoords(g);
 		float ang = (float)(laserList.getFirst().getAngle() + angle) % ((float)Math.PI * 2f);
-		laserList.getFirst().setAngle((ang < 0) ? (float)(Math.PI * 2f + ang) : ang);
+		laserList.getFirst().setAngle(ang);
 	}
 
 }

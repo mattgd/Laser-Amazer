@@ -43,7 +43,7 @@ public class TestLevel extends Level {
 		if (i < 160) {
 			if (box1 != null)
 				box1.move(0.05f * dir, 0f, 0f); // Test animation of models, this pings the box back and forth
-			laserWrappers.get(0).rotate((float)Math.toRadians(1));
+			laserWrappers.get(0).rotate((float)Math.toRadians(.1));
 			i++;
 		} else {
 			

@@ -87,6 +87,7 @@ public class LaserModel extends Model{
 	 */
 	public void setAngle(float a){
 		this.angle = a;
+		this.vect = new Vector2d(.1f * Math.cos(a), .1f * Math.sin(a));
 		determineDirection();
 	}
 	

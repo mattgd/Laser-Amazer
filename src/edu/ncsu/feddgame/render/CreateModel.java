@@ -319,7 +319,7 @@ public class CreateModel {
 				2, 3, 0
 		};
 
-		LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, newLaser(xOffset, yOffset - height/2f, 1));
+		LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, newLaser(xOffset, yOffset - height/2f, .1f));
 		l.rotate((float)Math.toRadians(-90 - 90 * side));
 		GameInstance.objectManager.addModel(l);
 		
