@@ -108,11 +108,18 @@ public class LaserModel extends Model{
 	}
 	
 	/**
-	 * Returns the coords of the line from which the laser is generated
+	 * Returns the coordinates of the line from which the laser is generated
 	 * @return
 	 */
 	public float[] getCoords(){
 		return this.coords;
+	}
+	/**
+	 * Sets the starting coordinates of the laser
+	 * @param f
+	 */
+	public void setCoords(float[] f){
+		this.coords = f;
 	}
 	
 	

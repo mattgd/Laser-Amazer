@@ -9,6 +9,11 @@ public class LaserStart extends Model{
 		this.laser = laser;
 	}
 	
+	public LaserStart(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset) {
+		super(vertices, tCoords, indices, xOffset, yOffset, 4, "start.png");
+	}
+	
+	
 	@Override
 	public void render(){
 		super.render();
@@ -17,6 +22,16 @@ public class LaserStart extends Model{
 	
 	public void reflect(){
 		laser.runReflections();
+	}
+	public void setLaser(LaserWrapper l){
+		this.laser = l;
+	}
+	
+	@Override
+	public void rotate(float angle){
+		super.rotate(angle);
+		if (laser != null)
+			laser.rotateStart(angle, super.xOffset, super.yOffset);
 	}
 
 }

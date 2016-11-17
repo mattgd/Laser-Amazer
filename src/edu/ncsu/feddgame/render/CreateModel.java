@@ -62,9 +62,9 @@ public class CreateModel {
 		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 3, GameTexture.WALL.getPath()));
 	}
 	
-	public static MovableModel createMovableTriangle(float xOffset, float yOffset, float xSide, float ySide) {
-		xOffset += 4;
-		yOffset -= 2;
+	public static MovableModel createMovableTrangle(float xOffset, float yOffset, float xSide, float ySide) {
+		xOffset += 4 - xSide / 6f;
+		yOffset -= 2 + ySide / 6f;
 		
 		// Right Triangle
 		float[] vertices = new float[] {
@@ -250,10 +250,16 @@ public class CreateModel {
 		return new LaserModel(texture, indices, begX, begY, vect); 	//Return the new Laser
 	}
 	
+	/**
+	 * Creates the Laser starting block
+	 * @param xOffset
+	 * @param yOffset
+	 * @param side
+	 * @param angle
+	 * @return
+	 */
 	public static LaserStart createLaserStart(float xOffset, float yOffset, int side, double angle) {
 		float width = 1, height = 1;
-		float x = 0, y = 0;
-		
 		float[] vertices = new float[] {
 				-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
 				width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
@@ -272,34 +278,21 @@ public class CreateModel {
 				0, 1, 2,
 				2, 3, 0
 		};
-		
-		switch (side) {
-		case 0:
-			x = xOffset - width/2f;
-			y = yOffset;
-			break;
-		case 1:
-			x = xOffset;
-			y = yOffset + height/2f;
-			break;
-		case 2:
-			x = xOffset + width/2f;
-			y = yOffset;
-			break;
-		case 3:
-			x = xOffset;
-			y = yOffset - height/2f;
-			break;
-		}
-			
-		LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, newLaser(x, y, angle, 1));
+
+		LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, newLaser(xOffset, yOffset - height/2f, angle, 1));
 		l.rotate((float)Math.toRadians(-90 - 90 * side));
 		GameInstance.objectManager.addModel(l);
 		
 		return l;
 	}
 	
-	public static LaserStop createLaserStop(float xOffset, float yOffset) {
+	/**
+	 * Creates the laser reciever block
+	 * @param xOffset
+	 * @param yOffset
+	 * @return
+	 */
+	public static LaserStop createLaserStop(float xOffset, float yOffset){
 		int size = 1;
 		
 		// Vertices for a quadrilateral
