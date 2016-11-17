@@ -5,14 +5,14 @@ import edu.ncsu.feddgame.render.LaserStart;
 import edu.ncsu.feddgame.render.LaserStop;
 import edu.ncsu.feddgame.render.Model;
 import edu.ncsu.feddgame.render.MovableModel;
+import edu.ncsu.feddgame.render.MovingBox;
 
 public class Level10 extends Level {
 
-	private Model movingBox1, tri1;
+	private MovingBox[] movingBoxes;
+	private Model tri1;
 	private MovableModel box2;
-	private LaserStop lasstop;
-	private int i;
-	private float dir;
+	private LaserStop laserStop;
 	
 	public Level10() {
 		super("Level 10");
@@ -21,17 +21,25 @@ public class Level10 extends Level {
 	@Override
 	public void renderObjects() {
 		LaserStart start = CreateModel.createLaserStart(9.3f, 9.3f, 3, Math.toRadians(254));
-		laserWrapers.add(start);
+		laserWrappers.add(start);
 		
-		lasstop = CreateModel.createLaserStop(-9.3f, 9.3f);
+		laserStop = CreateModel.createLaserStop(-9f, 9.3f);
+		//CreateModel.createBox(-9.3f, 9.3f);
 		
-		movingBox1 = CreateModel.createBox(2.85f, 2f);
+		// MovingBoxes
+		MovingBox movingBox1 = new MovingBox(2.85f, 2f, 123, 1f, 0f);
+		movingBox1.rotate(45);
+		
+		MovingBox movingBox2 = new MovingBox(0f, 2f, 123, 0f, 1f);
+		
+		movingBoxes = new MovingBox[] { movingBox1, movingBox2 };
 		
 		box2 = CreateModel.createMovableBox(4.05f, -5.925f);
 		CreateModel.createMovableTrapezoid(-.9f, 5.8f, 1.5f, 1, 1);
-		CreateModel.createBox(3.4f, -8);
+		CreateModel.createBox(4f, 0f);
+		
 		tri1 = CreateModel.createTriangle(-4, -4, -1, -2);
-		movingBox1.rotate((float)Math.toRadians(45));
+		tri1.rotate(.3f);
 		
 		{
 			// Outer bounds
@@ -41,14 +49,14 @@ public class Level10 extends Level {
 			CreateModel.createWall(10f, 0f, .5f, 20f);
 			
 			// Inner walls
-			CreateModel.createWall(-5f, 2f, .25f, 18f);
+			CreateModel.createWall(-9.7f, 9.4f, .5f, 1f); // Wall to fill in gaps around LaserStop
+			CreateModel.createWall(-8.3f, 9.4f, .5f, 1f); // Wall to fill in gaps around LaserStop
+			
+			CreateModel.createWall(-8f, 2f, .25f, 18f);
 			CreateModel.createWall(2f, -2f, .25f, 16f);
 			CreateModel.createWall(6f, -4f, .25f, 9f);
 			CreateModel.createWall(6f, 7.5f, .25f, 8f);
 		}
-		tri1.rotate(.3f);
-		i = 0;
-		dir = 1;
 		
 		Model model;
 		for (int i = 0; i < 7; i++) {
@@ -68,15 +76,13 @@ public class Level10 extends Level {
 	@Override
 	public void logicLoop() {
 		super.logicLoop();
-		if (i < 123) {
-			if (movingBox1 != null)
-				movingBox1.move(0.05f * dir, 0f, 0f); // Test animation of models, this pings the box back and forth
-			
-			i++;
-		} else {
-			
-			i = 0;
-			dir *= -1f;
+		
+		//TODO: Logic loop is sometimes called first, so cancel the rest if Array is null
+		if (movingBoxes != null) {
+			for (MovingBox mBox : movingBoxes) {
+				if (mBox != null)
+					mBox.logicLoop();
+			}
 		}
 	}
 

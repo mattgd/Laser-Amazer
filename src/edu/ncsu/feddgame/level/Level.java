@@ -8,11 +8,11 @@ import edu.ncsu.feddgame.render.LaserStop;
 
 public abstract class Level {
 
-	protected ArrayList<LaserStart> laserWrapers = new ArrayList<LaserStart>();
+	protected ArrayList<LaserStart> laserWrappers = new ArrayList<LaserStart>();
 	protected LaserStop laserStop;
 	private boolean activeLevel = false;
 	private String name;
-	double timeStart;
+	private double timeStart;
 	
 	public Level(String name) {
 		this.name = name;
@@ -25,15 +25,15 @@ public abstract class Level {
 	}
 
 	public void logicLoop() {
-		if (laserWrapers != null){
-			for (LaserStart l : laserWrapers)
+		if (laserWrappers != null){
+			for (LaserStart l : laserWrappers)
 				l.reflect();
 		}
 	}
 
 	public void renderLoop() {
-		if (laserWrapers != null){
-			for (LaserStart l : laserWrapers)
+		if (laserWrappers != null){
+			for (LaserStart l : laserWrappers)
 				l.render();
 		}
 	}
