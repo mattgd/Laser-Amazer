@@ -30,8 +30,9 @@ public class LaserStart extends Model{
 	@Override
 	public void rotate(float angle){
 		super.rotate(angle);
-		if (laser != null)
+		if (laser != null){
 			laser.rotateStart(angle, super.xOffset, super.yOffset);
+		}
 	}
 
 }

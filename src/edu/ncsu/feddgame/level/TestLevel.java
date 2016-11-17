@@ -15,14 +15,14 @@ public class TestLevel extends Level {
 	
 	@Override
 	public void renderObjects() {
-		laserWrapers.add(CreateModel.createLaserStart(7.5f, 9, 3, Math.toRadians(251)));
+		laserWrapers.add(CreateModel.createLaserStart(7.5f, 9, 3));
 		//CreateModel.createLaserStop(3, -9f);
 		box1 = CreateModel.createBox(0,0);
 		CreateModel.createMovableBox(4.05f, -5.925f);
 		CreateModel.createMovableTrapezoid(-.9f, 5.8f, 1.5f, 1, 1);
 		CreateModel.createBox(-4f, 2f);
-		CreateModel.createMovableTrangle(-4f, 2f, 3f, -1.4f);
-		CreateModel.createMovableTrangle(-4f, 2f, -1f, 1f);
+		CreateModel.createMovableTriangle(-4f, 2f, 3f, -1.4f);
+		CreateModel.createMovableTriangle(-4f, 2f, -1f, 1f);
 		tri1 = CreateModel.createTriangle(-4, -4, -1, -2);
 		box1.rotate((float)Math.toRadians(45));
 		{ 	//Walls
@@ -34,7 +34,7 @@ public class TestLevel extends Level {
 		tri1.rotate(.3f);
 		i = 0;
 		dir = 1;
-		//laserWrapers.get(0).rotate((float)Math.PI * 2f/3f);
+		laserWrapers.get(0).rotate((float)Math.toRadians(-12));
 	}
 	
 	@Override

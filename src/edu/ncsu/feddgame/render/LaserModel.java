@@ -81,6 +81,14 @@ public class LaserModel extends Model{
 	public float getAngle(){
 		return this.angle;
 	}
+	/**
+	 * Sets the initial angle of the laser
+	 * @param a
+	 */
+	public void setAngle(float a){
+		this.angle = a;
+		determineDirection();
+	}
 	
 	/**
 	 * Sets a value of 1 for positive, -1 for negative for the vector directions of the laser

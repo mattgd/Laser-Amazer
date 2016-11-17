@@ -62,7 +62,7 @@ public class CreateModel {
 		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 3, GameTexture.WALL.getPath()));
 	}
 	
-	public static MovableModel createMovableTrangle(float xOffset, float yOffset, float xSide, float ySide) {
+	public static MovableModel createMovableTriangle(float xOffset, float yOffset, float xSide, float ySide) {
 		xOffset += 4 - xSide / 6f;
 		yOffset -= 2 + ySide / 6f;
 		
@@ -225,6 +225,10 @@ public class CreateModel {
 		return new LaserWrapper(createLaser(begX, begY, angle, length));
 	}
 	
+	public static LaserWrapper newLaser(float begX, float begY, float length){
+		return new LaserWrapper(createLaser(begX, begY, 3f * Math.PI / 2, length));
+	}
+	
 	/**
 	 * Creates a LaserModel object and passes it to the lasers list of the objectManager
 	 * This is used for all reflected lasers to avoid calculating redundant reflections on lasers
@@ -279,7 +283,43 @@ public class CreateModel {
 				2, 3, 0
 		};
 
-		LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, newLaser(xOffset, yOffset - height/2f, angle, 1));
+		LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, newLaser(xOffset, yOffset - height/2f, angle, .1f));
+		l.rotate((float)Math.toRadians(-90 - 90 * side));
+		GameInstance.objectManager.addModel(l);
+		
+		return l;
+	}
+	
+	/**
+	 * Creates the Laser starting block
+	 * @param xOffset
+	 * @param yOffset
+	 * @param side
+	 * @param angle
+	 * @return
+	 */
+	public static LaserStart createLaserStart(float xOffset, float yOffset, int side) {
+		float width = 1, height = 1;
+		float[] vertices = new float[] {
+				-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
+				width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
+				width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
+				-width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
+		};
+			
+		float[] texture = new float[] {
+				0, 0, // TOP LEFT
+				1, 0, // TOP RIGHT
+				1, 1, // BOTTOM RIGHT
+				0, 1, // BOTTOM LEFT
+		};
+		
+		int[] indices = new int[] {
+				0, 1, 2,
+				2, 3, 0
+		};
+
+		LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, newLaser(xOffset, yOffset - height/2f, 1));
 		l.rotate((float)Math.toRadians(-90 - 90 * side));
 		GameInstance.objectManager.addModel(l);
 		
