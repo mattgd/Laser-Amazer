@@ -21,7 +21,7 @@ public class Level1 extends Level {
 			CreateModel.createWall(0, 1f, .25f, 18f);
 		}
 		
-		laserWrapers.add(CreateModel.createLaserStart(-10f, -1f, 2, Math.toRadians(-45)));
+		laserWrappers.add(CreateModel.createLaserStart(-10f, -1f, 2, Math.toRadians(-45)));
 		
 		CreateModel.createLaserStop(7, 10);
 		m = CreateModel.createMovableBox(4, 0);

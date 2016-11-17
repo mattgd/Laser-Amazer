@@ -15,7 +15,7 @@ public class TestLevel extends Level {
 	
 	@Override
 	public void renderObjects() {
-		laserWrapers.add(CreateModel.createLaserStart(7.5f, 9, 3, Math.toRadians(251)));
+		laserWrappers.add(CreateModel.createLaserStart(7.5f, 9, 3, Math.toRadians(251)));
 		//CreateModel.createLaserStop(3, -9f);
 		box1 = CreateModel.createBox(0,0);
 		CreateModel.createMovableBox(4.05f, -5.925f);
