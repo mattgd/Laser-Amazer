@@ -1,6 +1,7 @@
 package edu.ncsu.feddgame.level;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import edu.ncsu.feddgame.GameInstance;
@@ -25,9 +26,15 @@ public abstract class Level extends Scene{
 	}
 
 	public void logicLoop() {
-		if (laserWrappers != null){
-			for (LaserStart l : laserWrappers)
+		if (laserWrappers != null) {
+			for (Iterator<LaserStart> it = laserWrappers.iterator(); it.hasNext();) {
+				it.next().reflect();
+			}
+			
+			// Causes ConcurrentModificationException
+			/*for (LaserStart l : laserWrappers){
 				l.reflect();
+			}*/
 		}
 	}
 	@Override

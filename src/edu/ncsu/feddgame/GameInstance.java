@@ -27,7 +27,6 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
 
-import edu.ncsu.feddgame.level.Level;
 import edu.ncsu.feddgame.level.Level1;
 import edu.ncsu.feddgame.level.Level10;
 import edu.ncsu.feddgame.level.Level2;
@@ -35,7 +34,7 @@ import edu.ncsu.feddgame.level.Level3;
 import edu.ncsu.feddgame.level.MainMenu;
 import edu.ncsu.feddgame.level.OptionsMenu;
 import edu.ncsu.feddgame.level.Scene;
-import edu.ncsu.feddgame.level.TestLevel;
+import edu.ncsu.feddgame.level.Level4;
 import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.Camera;
 import edu.ncsu.feddgame.render.FloatColor;
@@ -53,6 +52,7 @@ public class GameInstance {
 	public static boolean showTimer = true;
 	public static int samplingLevel = 4;
 	
+	private int menuTime = 0;
 	public static List<Scene> levels = new ArrayList<Scene>() {
 		private static final long serialVersionUID = 525308338634565467L;
 	{
@@ -61,7 +61,7 @@ public class GameInstance {
 		add(new Level1());
 		add(new Level2());
 		add(new Level3());
-		add(new TestLevel());
+		add(new Level4());
 		add(new Level10());
 	}};
 	
@@ -174,8 +174,6 @@ public class GameInstance {
 				
 				if (frameTime >= 1.0) {
 					frameTime = 0;
-					// Display FPS counter in console
-					//System.out.println("FPS: " + frames);
 					frames = 0;
 				}
 			}
@@ -206,39 +204,50 @@ public class GameInstance {
 					startGame.renderString("(Press Space to return to the menu.)", Alignment.CENTER, -0.45f, 0.23f);
 				} else if (state.equals(State.LEVEL_COMPLETE)) {
 					if (levelCompleteDialogue){
-						if (gameState) {
-							levelTime = (int)((Level)levels.get(levNum)).getElapsedTime();
-						}
-						
-						gameState = false;
-						
-						shader.bind();
-						shader.updateUniforms(camera, target);
-						objectManager.renderAll();
-						
-						window.renderElements();
-						
-						// Add dark rectangle to make text more readable
-						shader.unbind();
-						glEnable(GL_BLEND);
-						glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-						
-						glColor4f(clearColor.red(), clearColor.green(), clearColor.blue(), .5f);
-						glRectf(-10f, -10f, 10f, 10f);
-						
-						menuItem.renderString("Congratulations!",  Alignment.CENTER, 0.1f, 0.45f);
-						menuItem.renderString("You've completed " + levels.get(levNum).getName() + " in " + levelTime + " seconds.", Alignment.CENTER, 0.02f, 0.2f);
-						startGame.renderString("(Press Space to continue.)", Alignment.CENTER, -0.45f, 0.3f);
+					gameState = false;
+					
+					shader.bind();
+					shader.updateUniforms(camera, target);
+					objectManager.renderAll();
+					
+					window.renderElements();
+					
+					// Add dark rectangle to make text more readable
+					shader.unbind();
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					
+					glColor4f(clearColor.red(), clearColor.green(), clearColor.blue(), .5f);
+					glRectf(-10f, -10f, 10f, 10f);
+					
+					startGame.setColor(GameColor.YELLOW.getFloatColor()); // Change color back if it was blue on the menu
+					
+					menuItem.renderString("Congratulations!",  Alignment.CENTER, 0.1f, 0.45f);
+					menuItem.renderString("You've completed " + levels.get(levNum).getName() + " in " + levelTime + " seconds.", Alignment.CENTER, 0.02f, 0.2f);
+					startGame.renderString("(Press Space to continue.)", Alignment.CENTER, -0.45f, 0.3f);
 					}else{
 						setState(State.NEXT_LEVEL);
 					}
 				} else if (state.equals(State.MAIN_MENU)) {
 					gameState = false;
 
-					menuTitle.renderString(menuTitle.getRenderString(), Alignment.CENTER, 0.3f, 0.4f);
-					menuItem.renderString("> Start Game", -0.64f, 0.1f, 0.3f);
-					menuItem.renderString("> How to Play", -0.64f, 0.02f, 0.3f);
-					startGame.renderString("(Press Space to start.)", Alignment.CENTER, -0.45f, 0.3f);
+					menuTitle.renderString(menuTitle.getRenderString(), Alignment.CENTER, 0.1f, 0.6f);
+					menuItem.renderString("A FEDD educational computer game.", Alignment.CENTER, 0.03f, 0.2f);
+					
+					if (menuTime > 120) {
+						startGame.setColor(GameColor.TEAL.getFloatColor());
+						startGame.renderString("<Press Space to begin.>", Alignment.CENTER, -0.18f, 0.3f);
+						
+					} else {
+						startGame.setColor(GameColor.YELLOW.getFloatColor());
+						startGame.renderString(">Press Space to begin.<", Alignment.CENTER, -0.18f, 0.3f);
+					}
+					
+					if (menuTime > 240) {
+						menuTime = 0;
+					} else {
+						menuTime++;
+					}
 				} else if (state.equals(State.NEXT_LEVEL)) {
 					gameState = false;
 					nextLevel();

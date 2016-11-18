@@ -6,14 +6,16 @@ import edu.ncsu.feddgame.GameInstance;
 import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.GameFont;
+import edu.ncsu.feddgame.render.GameTexture;
 import edu.ncsu.feddgame.render.Model;
 
-public class Button extends Model implements UIElement, IClickable{
+public class Button extends Model implements UIElement, IClickable {
 	
-	ArrayList<Runnable> callbacks = new ArrayList<Runnable>();
+	private ArrayList<Runnable> callbacks = new ArrayList<Runnable>();
 	protected float [] xCoords, yCoords;
-	GameFont label;
+	private GameFont label;
 	public float xOffset, yOffset, height, width;
+	
 	/**
 	 * New Button extension from Model with Runnable object for execution on click events
 	 * @param coords
@@ -21,8 +23,8 @@ public class Button extends Model implements UIElement, IClickable{
 	 * @param indices
 	 * @param r
 	 */
-	public Button(float[] coords, float[] tCoords, int[] indices, Runnable r, float xOffset, float yOffset, float height, float width){
-		super(coords, tCoords, indices, 4, "bgtile.png");
+	public Button(float[] coords, float[] tCoords, int[] indices, Runnable r, float xOffset, float yOffset, float height, float width) {
+		super(coords, tCoords, indices, 4, GameTexture.BUTTON.getPath());
 		callbacks.add(r);
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
@@ -32,6 +34,7 @@ public class Button extends Model implements UIElement, IClickable{
 		xCoords = new float[]{coords[0], coords[3], coords[6], coords[9]};
 		yCoords = new float[]{coords[1], coords[4], coords[7], coords[10]};
 	}
+	
 	/**
 	 * 
 	 * @param coords
@@ -44,8 +47,8 @@ public class Button extends Model implements UIElement, IClickable{
 	 * @param height
 	 * @param width
 	 */
-	public Button(float[] coords, float[] tCoords, int[] indices, Runnable r, GameFont f, float xOffset, float yOffset, float height, float width){
-		super(coords, tCoords, indices, 4, "bgtile.png");
+	public Button(float[] coords, float[] tCoords, int[] indices, Runnable r, GameFont f, float xOffset, float yOffset, float height, float width) {
+		super(coords, tCoords, indices, 4, GameTexture.BUTTON.getPath());
 		callbacks.add(r);
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
@@ -78,12 +81,14 @@ public class Button extends Model implements UIElement, IClickable{
 	@Override
 	public boolean checkClick(float xPos, float yPos) {
 		if (UIUtils.pnpoly(xCoords, yCoords, xPos * GameInstance.window.ratio, yPos)) {
-			if (callbacks != null)
+			if (callbacks != null) {
 				for(Runnable r : callbacks) {
 					r.run();
 				}
+			}
+				
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}

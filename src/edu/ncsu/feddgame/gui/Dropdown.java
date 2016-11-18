@@ -5,11 +5,11 @@ import java.util.LinkedList;
 import edu.ncsu.feddgame.GameInstance;
 import edu.ncsu.feddgame.render.GameFont;
 
-public class Dropdown extends Button{
+public class Dropdown extends Button {
 	
-	LinkedList<Button> options = new LinkedList<Button>();
-	Boolean open = false;
-	float length = 0;
+	private LinkedList<Button> options = new LinkedList<Button>();
+	private boolean open = false;
+	private float length = 0;
 
 	public Dropdown(float[] coords, float[] tCoords, int[] indices, float xOffset, float yOffset, float height, float width) {
 		super(coords, tCoords, indices, null, xOffset, yOffset, height, width);
@@ -23,19 +23,22 @@ public class Dropdown extends Button{
 	 * Adds the button passed and attaches another callback for this dropdown
 	 * @param b
 	 */
-	public void addButton(Button b){
+	public void addButton(Button b) {
 		b.addCallback(() -> {
 			choiceClicked();
 		});
+		
 		length -= (b.height + .05f);
 		b.move(0, length, 0);
 		options.add(b);
 	}
-	public void addButtons(Button[] b){
-		for (Button but : b){
+	
+	public void addButtons(Button[] b) {
+		for (Button but : b) {
 			but.addCallback(() -> {
 				choiceClicked();
 			});
+			
 			length -= (but.height / 2f + .05f);
 			but.move(0, length, 0);
 			options.add(but);
@@ -43,31 +46,39 @@ public class Dropdown extends Button{
 	}
 	
 	@Override
-	public boolean checkClick(float xPos, float yPos){
-		if (open){
-			for (Button b : options){ 	//Check click on all buttons in the dropdown first
+	public boolean checkClick(float xPos, float yPos) {
+		if (open) {
+			// Check click on all buttons in the dropdown first
+			for (Button b : options) {
 				b.checkClick(xPos, yPos);
 			}
 		}
-		if (UIUtils.pnpoly(super.xCoords, super.yCoords, xPos * GameInstance.window.ratio, yPos)){ 	//Then check if the dropdown was clicked
+		
+		// Then check if the dropdown was clicked
+		if (UIUtils.pnpoly(super.xCoords, super.yCoords, xPos * GameInstance.window.ratio, yPos)) {
 			choiceClicked();
 			return true;
-		}else{
+		} else {
 			return false;
 		}
-		
 	}
 	
-	public void choiceClicked(){ 	//Toggles whether the dropdown is open
+	/**
+	 * Toggles whether the Dropdown is open.
+	 */
+	public void choiceClicked() {
 		open = !open;
 	}
 	
+	/**
+	 * Renders everything necessary for a Dropdown menu.
+	 */
 	@Override
-	public void render(){ 	//Renders everything necessary
+	public void render() { 	
 		super.render();
-		if (open){
-			for(Button b : options){
-				//System.out.println(b);
+		
+		if (open) {
+			for (Button b : options) {
 				b.render();
 			}
 		}
