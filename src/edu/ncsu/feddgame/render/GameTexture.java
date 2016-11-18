@@ -2,6 +2,7 @@ package edu.ncsu.feddgame.render;
 
 public enum GameTexture {
 
+	BUTTON("button.png"),
 	MOVEABLE_BOX("moveablebox.png"),
 	UNMOVEABLE_BOX("unmoveablebox.png"),
 	WALL("bgtile.png");

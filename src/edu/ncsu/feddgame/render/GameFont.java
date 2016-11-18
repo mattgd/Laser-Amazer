@@ -50,7 +50,7 @@ public class GameFont {
         glBindTexture(GL_TEXTURE_2D, fontTexture);
         
         // Use TWL's utility classes to load the png file
-        PNGDecoder decoder = new PNGDecoder(new FileInputStream("res/font3.png"));
+        PNGDecoder decoder = new PNGDecoder(new FileInputStream("res/font.png"));
         ByteBuffer buffer = BufferUtils.createByteBuffer(4 * decoder.getWidth() * decoder.getHeight());
         decoder.decode(buffer, decoder.getWidth() * 4, PNGDecoder.Format.RGBA);
         buffer.flip();

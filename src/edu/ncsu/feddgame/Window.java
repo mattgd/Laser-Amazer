@@ -37,6 +37,7 @@ import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.glfw.GLFWVidMode;
 
 import de.matthiasmann.twl.utils.PNGDecoder;
+import edu.ncsu.feddgame.gui.Button;
 import edu.ncsu.feddgame.gui.CreateUI;
 import edu.ncsu.feddgame.gui.Dropdown;
 import edu.ncsu.feddgame.gui.IClickable;
@@ -51,21 +52,20 @@ import edu.ncsu.feddgame.render.MovableModel;
 public class Window {
 
 	public long window;
+	private float mouseX, mouseY;
 	public float ratio;
-	public int refreshRate;
-	public int width;
-	public int height;
+	public int refreshRate, width, height;
 	public boolean fullscreen, mouseHeld = false, ctrlHeld = false, shiftHeld = false;
 	private String title;
-	private float mouseX, mouseY;
-	public static boolean isclicked = false;
-	GLFWVidMode vidMode;
+	public static boolean isClicked = false;
+	private GLFWVidMode vidMode;
 	
 	public ArrayList<UIElement> elementList = new ArrayList<UIElement>();
 	
 	public Window () {
 		this(800, 800, "FEDD Game", false);
 	}
+	
 	/**
 	 * 
 	 * @param width
@@ -118,11 +118,20 @@ public class Window {
 	 * Adds all specified elements to the Window's array and scene
 	 */
 	public void addElements() {
-		Dropdown du = CreateUI.createDropdown(-12f, 8f, 2f, 1f, new GameFont("Select Level", GameColor.GREEN.getFloatColor()));
+		Button menuButton = CreateUI.createButton(-12f, 9f, 3f, 1f, new Runnable() {
+		    @Override
+		    public void run() {
+		    	GameInstance.setState(State.MAIN_MENU);
+		    }
+		}, new GameFont("Main Menu", GameColor.ORANGE.getFloatColor()));
+		
+		elementList.add(menuButton);
+		
+		Dropdown du = CreateUI.createDropdown(-12f, 7.5f, 3f, 1f, new GameFont("Select Level", GameColor.ORANGE.getFloatColor()));
 		for (Level level : GameInstance.levels) {
-			du.addButton(CreateUI.createButton(-12f, 8f, 2f, 1, () -> {
+			du.addButton(CreateUI.createButton(-12f, 7.5f, 2f, 1, () -> {
 				GameInstance.setLevel(GameInstance.levels.indexOf(level));
-			}, new GameFont(level.getName(), GameColor.GREEN.getFloatColor())));
+			}, new GameFont(level.getName(), GameColor.ORANGE.getFloatColor())));
 		}
 		elementList.add(du);
 	}
@@ -196,8 +205,7 @@ public class Window {
 				default:
 					GameInstance.setState(State.MAIN_MENU);
 				}
-			}
-				
+			}	
 		});
 	}
 	
@@ -219,42 +227,49 @@ public class Window {
 	 */
 	public void setMouseButtonCallback() {
 		glfwSetMouseButtonCallback(window, (window, button, action, mods) -> { 	//Mouse click listener
-			if (button == GLFW_MOUSE_BUTTON_LEFT){ 	//If left mouse button
-				if (action == GLFW_RELEASE){ 	//Set a boolean variable based on state of mouse (GLFW won't poll mouse state again if already pressed, need to manually store state)
+			if (button == GLFW_MOUSE_BUTTON_LEFT) { 	//If left mouse button
+				if (action == GLFW_RELEASE) { 	//Set a boolean variable based on state of mouse (GLFW won't poll mouse state again if already pressed, need to manually store state)
 					mouseHeld = false;
-				}else if (action == GLFW_PRESS && GameInstance.gameState){
+				} else if (action == GLFW_PRESS && GameInstance.gameState) {
 					mouseHeld = true;
-					for(int j = GameInstance.objectManager.getModels().size()-1; j >= 0; j--){ 	//Iterate over all models in the scene
+					
+					// Iterate over all models in the scene
+					for (int j = GameInstance.objectManager.getModels().size()-1; j >= 0; j--) {
 						Model b = GameInstance.objectManager.getModel(j);
-						if (b instanceof MovableModel){
-							MovableModel m = (MovableModel)b;
+						if (b instanceof MovableModel) {
+							MovableModel m = (MovableModel) b;
 							if (m.checkClick(mouseX, mouseY)){ 	//If the object is movable and is the one clicked
 								new Thread(() -> { 	//Start a new thread to move it while the mouse is being held
-								while (mouseHeld){
-									try{
-									wait(0); 			//Don't ask: the game breaks without some random code before the followCursor call
-									}catch (Exception e){}
-									if (GameInstance.gameState){ 	//Don't ask about this redundant code either...
-										m.followCursor(mouseX, mouseY);
-									}else{
-										return;
+									while (mouseHeld){
+										try {
+											//TODO: The game breaks without some random code before the followCursor call
+											wait(0);
+										} catch (Exception e) {}
+										
+										//TODO: Redundant code
+										if (GameInstance.gameState) { 	
+											m.followCursor(mouseX, mouseY);
+										} else {
+											return;
+										}
 									}
-								}
 								}).start();
 								break;
 							}
 						}
 					}
-					for (UIElement e : elementList){
-						if (e instanceof IClickable){
-							((IClickable)e).checkClick(mouseX, mouseY);
+					
+					for (UIElement e : elementList) {
+						if (e instanceof IClickable) {
+							((IClickable) e).checkClick(mouseX, mouseY);
 						}
 					}
 				}
 			}
 		});
 	}
-	public void setMousePosCallback(){
+	
+	public void setMousePosCallback() {
 		glfwSetCursorPosCallback(window, (window, xPos, yPos) -> {
 			float[] newC = UIUtils.convertToWorldspace((float)xPos, (float)yPos, this.width, this.height);
 			this.mouseX = newC[0];

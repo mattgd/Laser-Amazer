@@ -47,6 +47,8 @@ public class GameInstance {
 	boolean canRender;
 	private int levelTime;
 	
+	private int menuTime = 0;
+	
 	public static List<Level> levels = new ArrayList<Level>() {
 		private static final long serialVersionUID = 525308338634565467L;
 	{
@@ -162,8 +164,6 @@ public class GameInstance {
 				
 				if (frameTime >= 1.0) {
 					frameTime = 0;
-					// Display FPS counter in console
-					//System.out.println("FPS: " + frames);
 					frames = 0;
 				}
 			}
@@ -213,16 +213,31 @@ public class GameInstance {
 					glColor4f(clearColor.red(), clearColor.green(), clearColor.blue(), .5f);
 					glRectf(-10f, -10f, 10f, 10f);
 					
+					startGame.setColor(GameColor.YELLOW.getFloatColor()); // Change color back if it was blue on the menu
+					
 					menuItem.renderString("Congratulations!",  Alignment.CENTER, 0.1f, 0.45f);
 					menuItem.renderString("You've completed " + levels.get(levNum).getName() + " in " + levelTime + " seconds.", Alignment.CENTER, 0.02f, 0.2f);
 					startGame.renderString("(Press Space to continue.)", Alignment.CENTER, -0.45f, 0.3f);
 				} else if (state.equals(State.MAIN_MENU)) {
 					gameState = false;
 
-					menuTitle.renderString(menuTitle.getRenderString(), Alignment.CENTER, 0.3f, 0.4f);
-					menuItem.renderString("> Start Game", -0.64f, 0.1f, 0.3f);
-					menuItem.renderString("> How to Play", -0.64f, 0.02f, 0.3f);
-					startGame.renderString("(Press Space to start.)", Alignment.CENTER, -0.45f, 0.3f);
+					menuTitle.renderString(menuTitle.getRenderString(), Alignment.CENTER, 0.1f, 0.6f);
+					menuItem.renderString("A FEDD educational computer game.", Alignment.CENTER, 0.03f, 0.2f);
+					
+					if (menuTime > 120) {
+						startGame.setColor(GameColor.TEAL.getFloatColor());
+						startGame.renderString("<Press Space to begin.>", Alignment.CENTER, -0.18f, 0.3f);
+						
+					} else {
+						startGame.setColor(GameColor.YELLOW.getFloatColor());
+						startGame.renderString(">Press Space to begin.<", Alignment.CENTER, -0.18f, 0.3f);
+					}
+					
+					if (menuTime > 240) {
+						menuTime = 0;
+					} else {
+						menuTime++;
+					}
 				} else if (state.equals(State.NEXT_LEVEL)) {
 					gameState = false;
 					nextLevel();
