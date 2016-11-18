@@ -12,6 +12,7 @@ public class Level4 extends Level {
 	
 	@Override
 	public void renderObjects() {
+		super.renderObjects();
 		// Walls
 		{
 			// Outer bounds
