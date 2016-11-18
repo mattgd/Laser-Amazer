@@ -27,8 +27,8 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
 
+import edu.ncsu.feddgame.level.GameComplete;
 import edu.ncsu.feddgame.level.Level1;
-import edu.ncsu.feddgame.level.Level10;
 import edu.ncsu.feddgame.level.Level2;
 import edu.ncsu.feddgame.level.Level3;
 import edu.ncsu.feddgame.level.Level4;
@@ -54,7 +54,7 @@ public class GameInstance {
 	
 	private boolean canRender;
 	
-	public static List<Scene> levels = new ArrayList<Scene>() {
+	public static List<Scene> scenes = new ArrayList<Scene>() {
 		private static final long serialVersionUID = 525308338634565467L;
 	{
 		add(new MainMenu());
@@ -63,7 +63,8 @@ public class GameInstance {
 		add(new Level2());
 		add(new Level3());
 		add(new Level4());
-		add(new Level10());
+		//add(new Level10());
+		add(new GameComplete());
 	}};
 	
 	private static int levNum = 0; // Start with 0
@@ -76,7 +77,8 @@ public class GameInstance {
 	
 	// Game begins here
 	public GameInstance() {
-		try { 	// Run and quit on error
+		// Run and quit on error
+		try { 	
 			setup();
 			renderLoop();
 		} finally {
@@ -118,7 +120,6 @@ public class GameInstance {
 		
 		//TODO: Move this to it's own class, and have Fonts instantiated with location info
 		// Set up main menu text
-		GameFont menuTitle = new GameFont("Laser Amazer", new FloatColor(GameColor.RED.getColor()));
 		GameFont menuItem = new GameFont("Start Game", new FloatColor(GameColor.ORANGE.getColor()));
 		GameFont startGame = new GameFont("Press Space to Start Game", new FloatColor(GameColor.YELLOW.getColor()));
 		
@@ -200,13 +201,6 @@ public class GameInstance {
 
 					window.renderElements();
 					getCurrentLevel().renderLoop();
-				} else if (state.equals(State.GAME_COMPLETE)) {
-					gameState = false;
-					menuItem.renderString("Congratulations!", Alignment.CENTER, 0.1f, 0.3f);
-					menuItem.renderString("You've completed the game.", Alignment.CENTER, 0.02f, 0.3f);
-					menuTitle.renderString("Made by", Alignment.CENTER, -0.1f, 0.3f);
-					menuTitle.renderString("thejereman13 and mattgd", Alignment.CENTER, -0.17f, 0.23f);
-					startGame.renderString("(Press Space to return to the menu.)", Alignment.CENTER, -0.45f, 0.23f);
 				} else if (state.equals(State.LEVEL_COMPLETE)) {
 					getCurrentLevel().setActive(false); // Set level as inactive
 					
@@ -312,9 +306,9 @@ public class GameInstance {
 		levNum++;
 		latestLevel++;
 		
-		if (levNum > levels.size() - 1) {
+		if (levNum > scenes.size() - 1) {
 			levNum = 0;
-			setState(State.GAME_COMPLETE);
+			setLevel(scenes.size() - 1); // Set to GameComplete (last level)
 		}
 		
 		getCurrentLevel().setActive(true); // Set new active level
@@ -322,20 +316,26 @@ public class GameInstance {
 	}
 	
 	public static Scene getCurrentLevel() {
-		return levels.get(levNum);
+		return scenes.get(levNum);
 	}
 	
 	public static void setLevel(int levelNumber) {
-		levNum = levelNumber;
-		levels.get(levNum).setActive(true); // Set active level
+		if (levelNumber > scenes.size() - 1) {
+			levNum = scenes.size() - 1;
+		} else {
+			levNum = levelNumber;
+		}
+		
+		fade = 90f;
+		scenes.get(levNum).setActive(true); // Set active level
 		hasLevel = false;
 	}
 	
 	public void renderLevel() {
-		if (levNum < levels.size() && !hasLevel) {
+		if (levNum < scenes.size() && !hasLevel) {
 			objectManager.clearAll();
 			window.clearElements();
-			levels.get(levNum).renderObjects(); // Add all objects to the scene from the level class
+			scenes.get(levNum).renderObjects(); // Add all objects to the scene from the level class
 			objectManager.updateModels();
 			hasLevel = true;
 		} else if (!hasLevel) {

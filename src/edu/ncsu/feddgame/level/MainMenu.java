@@ -21,8 +21,8 @@ public class MainMenu extends Menu {
 		}, new GameFont("Continue", GameColor.RED.getFloatColor())));
 		
 		elementList.add(CreateUI.createButton(0, -0.5f, 3, 1.25f, () -> {
-			GameInstance.latestLevel = 2;
-			GameInstance.setLevel(2);
+			GameInstance.latestLevel = 3;
+			GameInstance.setLevel(3);
 		}, new GameFont("New Game", GameColor.RED.getFloatColor())));
 		
 		elementList.add(CreateUI.createButton(0, -2f, 3, 1.25f, () -> {

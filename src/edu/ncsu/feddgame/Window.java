@@ -177,17 +177,9 @@ public class Window {
 			
 			if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE) {
 				State state = GameInstance.getState();
-				switch (state) {
-				case GAME:
-					break;
-				case GAME_COMPLETE:
-					//GameInstance.setState(State.MAIN_MENU);
-					break;
-				case LEVEL_COMPLETE:
+				
+				if (state.equals(State.LEVEL_COMPLETE)) {
 					GameInstance.setState(State.NEXT_LEVEL);
-					break;
-				default:
-					GameInstance.setState(State.GAME);
 				}
 			}	
 		});

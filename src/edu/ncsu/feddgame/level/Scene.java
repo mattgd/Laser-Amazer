@@ -2,15 +2,16 @@ package edu.ncsu.feddgame.level;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.ncsu.feddgame.gui.IClickable;
 import edu.ncsu.feddgame.gui.UIElement;
 
 public abstract class Scene {
 	
-	public ArrayList<UIElement> elementList = new ArrayList<UIElement>();
-	protected boolean active = false;
 	protected String name;
+	protected boolean active = false;
+	protected List<UIElement> elementList = new ArrayList<UIElement>();
 	private double timeStart, timeStop;
 	
 	public Scene(String name) {
@@ -74,6 +75,10 @@ public abstract class Scene {
 	 */
 	public double getTime() {
 		return (double) System.nanoTime() / (double) 1000000000L;
+	}
+	
+	public List<UIElement> getElementList() {
+		return elementList;
 	}
 	
 }
