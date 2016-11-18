@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+import edu.ncsu.feddgame.GameInstance;
+import edu.ncsu.feddgame.gui.Button;
+import edu.ncsu.feddgame.gui.CreateUI;
+import edu.ncsu.feddgame.render.GameColor;
+import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.LaserStart;
 import edu.ncsu.feddgame.render.LaserStop;
 
@@ -39,7 +44,7 @@ public abstract class Level {
 	}
 
 	public void renderLoop() {
-		if (laserWrappers != null){
+		if (laserWrappers != null) {
 			for (LaserStart l : laserWrappers)
 				l.render();
 		}
