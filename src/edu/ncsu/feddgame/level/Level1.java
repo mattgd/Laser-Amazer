@@ -13,17 +13,22 @@ public class Level1 extends Level {
 
 	@Override
 	public void renderObjects() {
-		{ // Walls
+		// Walls
+		{ 
+			// Outer bounds
 			CreateModel.createWall(0f, 10f, 20f, .5f);
 			CreateModel.createWall(0f, -10f, 20f, .5f);
 			CreateModel.createWall(-10f, 0f, .5f, 20f);
 			CreateModel.createWall(10f, 0f, .5f, 20f);
+			
+			// Inner bounds
 			CreateModel.createWall(0, 1f, .25f, 18f);
 		}
 		
+		// Laser start/stop
 		laserWrappers.add(CreateModel.createLaserStart(-10f, -1f, 2, Math.toRadians(-45)));
+		CreateModel.createLaserStop(7f, 9.9f);
 		
-		CreateModel.createLaserStop(7, 10);
 		m = CreateModel.createMovableBox(4, 0);
 		CreateModel.createMovableBox(2, 4);
 		m.rotate(-.5f);
@@ -34,7 +39,6 @@ public class Level1 extends Level {
 	@Override
 	public void logicLoop() {
 		super.logicLoop();
-		
 		m.rotate(.005f);
 	}
 

@@ -32,7 +32,7 @@ import edu.ncsu.feddgame.level.Level1;
 import edu.ncsu.feddgame.level.Level10;
 import edu.ncsu.feddgame.level.Level2;
 import edu.ncsu.feddgame.level.Level3;
-import edu.ncsu.feddgame.level.TestLevel;
+import edu.ncsu.feddgame.level.Level4;
 import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.Camera;
 import edu.ncsu.feddgame.render.FloatColor;
@@ -55,7 +55,7 @@ public class GameInstance {
 		add(new Level1());
 		add(new Level2());
 		add(new Level3());
-		add(new TestLevel());
+		add(new Level4());
 		add(new Level10());
 	}};
 	

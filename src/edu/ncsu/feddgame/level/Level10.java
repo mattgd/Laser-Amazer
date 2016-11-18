@@ -20,7 +20,26 @@ public class Level10 extends Level {
 	
 	@Override
 	public void renderObjects() {
-		LaserStart start = CreateModel.createLaserStart(9.3f, 9.3f, 3, Math.toRadians(254));
+		// Walls
+		{
+			// Outer bounds
+			CreateModel.createWall(0f, 10f, 20f, .5f);
+			CreateModel.createWall(0f, -10f, 20f, .5f);
+			CreateModel.createWall(-10f, 0f, .5f, 20f);
+			CreateModel.createWall(10f, 0f, .5f, 20f);
+			
+			// Inner walls
+			CreateModel.createWall(-9.7f, 9.4f, .5f, 1f); // Wall to fill in gaps around LaserStop
+			CreateModel.createWall(-8.3f, 9.4f, .5f, 1f); // Wall to fill in gaps around LaserStop
+			
+			CreateModel.createWall(-8f, 2f, .25f, 18f);
+			CreateModel.createWall(2f, -2f, .25f, 16f);
+			CreateModel.createWall(6f, -4f, .25f, 9f);
+			CreateModel.createWall(6f, 7.5f, .25f, 8f);
+		}
+		
+		// Laser start/stop
+		LaserStart start = CreateModel.createLaserStart(9.3f, 9.3f, 3, Math.toRadians(-10));
 		laserWrappers.add(start);
 		
 		laserStop = CreateModel.createLaserStop(-9f, 9.3f);
@@ -41,22 +60,7 @@ public class Level10 extends Level {
 		tri1 = CreateModel.createTriangle(-4, -4, -1, -2);
 		tri1.rotate(.3f);
 		
-		{
-			// Outer bounds
-			CreateModel.createWall(0f, 10f, 20f, .5f);
-			CreateModel.createWall(0f, -10f, 20f, .5f);
-			CreateModel.createWall(-10f, 0f, .5f, 20f);
-			CreateModel.createWall(10f, 0f, .5f, 20f);
-			
-			// Inner walls
-			CreateModel.createWall(-9.7f, 9.4f, .5f, 1f); // Wall to fill in gaps around LaserStop
-			CreateModel.createWall(-8.3f, 9.4f, .5f, 1f); // Wall to fill in gaps around LaserStop
-			
-			CreateModel.createWall(-8f, 2f, .25f, 18f);
-			CreateModel.createWall(2f, -2f, .25f, 16f);
-			CreateModel.createWall(6f, -4f, .25f, 9f);
-			CreateModel.createWall(6f, 7.5f, .25f, 8f);
-		}
+		
 		CreateModel.createMovableTriangle(-1f, 1f, 1, 1);
 		Model model;
 		for (int i = 0; i < 7; i++) {
