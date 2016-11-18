@@ -32,6 +32,9 @@ import edu.ncsu.feddgame.level.Level1;
 import edu.ncsu.feddgame.level.Level10;
 import edu.ncsu.feddgame.level.Level2;
 import edu.ncsu.feddgame.level.Level3;
+import edu.ncsu.feddgame.level.MainMenu;
+import edu.ncsu.feddgame.level.OptionsMenu;
+import edu.ncsu.feddgame.level.Scene;
 import edu.ncsu.feddgame.level.TestLevel;
 import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.Camera;
@@ -46,16 +49,23 @@ public class GameInstance {
 	public static ObjectManager objectManager;
 	boolean canRender;
 	private int levelTime;
+	public static boolean levelCompleteDialogue = true;
+	public static boolean showTimer = true;
+	public static int samplingLevel = 4;
 	
-	public static List<Level> levels = new ArrayList<Level>() {
+	public static List<Scene> levels = new ArrayList<Scene>() {
 		private static final long serialVersionUID = 525308338634565467L;
 	{
+		add(new MainMenu());
+		add(new OptionsMenu());
 		add(new Level1());
 		add(new Level2());
 		add(new Level3());
 		add(new TestLevel());
 		add(new Level10());
 	}};
+	
+	public static int latestLevel = 5;
 	
 	private static int levNum = 0; // Start with 0
 	public static float fade = 90f; // Amount of fade in degrees (0-90)
@@ -93,7 +103,7 @@ public class GameInstance {
 		
 		window = new Window(800, 800, "Laser Amazer", false);
 		
-		state = State.MAIN_MENU; // Set the game state
+		state = State.GAME; // Set the game state
 	}
 	
 	private void renderLoop() { 	// Render Loop
@@ -151,7 +161,9 @@ public class GameInstance {
 				frameTime += elapsed;
 				time = timeNow;
 			}
-			
+			renderLevel();
+			window.clearElements();
+			window.addElements();
 			// Run all non-render related tasks
 			while (unprocessed >= frameCap) {
 				unprocessed -= frameCap;
@@ -168,7 +180,6 @@ public class GameInstance {
 				}
 			}
 			
-			renderLevel();
 			
 			// Render when scene changes
 			if (canRender) {
@@ -185,6 +196,7 @@ public class GameInstance {
 						levels.get(levNum).logicLoop();
 
 					window.renderElements();
+					levels.get(levNum).renderLoop();
 				} else if (state.equals(State.GAME_COMPLETE)) {
 					gameState = false;
 					menuItem.renderString("Congratulations!", Alignment.CENTER, 0.1f, 0.3f);
@@ -193,29 +205,33 @@ public class GameInstance {
 					menuTitle.renderString("thejereman13 and mattgd", Alignment.CENTER, -0.17f, 0.23f);
 					startGame.renderString("(Press Space to return to the menu.)", Alignment.CENTER, -0.45f, 0.23f);
 				} else if (state.equals(State.LEVEL_COMPLETE)) {
-					if (gameState) {
-						levelTime = (int)levels.get(levNum).getElapsedTime();
+					if (levelCompleteDialogue){
+						if (gameState) {
+							levelTime = (int)((Level)levels.get(levNum)).getElapsedTime();
+						}
+						
+						gameState = false;
+						
+						shader.bind();
+						shader.updateUniforms(camera, target);
+						objectManager.renderAll();
+						
+						window.renderElements();
+						
+						// Add dark rectangle to make text more readable
+						shader.unbind();
+						glEnable(GL_BLEND);
+						glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+						
+						glColor4f(clearColor.red(), clearColor.green(), clearColor.blue(), .5f);
+						glRectf(-10f, -10f, 10f, 10f);
+						
+						menuItem.renderString("Congratulations!",  Alignment.CENTER, 0.1f, 0.45f);
+						menuItem.renderString("You've completed " + levels.get(levNum).getName() + " in " + levelTime + " seconds.", Alignment.CENTER, 0.02f, 0.2f);
+						startGame.renderString("(Press Space to continue.)", Alignment.CENTER, -0.45f, 0.3f);
+					}else{
+						setState(State.NEXT_LEVEL);
 					}
-					
-					gameState = false;
-					
-					shader.bind();
-					shader.updateUniforms(camera, target);
-					objectManager.renderAll();
-					
-					window.renderElements();
-					
-					// Add dark rectangle to make text more readable
-					shader.unbind();
-					glEnable(GL_BLEND);
-					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-					
-					glColor4f(clearColor.red(), clearColor.green(), clearColor.blue(), .5f);
-					glRectf(-10f, -10f, 10f, 10f);
-					
-					menuItem.renderString("Congratulations!",  Alignment.CENTER, 0.1f, 0.45f);
-					menuItem.renderString("You've completed " + levels.get(levNum).getName() + " in " + levelTime + " seconds.", Alignment.CENTER, 0.02f, 0.2f);
-					startGame.renderString("(Press Space to continue.)", Alignment.CENTER, -0.45f, 0.3f);
 				} else if (state.equals(State.MAIN_MENU)) {
 					gameState = false;
 
@@ -305,6 +321,10 @@ public class GameInstance {
 		hasLevel = false;
 	}
 	
+	public static Scene getLatestLevel(){
+		return levels.get(levNum);
+	}
+	
 	public static void setLevel(int lev) {
 		levNum = lev;
 		levels.get(levNum).setActiveLevel(true); // Set active level
@@ -317,7 +337,6 @@ public class GameInstance {
 			window.clearElements();
 			levels.get(levNum).renderObjects(); // Add all objects to the scene from the level class
 			objectManager.updateModels();
-			window.addElements();
 			hasLevel = true;
 		} else if (!hasLevel) {
 			System.out.println("End of game");

@@ -4,7 +4,7 @@ import edu.ncsu.feddgame.render.CreateModel;
 import edu.ncsu.feddgame.render.Model;
 
 public class Level1 extends Level {
-	
+	boolean isrendered = false;
 	private Model m;
 	
 	public Level1() {
@@ -13,6 +13,7 @@ public class Level1 extends Level {
 
 	@Override
 	public void renderObjects() {
+		super.renderObjects();
 		{ // Walls
 			CreateModel.createWall(0f, 10f, 20f, .5f);
 			CreateModel.createWall(0f, -10f, 20f, .5f);
@@ -29,13 +30,15 @@ public class Level1 extends Level {
 		m.rotate(-.5f);
 		
 		m = CreateModel.createBox(7, 4, 1); // Stationary box
+		isrendered = true;
 	}
 	
 	@Override
 	public void logicLoop() {
-		super.logicLoop();
-		
-		m.rotate(.005f);
+		if (isrendered){
+			super.logicLoop();
+			m.rotate(.005f);
+		}
 	}
 
 }

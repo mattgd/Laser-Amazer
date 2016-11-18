@@ -3,6 +3,7 @@ package edu.ncsu.feddgame.gui;
 import java.util.ArrayList;
 
 import edu.ncsu.feddgame.GameInstance;
+import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.Model;
@@ -91,7 +92,9 @@ public class Button extends Model implements UIElement, IClickable{
 	public void render() {
 		super.render();
 		float w = width / (float)label.getRenderString().length() / 3.5f;
-		label.renderString(label.getRenderString(), xCoords[0] / 10, (yOffset - w * 2f) / 20, w);
+		if (.52f * w > .13f * height)
+			w = .13f * height / .52f;
+		label.renderString(label.getRenderString(), xCoords[0] / 10, (yOffset - w * 2.6f) / 20, w);
 	}
 	
 	@Override
@@ -104,7 +107,14 @@ public class Button extends Model implements UIElement, IClickable{
 
 	@Override
 	public void setCallback(Runnable r) {
-		// TODO Auto-generated method stub
+	}
+	
+	/**
+	 * Change the label rendered by the text
+	 * @param f
+	 */
+	public void setLabel(GameFont f){
+		this.label = f;
 	}
 
 }

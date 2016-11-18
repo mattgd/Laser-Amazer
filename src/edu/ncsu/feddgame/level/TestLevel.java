@@ -4,7 +4,7 @@ import edu.ncsu.feddgame.render.CreateModel;
 import edu.ncsu.feddgame.render.Model;
 
 public class TestLevel extends Level {
-
+	boolean isrendered = false;
 	private Model box1, tri1;
 	private int i;
 	private float dir;
@@ -15,6 +15,7 @@ public class TestLevel extends Level {
 	
 	@Override
 	public void renderObjects() {
+		super.renderObjects();
 		laserWrappers.add(CreateModel.createLaserStart(7.5f, 9, 3));
 		//CreateModel.createLaserStop(3, -9f);
 		box1 = CreateModel.createBox(0,0);
@@ -37,20 +38,24 @@ public class TestLevel extends Level {
 		i = 0;
 		dir = 1;
 		laserWrappers.get(0).rotate((float)Math.toRadians(-12));
+		isrendered = true;
 	}
 	
 	@Override
 	public void logicLoop() {
-		super.logicLoop();
-		if (i < 160) {
-			if (box1 != null)
-				box1.move(0.05f * dir, 0f, 0f); // Test animation of models, this pings the box back and forth
-			laserWrappers.get(0).rotate((float)Math.toRadians(.1));
-			i++;
-		} else {
-			
-			i = 0;
-			dir *= -1f;
+		if (isrendered){
+			super.logicLoop();
+			if (i < 160) {
+				if (box1 != null && laserWrappers.size() > 0){
+					box1.move(0.05f * dir, 0f, 0f); // Test animation of models, this pings the box back and forth
+					laserWrappers.get(0).rotate((float)Math.toRadians(.1));
+				}
+				i++;
+			} else {
+				
+				i = 0;
+				dir *= -1f;
+			}
 		}
 	}
 

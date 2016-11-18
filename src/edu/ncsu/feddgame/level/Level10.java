@@ -20,6 +20,7 @@ public class Level10 extends Level {
 	
 	@Override
 	public void renderObjects() {
+		super.renderObjects();
 		LaserStart start = CreateModel.createLaserStart(9.3f, 9.3f, 3, Math.toRadians(254));
 		laserWrappers.add(start);
 		

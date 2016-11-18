@@ -40,9 +40,12 @@ import de.matthiasmann.twl.utils.PNGDecoder;
 import edu.ncsu.feddgame.gui.CreateUI;
 import edu.ncsu.feddgame.gui.Dropdown;
 import edu.ncsu.feddgame.gui.IClickable;
+import edu.ncsu.feddgame.gui.Text;
 import edu.ncsu.feddgame.gui.UIElement;
 import edu.ncsu.feddgame.gui.UIUtils;
 import edu.ncsu.feddgame.level.Level;
+import edu.ncsu.feddgame.level.Menu;
+import edu.ncsu.feddgame.level.Scene;
 import edu.ncsu.feddgame.render.GameColor;
 import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.Model;
@@ -118,13 +121,9 @@ public class Window {
 	 * Adds all specified elements to the Window's array and scene
 	 */
 	public void addElements() {
-		Dropdown du = CreateUI.createDropdown(-12f, 8f, 3f, 1f, new GameFont("Select Level", GameColor.RED.getFloatColor()));
-		for (Level level : GameInstance.levels) {
-			du.addButton(CreateUI.createButton(-12f, 8f, 3f, 1, () -> {
-				GameInstance.setLevel(GameInstance.levels.indexOf(level));
-			}, new GameFont(level.getName(), GameColor.RED.getFloatColor())));
-		}
-		elementList.add(du);
+		//Add items here that need to be rendered every frame on all screens
+		if (GameInstance.getLatestLevel() instanceof Level && GameInstance.showTimer)
+			elementList.add(new Text(11f, -2f, "Time: " + (int)((Level)GameInstance.getLatestLevel()).getElapsedTime(), GameColor.GREEN.getFloatColor(), 1));
 	}
 	
 	public void clearElements() {
@@ -184,6 +183,7 @@ public class Window {
 				State state = GameInstance.getState();
 				switch (state) {
 				case GAME:
+					break;
 				case GAME_COMPLETE:
 					GameInstance.setState(State.MAIN_MENU);
 					break;
@@ -250,6 +250,7 @@ public class Window {
 							((IClickable)e).checkClick(mouseX, mouseY);
 						}
 					}
+					GameInstance.getLatestLevel().checkClick(mouseX, mouseY);
 				}
 			}
 		});
