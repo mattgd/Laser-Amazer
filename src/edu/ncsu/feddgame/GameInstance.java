@@ -320,6 +320,7 @@ public class GameInstance {
 		
 		// If all levels complete, reset to level 0
 		levNum++;
+		latestLevel++;
 		
 		if (levNum > levels.size() - 1) {
 			levNum = 0;
