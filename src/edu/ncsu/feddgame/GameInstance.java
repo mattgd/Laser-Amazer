@@ -48,9 +48,13 @@ public class GameInstance {
 	public static ObjectManager objectManager;
 	boolean canRender;
 	private int levelTime;
+	
+	
 	public static boolean levelCompleteDialogue = true;
 	public static boolean showTimer = true;
 	public static int samplingLevel = 4;
+	public static int latestLevel = 5;
+	
 	
 	private int menuTime = 0;
 	public static List<Scene> levels = new ArrayList<Scene>() {
@@ -64,8 +68,6 @@ public class GameInstance {
 		add(new Level4());
 		add(new Level10());
 	}};
-	
-	public static int latestLevel = 5;
 	
 	private static int levNum = 0; // Start with 0
 	public static float fade = 90f; // Amount of fade in degrees (0-90)
@@ -87,7 +89,9 @@ public class GameInstance {
 	}
 	
 	private void setup() { 	// Setup all the window settings
-		//Window.setCallbacks();
+		
+		SaveData.readData();
+		
 		
 		objectManager = new ObjectManager();
 		
@@ -271,6 +275,7 @@ public class GameInstance {
 			}
 			
 		}
+		SaveData.writeData();
 	}
 	
 	private void logicLoop() {
