@@ -46,11 +46,11 @@ public class GameInstance {
 	
 	public static Window window;
 	public static ObjectManager objectManager;
-	boolean canRender;
-	private int levelTime = 0;
 	public static boolean levelCompleteDialogue = true;
 	public static boolean showTimer = true;
 	public static int samplingLevel = 4;
+	
+	private boolean canRender;
 	
 	public static List<Scene> levels = new ArrayList<Scene>() {
 		private static final long serialVersionUID = 525308338634565467L;
@@ -85,9 +85,11 @@ public class GameInstance {
 		}
 	}
 	
-	private void setup() { 	// Setup all the window settings
+	/**
+	 * Setup all the window settings
+	 */
+	private void setup() { 	
 		//Window.setCallbacks();
-		
 		objectManager = new ObjectManager();
 		
 		if (!glfwInit()) {
@@ -105,7 +107,9 @@ public class GameInstance {
 		setState(State.GAME); // Set the game state
 	}
 	
-	// Render Loop
+	/**
+	 * Game render loop
+	 */
 	private void renderLoop() {
 		GL.createCapabilities();
 		//TODO Should probably throw exception and exit here if window is null
@@ -193,7 +197,7 @@ public class GameInstance {
 						getCurrentLevel().logicLoop();
 
 					window.renderElements();
-					levels.get(levNum).renderLoop();
+					getCurrentLevel().renderLoop();
 				} else if (state.equals(State.GAME_COMPLETE)) {
 					gameState = false;
 					menuItem.renderString("Congratulations!", Alignment.CENTER, 0.1f, 0.3f);
@@ -222,8 +226,6 @@ public class GameInstance {
 						glColor4f(clearColor.red(), clearColor.green(), clearColor.blue(), .5f);
 						glRectf(-10f, -10f, 10f, 10f);
 						
-						startGame.setColor(GameColor.YELLOW.getFloatColor()); // Change color back if it was blue on the menu
-						
 						Scene latestLevel = getCurrentLevel();
 						
 						menuItem.renderString("Congratulations!",  Alignment.CENTER, 0.1f, 0.45f);
@@ -243,6 +245,7 @@ public class GameInstance {
 					shader.unbind();
 					glEnable(GL_BLEND);
 					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					
 					if (fade > 0) {
 						fade -= 2.5f;
 						glColor4f(clearColor.red(), clearColor.blue(), clearColor.green(), (float) Math.sin(Math.toRadians(fade)));
@@ -267,8 +270,8 @@ public class GameInstance {
 			double timeNow = getTime(); // Get time at the start of the loop
 			
 			// Make sure it's the active level
-			if (levels.get(levNum).isActive())
-				levels.get(levNum).logicLoop();
+			if (getCurrentLevel().isActive())
+				getCurrentLevel().logicLoop();
 			
 			{
 				long sleeptime = timing - (long)(getTime() - timeNow); // Sync the game loop to update at the refresh rate
@@ -319,8 +322,8 @@ public class GameInstance {
 		return levels.get(levNum);
 	}
 	
-	public static void setLevel(int lev) {
-		levNum = lev;
+	public static void setLevel(int levelNumber) {
+		levNum = levelNumber;
 		levels.get(levNum).setActive(true); // Set active level
 		hasLevel = false;
 	}

@@ -4,10 +4,11 @@ import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.GameFont;
 
-public class Text implements UIElement{
-	GameFont label;
-	float xOffset, yOffset, size;
-	Alignment align;
+public class Text implements UIElement {
+	
+	private GameFont label;
+	private float xOffset, yOffset, size;
+	private Alignment align;
 	
 	/**
 	 * New Text UIElement
@@ -56,16 +57,18 @@ public class Text implements UIElement{
 		this.size = size;
 		this.align = align;
 	}
+	
 	@Override
 	public void render() {
 		label.renderString(label.getRenderString(), xOffset, yOffset, size);
 		
 	}
+	
 	/**
 	 * Change the label rendered by the text
 	 * @param f
 	 */
-	public void setLabel(GameFont f){
+	public void setLabel(GameFont f) {
 		this.label = f;
 		String str = label.getRenderString();
 		switch (align) {

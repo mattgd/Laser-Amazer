@@ -40,7 +40,7 @@ public class OptionsMenu extends Menu{
 			GameInstance.setLevel(0);
 		}, new GameFont("Return to Main Menu", GameColor.TEAL.getFloatColor())));
 		
-		gameList.add(new Text(0f, 4.5f, Alignment.CENTER, "Game Options", GameColor.ORANGE.getFloatColor(), 1.5f));
+		gameList.add(new Text(0f, 4f, Alignment.CENTER, "Game Options", GameColor.ORANGE.getFloatColor(), 1.5f));
 		gameList.add(new Text(-9f, 1f, "Show Level Complete -", GameColor.BLUE.getFloatColor(), 1.2f));
 		gameList.add(new Text(-5.4f, 0f, "Show Timer -", GameColor.BLUE.getFloatColor(), 1.2f));
 		complete = CreateUI.createButton(2f, 2.25f, 3, .8f, () -> {
@@ -64,7 +64,7 @@ public class OptionsMenu extends Menu{
 		}, new GameFont(GameInstance.showTimer ? " Yes " : " No ", GameColor.YELLOW.getFloatColor()));
 		gameList.add(timer);
 		
-		graphicsList.add(new Text(0f, 4.5f, Alignment.CENTER, "Graphics Options", GameColor.ORANGE.getFloatColor(), 1.5f));
+		graphicsList.add(new Text(0f, 4f, Alignment.CENTER, "Graphics Options", GameColor.ORANGE.getFloatColor(), 1.5f));
 		graphicsList.add(new Text(-9f, 1f, "Multisampling Level -", GameColor.BLUE.getFloatColor(), 1.2f));
 		multisampling = CreateUI.createDropdown(2f, 2.25f, 2.5f, .8f, new GameFont(" " + Integer.toString(GameInstance.samplingLevel), GameColor.YELLOW.getFloatColor()), new GameFont[]{
 				new GameFont(" 0", GameColor.YELLOW.getFloatColor()),
