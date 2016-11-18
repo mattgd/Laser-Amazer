@@ -123,15 +123,14 @@ public class Window {
 		    public void run() {
 		    	GameInstance.setState(State.MAIN_MENU);
 		    }
-		}, new GameFont("Main Menu", GameColor.ORANGE.getFloatColor()));
-		
+		}, new GameFont("Main Menu", GameColor.RED.getFloatColor()));
 		elementList.add(menuButton);
 		
-		Dropdown du = CreateUI.createDropdown(-12f, 7.5f, 3f, 1f, new GameFont("Select Level", GameColor.ORANGE.getFloatColor()));
+		Dropdown du = CreateUI.createDropdown(-12f, 7.5f, 3f, 1f, new GameFont("Select Level", GameColor.RED.getFloatColor()));
 		for (Level level : GameInstance.levels) {
-			du.addButton(CreateUI.createButton(-12f, 7.5f, 2f, 1, () -> {
+			du.addButton(CreateUI.createButton(-12f, 7.5f, 3f, 1, () -> {
 				GameInstance.setLevel(GameInstance.levels.indexOf(level));
-			}, new GameFont(level.getName(), GameColor.ORANGE.getFloatColor())));
+			}, new GameFont(level.getName(), GameColor.RED.getFloatColor())));
 		}
 		elementList.add(du);
 	}
