@@ -23,14 +23,16 @@ public class Level2 extends Level {
 			CreateModel.createWall(-5f, 2f, .25f, 18f);
 			CreateModel.createWall(2f, -2f, .25f, 16f);
 		}
-		laserWrappers.add(CreateModel.createLaserStart(-10f, -1f, 2, Math.toRadians(-45)));
 		
+		// Laser start/stop
+		laserWrappers.add(CreateModel.createLaserStart(-10f, -1f, 2, Math.toRadians(-45)));
 		Model model = CreateModel.createLaserStop(10, 7);
 		model.rotate(-1.55f);
 
+		// Moveables
 		for (int i = 0; i < 7; i++) {
-			int x = randomInt(1, 9);
-			int y = randomInt(2, 8);
+			int x = randomInt(-3, 9);
+			int y = randomInt(-3, 8);
 			
 			model = CreateModel.createMovableBox(x, y);
 			
@@ -38,9 +40,12 @@ public class Level2 extends Level {
 			if (Math.random() < 0.5) rotate = true;
 			float r = (float)Math.random();
 			if (rotate)
-				model.rotate(r < .5f ? (-(float)Math.PI / 3f):((float)Math.PI /6f));
+				model.rotate(r < .5f ? (-(float)Math.PI / 3f):((float)Math.PI / 6f));
 		}
+		
 		CreateModel.createMovableTriangle(-1f, 1f, 1, 1);
+		
+		// Unmoveables
 		CreateModel.createTriangle(2, 7, 1, 1);
 	}
 

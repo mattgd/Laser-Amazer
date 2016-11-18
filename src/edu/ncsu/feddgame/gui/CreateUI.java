@@ -12,7 +12,7 @@ public class CreateUI {
 	 * @param width
 	 * @param r
 	 */
-	public static Button createButton(float xOffset, float yOffset, float width, float height, Runnable r, GameFont f){
+	public static Button createButton(float xOffset, float yOffset, float width, float height, Runnable r, GameFont f) {
 		// Vertices for a trapezoid
 		float[] vertices = new float[] {
 			-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
@@ -43,7 +43,7 @@ public class CreateUI {
 	 * @param r
 	 * @return
 	 */
-	public static Button createButton(float xOffset, float yOffset, float width, float height, Runnable r){
+	public static Button createButton(float xOffset, float yOffset, float width, float height, Runnable r) {
 		// Vertices for a trapezoid
 		float[] vertices = new float[] {
 			-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0

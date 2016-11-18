@@ -31,10 +31,10 @@ import edu.ncsu.feddgame.level.Level1;
 import edu.ncsu.feddgame.level.Level10;
 import edu.ncsu.feddgame.level.Level2;
 import edu.ncsu.feddgame.level.Level3;
+import edu.ncsu.feddgame.level.Level4;
 import edu.ncsu.feddgame.level.MainMenu;
 import edu.ncsu.feddgame.level.OptionsMenu;
 import edu.ncsu.feddgame.level.Scene;
-import edu.ncsu.feddgame.level.Level4;
 import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.Camera;
 import edu.ncsu.feddgame.render.FloatColor;
@@ -46,17 +46,14 @@ public class GameInstance {
 	
 	public static Window window;
 	public static ObjectManager objectManager;
-	boolean canRender;
-	private int levelTime;
-	
-	
+
 	public static boolean levelCompleteDialogue = true;
 	public static boolean showTimer = true;
 	public static int samplingLevel = 4;
 	public static int latestLevel = 5;
 	
+	private boolean canRender;
 	
-	private int menuTime = 0;
 	public static List<Scene> levels = new ArrayList<Scene>() {
 		private static final long serialVersionUID = 525308338634565467L;
 	{
@@ -88,11 +85,13 @@ public class GameInstance {
 		}
 	}
 	
-	private void setup() { 	// Setup all the window settings
-		
+
+	/**
+	 * Setup all the window settings
+	 */
+	private void setup() {
 		SaveData.readData();
-		
-		
+		//Window.setCallbacks();
 		objectManager = new ObjectManager();
 		
 		if (!glfwInit()) {
@@ -107,10 +106,13 @@ public class GameInstance {
 		
 		window = new Window(800, 800, "Laser Amazer", false);
 		
-		state = State.GAME; // Set the game state
+		setState(State.GAME); // Set the game state
 	}
 	
-	private void renderLoop() { 	// Render Loop
+	/**
+	 * Game render loop
+	 */
+	private void renderLoop() {
 		GL.createCapabilities();
 		//TODO Should probably throw exception and exit here if window is null
 		
@@ -182,7 +184,6 @@ public class GameInstance {
 				}
 			}
 			
-			
 			// Render when scene changes
 			if (canRender) {
 				glClear(GL_COLOR_BUFFER_BIT);
@@ -194,11 +195,11 @@ public class GameInstance {
 					objectManager.renderAll();
 					
 					// Make sure it's the active level
-					if (levels.get(levNum).isActiveLevel())
-						levels.get(levNum).logicLoop();
+					if (getCurrentLevel().isActive())
+						getCurrentLevel().logicLoop();
 
 					window.renderElements();
-					levels.get(levNum).renderLoop();
+					getCurrentLevel().renderLoop();
 				} else if (state.equals(State.GAME_COMPLETE)) {
 					gameState = false;
 					menuItem.renderString("Congratulations!", Alignment.CENTER, 0.1f, 0.3f);
@@ -207,50 +208,33 @@ public class GameInstance {
 					menuTitle.renderString("thejereman13 and mattgd", Alignment.CENTER, -0.17f, 0.23f);
 					startGame.renderString("(Press Space to return to the menu.)", Alignment.CENTER, -0.45f, 0.23f);
 				} else if (state.equals(State.LEVEL_COMPLETE)) {
-					if (levelCompleteDialogue){
-					gameState = false;
+					getCurrentLevel().setActive(false); // Set level as inactive
 					
-					shader.bind();
-					shader.updateUniforms(camera, target);
-					objectManager.renderAll();
-					
-					window.renderElements();
-					
-					// Add dark rectangle to make text more readable
-					shader.unbind();
-					glEnable(GL_BLEND);
-					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-					
-					glColor4f(clearColor.red(), clearColor.green(), clearColor.blue(), .5f);
-					glRectf(-10f, -10f, 10f, 10f);
-					
-					startGame.setColor(GameColor.YELLOW.getFloatColor()); // Change color back if it was blue on the menu
-					
-					menuItem.renderString("Congratulations!",  Alignment.CENTER, 0.1f, 0.45f);
-					menuItem.renderString("You've completed " + levels.get(levNum).getName() + " in " + levelTime + " seconds.", Alignment.CENTER, 0.02f, 0.2f);
-					startGame.renderString("(Press Space to continue.)", Alignment.CENTER, -0.45f, 0.3f);
-					}else{
-						setState(State.NEXT_LEVEL);
-					}
-				} else if (state.equals(State.MAIN_MENU)) {
-					gameState = false;
-
-					menuTitle.renderString(menuTitle.getRenderString(), Alignment.CENTER, 0.1f, 0.6f);
-					menuItem.renderString("A FEDD educational computer game.", Alignment.CENTER, 0.03f, 0.2f);
-					
-					if (menuTime > 120) {
-						startGame.setColor(GameColor.TEAL.getFloatColor());
-						startGame.renderString("<Press Space to begin.>", Alignment.CENTER, -0.18f, 0.3f);
+					// If user has the level complete dialogue enabled
+					if (levelCompleteDialogue) {
+						gameState = false;
 						
+						shader.bind();
+						shader.updateUniforms(camera, target);
+						objectManager.renderAll();
+						
+						window.renderElements();
+						
+						// Add dark rectangle to make text more readable
+						shader.unbind();
+						glEnable(GL_BLEND);
+						glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+						
+						glColor4f(clearColor.red(), clearColor.green(), clearColor.blue(), .5f);
+						glRectf(-10f, -10f, 10f, 10f);
+						
+						Scene latestLevel = getCurrentLevel();
+						
+						menuItem.renderString("Congratulations!",  Alignment.CENTER, 0.1f, 0.45f);
+						menuItem.renderString("You've completed " + latestLevel.getName() + " in " + latestLevel.getElapsedSeconds() + " seconds.", Alignment.CENTER, 0.02f, 0.2f);
+						startGame.renderString("(Press Space to continue.)", Alignment.CENTER, -0.45f, 0.3f);
 					} else {
-						startGame.setColor(GameColor.YELLOW.getFloatColor());
-						startGame.renderString(">Press Space to begin.<", Alignment.CENTER, -0.18f, 0.3f);
-					}
-					
-					if (menuTime > 240) {
-						menuTime = 0;
-					} else {
-						menuTime++;
+						setState(State.NEXT_LEVEL);
 					}
 				} else if (state.equals(State.NEXT_LEVEL)) {
 					gameState = false;
@@ -263,6 +247,7 @@ public class GameInstance {
 					shader.unbind();
 					glEnable(GL_BLEND);
 					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					
 					if (fade > 0) {
 						fade -= 2.5f;
 						glColor4f(clearColor.red(), clearColor.blue(), clearColor.green(), (float) Math.sin(Math.toRadians(fade)));
@@ -280,19 +265,19 @@ public class GameInstance {
 	
 	private void logicLoop() {
 		Thread.currentThread().setName("Logic");
-		long timing = Math.round(1f / 60 * 1000f); 	//Get the number of milliseconds between frames based on 60 times a second
+		long timing = Math.round(1f / 60 * 1000f); 	// Get the number of milliseconds between frames based on 60 times a second
 		
 		while (!window.shouldClose()) {
 			if (!gameState) continue;
 			
-			double timeNow = getTime(); 	//Get time at the start of the loop
+			double timeNow = getTime(); // Get time at the start of the loop
 			
 			// Make sure it's the active level
-			if (levels.get(levNum).isActiveLevel())
-				levels.get(levNum).logicLoop();
+			if (getCurrentLevel().isActive())
+				getCurrentLevel().logicLoop();
 			
 			{
-				long sleeptime = timing - (long)(getTime() - timeNow); 	//Sync the game loop to update at the refresh rate
+				long sleeptime = timing - (long)(getTime() - timeNow); // Sync the game loop to update at the refresh rate
 				//System.out.println(sleeptime);
 				try {
 					Thread.sleep(sleeptime);
@@ -321,7 +306,7 @@ public class GameInstance {
 	}
 	
 	public static void nextLevel() {
-		levels.get(levNum).setActiveLevel(false); // No longer the active level
+		getCurrentLevel().setActive(false); // No longer the active level
 		
 		// If all levels complete, reset to level 0
 		levNum++;
@@ -332,17 +317,17 @@ public class GameInstance {
 			setState(State.GAME_COMPLETE);
 		}
 		
-		levels.get(levNum).setActiveLevel(true); // Set new active level
+		getCurrentLevel().setActive(true); // Set new active level
 		hasLevel = false;
 	}
 	
-	public static Scene getLatestLevel(){
+	public static Scene getCurrentLevel() {
 		return levels.get(levNum);
 	}
 	
-	public static void setLevel(int lev) {
-		levNum = lev;
-		levels.get(levNum).setActiveLevel(true); // Set active level
+	public static void setLevel(int levelNumber) {
+		levNum = levelNumber;
+		levels.get(levNum).setActive(true); // Set active level
 		hasLevel = false;
 	}
 	
