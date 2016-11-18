@@ -28,13 +28,8 @@ public class MainMenu extends Menu {
 		elementList.add(CreateUI.createButton(0, -2f, 3, 1.25f, () -> {
 			GameInstance.setLevel(1);
 		}, new GameFont("Options", GameColor.RED.getFloatColor())));
-<<<<<<< HEAD
-		elementList.add(CreateUI.createButton(0, -1.5f, 3, 1.25f, () ->{
+		elementList.add(CreateUI.createButton(0, -3.5f, 3, 1.25f, () ->{
 			SaveData.writeData();
-=======
-		
-		elementList.add(CreateUI.createButton(0, -3.5f, 3, 1.25f, () -> {
->>>>>>> origin/master
 			System.exit(1);
 		}, new GameFont("Quit", GameColor.RED.getFloatColor())));
 		
