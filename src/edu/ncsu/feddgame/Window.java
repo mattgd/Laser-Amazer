@@ -116,8 +116,8 @@ public class Window {
 	 */
 	public void addElements() {
 		//Add items here that need to be rendered every frame on all screens
-		if (GameInstance.getLatestLevel() instanceof Level && GameInstance.showTimer)
-			elementList.add(new Text(11f, -2f, "Time: " + (int)((Level)GameInstance.getLatestLevel()).getElapsedTime(), GameColor.TEAL.getFloatColor(), 1));
+		if (GameInstance.getCurrentLevel() instanceof Level && GameInstance.showTimer)
+			elementList.add(new Text(11f, -2f, "Time: " + (int)((Level)GameInstance.getCurrentLevel()).getElapsedTime(), GameColor.TEAL.getFloatColor(), 1));
 	}
 	
 	public void clearElements() {
@@ -166,6 +166,7 @@ public class Window {
 					ctrlHeld = false;
 				}
 			}
+			
 			if (key == GLFW_KEY_LEFT_SHIFT) {
 				if (action == GLFW_PRESS) {
 					shiftHeld = true;
@@ -173,22 +174,20 @@ public class Window {
 					shiftHeld = false;
 				}
 			}
+			
 			if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE) {
 				State state = GameInstance.getState();
 				switch (state) {
 				case GAME:
 					break;
 				case GAME_COMPLETE:
-					GameInstance.setState(State.MAIN_MENU);
+					//GameInstance.setState(State.MAIN_MENU);
 					break;
 				case LEVEL_COMPLETE:
 					GameInstance.setState(State.NEXT_LEVEL);
 					break;
-				case MAIN_MENU:
-					GameInstance.setState(State.GAME);
-					break;
 				default:
-					GameInstance.setState(State.MAIN_MENU);
+					GameInstance.setState(State.GAME);
 				}
 			}	
 		});
@@ -249,7 +248,7 @@ public class Window {
 							((IClickable) e).checkClick(mouseX, mouseY);
 						}
 					}
-					GameInstance.getLatestLevel().checkClick(mouseX, mouseY);
+					GameInstance.getCurrentLevel().checkClick(mouseX, mouseY);
 				}
 			}
 		});

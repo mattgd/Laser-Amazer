@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.Random;
 
 import edu.ncsu.feddgame.GameInstance;
-import edu.ncsu.feddgame.gui.Button;
 import edu.ncsu.feddgame.gui.CreateUI;
 import edu.ncsu.feddgame.gui.Dropdown;
 import edu.ncsu.feddgame.render.GameColor;
@@ -14,15 +13,15 @@ import edu.ncsu.feddgame.render.LaserStart;
 import edu.ncsu.feddgame.render.LaserStop;
 
 public abstract class Level extends Scene {
+	
 	protected ArrayList<LaserStart> laserWrappers = new ArrayList<LaserStart>();
 	protected LaserStop laserStop;
-	private double timeStart;
 	
 	public Level(String name) {
 		super(name);
 	}
 	
-	public int randomInt(int min, int max) {
+	protected int randomInt(int min, int max) {
 		return new Random().nextInt(max - min + 1) + min;
 	}
 
@@ -31,13 +30,9 @@ public abstract class Level extends Scene {
 			for (Iterator<LaserStart> it = laserWrappers.iterator(); it.hasNext();) {
 				it.next().reflect();
 			}
-			
-			// Causes ConcurrentModificationException
-			/*for (LaserStart l : laserWrappers){
-				l.reflect();
-			}*/
 		}
 	}
+	
 	@Override
 	public void renderObjects() {
 		laserWrappers.clear();
@@ -64,23 +59,6 @@ public abstract class Level extends Scene {
 			for (LaserStart l : laserWrappers)
 				l.render();
 		}
-	}
-	
-	@Override
-	public void setActiveLevel(boolean active) {
-		super.setActiveLevel(active);
-		timeStart = getTime();
-	}
-	
-	public double getElapsedTime() {
-		return getTime() - timeStart;
-	}
-	
-	/**
-	 * @return System time in seconds
-	 */
-	public double getTime() {
-		return (double) System.nanoTime() / (double) 1000000000L;
 	}
 
 }
