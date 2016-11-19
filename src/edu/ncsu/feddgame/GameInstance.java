@@ -34,6 +34,7 @@ import edu.ncsu.feddgame.level.Level2;
 import edu.ncsu.feddgame.level.Level3;
 import edu.ncsu.feddgame.level.Level4;
 import edu.ncsu.feddgame.level.Level5;
+import edu.ncsu.feddgame.level.Level6;
 import edu.ncsu.feddgame.level.MainMenu;
 import edu.ncsu.feddgame.level.OptionsMenu;
 import edu.ncsu.feddgame.level.Scene;
@@ -66,6 +67,7 @@ public class GameInstance {
 		add(new Level3());
 		add(new Level4());
 		add(new Level5());
+		add(new Level6());
 		add(new Level10());
 		add(new GameComplete());
 	}};
@@ -142,7 +144,7 @@ public class GameInstance {
 		double unprocessed = 0;
 		
 		setState(State.GAME); // Set the game state
-		setLevel(6); // Set the starting level
+		setLevel(0); // Set the starting level
 		
 		new Thread(() -> logicLoop()).start(); // Run the logic in a separate thread
 		
