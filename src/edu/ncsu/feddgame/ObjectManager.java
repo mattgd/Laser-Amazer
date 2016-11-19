@@ -8,10 +8,8 @@ import edu.ncsu.feddgame.render.Model;
 
 public class ObjectManager {
 
-	private static List<Model> models = new ArrayList<Model>();
-	private static List<LaserModel> lasers = new ArrayList<LaserModel>();
-	private List<Model> addModels = new ArrayList<Model>();
-	private List<LaserModel> addLasers = new ArrayList<LaserModel>();
+	private static ArrayList<Model> models = new ArrayList<Model>();
+	private ArrayList<Model> addModels = new ArrayList<Model>();
 
 	/**
 	 * Adds a passed Model to the stored ArrayList
@@ -32,7 +30,7 @@ public class ObjectManager {
 		return models;
 	}
 
-	public void setModels(List<Model> models) {
+	public void setModels(ArrayList<Model> models) {
 		ObjectManager.models = models;
 	}
 
@@ -40,10 +38,9 @@ public class ObjectManager {
 	 * Flushes the buffer ArrayList into the primary ArrayLists
 	 */
 	void updateModels() {
-		getModels().addAll(addModels);
-		lasers.addAll(addLasers);
+		models.addAll(addModels);
 		addModels.clear();
-		addLasers.clear();
+		addModels.trimToSize();
 	}
 
 	/**
@@ -52,7 +49,7 @@ public class ObjectManager {
 	 * @param index
 	 */
 	public void removeModel(int index) {
-		getModels().remove(index);
+		models.remove(index);
 	}
 
 	/**
@@ -85,7 +82,6 @@ public class ObjectManager {
 	
 	void clearAll() {
 		models.clear();
-		lasers.clear();
 	}
 
 }

@@ -14,6 +14,7 @@ public abstract class Scene {
 	protected List<UIElement> elementList = new ArrayList<UIElement>();
 	protected double timeStart;
 	private double timeStop;
+	private static DecimalFormat timeFormat = new DecimalFormat("#.#");
 	
 	Scene(String name) {
 		this.name = name;
@@ -68,7 +69,7 @@ public abstract class Scene {
 	}
 	
 	public String getElapsedSeconds() {
-		return new DecimalFormat("#.#").format(getElapsedTime());
+		return timeFormat.format(getElapsedTime());
 	}
 	
 	/**

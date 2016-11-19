@@ -79,7 +79,7 @@ public class ReflectionCalculation {
 
 	private static void findIntersects(LaserModel laser, List<Model> models) {
 		intersects.clear(); // Remove existing intersects from the list
-		
+		intersects.trimToSize();
 		float slope = (float) Math.tan(laser.getAngle());
 		coords = laser.getCoords();
 		int xDir = laser.xDir;

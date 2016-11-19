@@ -40,9 +40,11 @@ public class LaserWrapper {
 	 */
 	public void runReflections() {
 		lock.writeLock().lock(); // Lock access to the list
+		
 		laserList.clear(); // Clear and restart the list
 		laserList.add(root);
 		calculateReflections(); // Run reflections
+		
 		lock.writeLock().unlock(); // Unlock access
 	}
 	
@@ -53,8 +55,9 @@ public class LaserWrapper {
 		lock.readLock().lock(); // Locks access to the list
 		
 		// Renders all lasers in the list
-		for (LaserModel m : laserList)
+		for (LaserModel m : laserList){
 			m.render();
+		}
 		
 		lock.readLock().unlock(); // Unlocks the list
 	}

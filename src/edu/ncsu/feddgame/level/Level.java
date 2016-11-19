@@ -49,14 +49,5 @@ public abstract class Level extends Scene {
 		}, new GameFont("Main Menu", GameColor.RED.getFloatColor())));
 	}
 
-	@Override
-	public void renderLoop() {
-		super.renderLoop();
-		
-		if (laserWrappers != null) {
-			for (LaserStart l : laserWrappers)
-				l.render();
-		}
-	}
 
 }

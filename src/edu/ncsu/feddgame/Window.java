@@ -41,6 +41,7 @@ import edu.ncsu.feddgame.gui.UIElement;
 import edu.ncsu.feddgame.gui.UIUtils;
 import edu.ncsu.feddgame.level.Level;
 import edu.ncsu.feddgame.render.GameColor;
+import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.Model;
 import edu.ncsu.feddgame.render.MovableModel;
 
@@ -55,6 +56,7 @@ public class Window {
 	private String title;
 	public static boolean isClicked = false;
 	private GLFWVidMode vidMode;
+	private Text times;
 	
 	private ArrayList<UIElement> elementList = new ArrayList<UIElement>();
 	
@@ -109,12 +111,19 @@ public class Window {
 	 */
 	void addElements() {
 		//Add items here that need to be rendered every frame on all screens
-		if (GameInstance.getCurrentLevel() instanceof Level && GameInstance.showTimer)
-			elementList.add(new Text(11f, -2f, "Time: " + (int)((Level)GameInstance.getCurrentLevel()).getElapsedTime(), GameColor.TEAL.getFloatColor(), 1));
+		if (GameInstance.getCurrentLevel() instanceof Level && GameInstance.showTimer){
+			times = new Text(11f, -2f, "Time: ", GameColor.TEAL.getFloatColor(), 1);
+			elementList.add(times);
+		}
+	}
+	public void updateTime(){
+		if (GameInstance.getCurrentLevel() instanceof Level)
+			times.setLabelString("Time: " + (int)((Level)GameInstance.getCurrentLevel()).getElapsedTime());
 	}
 	
 	void clearElements() {
 		elementList.clear();
+		elementList.trimToSize();
 	}
 	
 	void centerWindow() {

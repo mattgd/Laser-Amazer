@@ -140,13 +140,12 @@ public class GameInstance {
 		double unprocessed = 0;
 		
 		setState(State.GAME); // Set the game state
-		setLevel(0); // Set the starting level
+		setLevel(2); // Set the starting level
 		
 		new Thread(() -> logicLoop()).start(); // Run the logic in a separate thread
 		
 		glfwSetWindowSize(window.window, 1200, 800);
 		window.centerWindow(); // Center window on screen
-
 		// Poll window while window isn't about to close
 		while (!window.shouldClose()) {
 			canRender = false;
@@ -159,10 +158,6 @@ public class GameInstance {
 				frameTime += elapsed;
 				time = timeNow;
 			}
-			
-			renderLevel();
-			window.clearElements();
-			window.addElements();
 			
 			// Run all non-render related tasks
 			while (unprocessed >= frameCap) {
@@ -178,6 +173,7 @@ public class GameInstance {
 			
 			// Render when scene changes
 			if (canRender) {
+				renderLevel();
 				glClear(GL_COLOR_BUFFER_BIT);
 				
 				if (state.equals(State.GAME)) {
@@ -185,11 +181,7 @@ public class GameInstance {
 					shader.bind();
 					shader.updateUniforms(camera, target);
 					objectManager.renderAll();
-					
-					// Make sure it's the active level
-					if (getCurrentLevel().isActive())
-						getCurrentLevel().logicLoop();
-
+					window.updateTime();
 					window.renderElements();
 					getCurrentLevel().renderLoop();
 				} else if (state.equals(State.LEVEL_COMPLETE)) {
@@ -294,7 +286,7 @@ public class GameInstance {
 		
 		// If all levels complete, reset to level 0
 		levNum++;
-		latestLevel++;
+		latestLevel = (levNum <= latestLevel) ? (latestLevel) : (levNum);
 		
 		if (levNum > scenes.size() - 1) {
 			levNum = 0;
@@ -325,6 +317,7 @@ public class GameInstance {
 		if (levNum < scenes.size() && !hasLevel) {
 			objectManager.clearAll();
 			window.clearElements();
+			window.addElements();
 			getCurrentLevel().renderObjects(); // Add all objects to the scene from the level class
 			objectManager.updateModels();
 			hasLevel = true;

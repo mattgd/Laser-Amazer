@@ -28,7 +28,7 @@ public class GameFont {
 
 	private int fontTexture;
 	private FloatColor color;
-	private final String renderStr;
+	private String renderStr;
 	
 	private final static int GRID_SIZE = 16;
 	
@@ -150,6 +150,9 @@ public class GameFont {
 	
 	public String getRenderString() {
 		return renderStr;
+	}
+	public void setRenderString(String str){
+		renderStr = str;
 	}
 	
 	public void setColor(FloatColor color) {

@@ -29,6 +29,10 @@ public class Model {
 	private Texture tex;
 	private String texStr;
 	protected float xOffset, yOffset;
+	private float[] newv;
+	
+	FloatBuffer vert, coords;
+	IntBuffer indec;
 	
 	private String defaultTexString = "bgtile.png";
 	/**
@@ -100,29 +104,31 @@ public class Model {
 			textureId = glGenBuffers();
 			indexId = glGenBuffers();
 			generated = true;
+			vert = createBuffer(vertices);
+			coords = createBuffer(tCoords);
+			indec = BufferUtils.createIntBuffer(indices.length);
+			indec.put(indices);
+			indec.flip();
 		}
 		
-		float[] newv = vertices.clone();
-		float ratio = GameInstance.window.ratio;
+		newv = vertices.clone();
 		//System.out.println(ratio);
 		for (int i = 0; i < this.sideCount; i++){
-			newv[i * 3] /= ratio;
+			newv[i * 3] /= GameInstance.window.ratio;
 		}
+		updateBuffer(vert, newv);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexId);
-		glBufferData(GL_ARRAY_BUFFER, createBuffer(newv), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, vert, GL_STATIC_DRAW);
 		
 		
 		glBindBuffer(GL_ARRAY_BUFFER, textureId);
-		glBufferData(GL_ARRAY_BUFFER, createBuffer(tCoords), GL_STATIC_DRAW);
-		
+		glBufferData(GL_ARRAY_BUFFER, coords, GL_STATIC_DRAW);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
 		
-		IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
-		buffer.put(indices);
-		buffer.flip();
 		
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
+		
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indec, GL_STATIC_DRAW);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -145,6 +151,7 @@ public class Model {
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		tex.unbind();
+		
 	}
 	
 	/**
@@ -158,6 +165,11 @@ public class Model {
 		buffer.flip();
 		
 		return buffer;
+	}
+	private void updateBuffer(FloatBuffer b, float[] data){
+		b.clear();
+		b.put(data);
+		b.flip();
 	}
 	
 	/**
