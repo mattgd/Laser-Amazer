@@ -16,6 +16,7 @@ public class ReflectionCalculation {
 
 	private static ArrayList<Object[]> intersects = new ArrayList<Object[]>(); // list of arrays : [Model, xIntercept, yIntercept, slope of intersected line segment]
 	private static float coords[];
+	private static Object[] closest;
 
 	/**
 	 * Calculates the path of travel of the laser and sets the laser to such a
@@ -28,8 +29,9 @@ public class ReflectionCalculation {
 		findIntersects(laser, GameInstance.objectManager.getModels());
 		
 		// If there exists at least one valid intersection
+		
 		if (!intersects.isEmpty()) { 
-			Object[] closest = getClosestIntersection(); // Find the closest one
+			closest = getClosestIntersection(); // Find the closest one
 			
 			// Pythagorean theorem to find length of vector
 			float length = (float) Math.hypot((float) closest[1] - coords[0], (float) closest[2] - coords[1]); 
@@ -76,7 +78,13 @@ public class ReflectionCalculation {
 
 		return resultant;
 	}
-
+	
+	
+	static float[] v;
+	static float sl;
+	static float xIntercept;
+	static float yIntercept;
+	
 	private static void findIntersects(LaserModel laser, List<Model> models) {
 		intersects.clear(); // Remove existing intersects from the list
 		intersects.trimToSize();
@@ -90,10 +98,8 @@ public class ReflectionCalculation {
 			// Don't intersect with lasers or UI Elements
 			if (!(m instanceof LaserModel) && !(m instanceof UIElement)) { 
 				for (int side = 0; side < m.sideCount; side++) {
-					float[] v = getY1X1(m, side);
-					float sl = getSlope(v);
-					float xIntercept;
-					float yIntercept;
+					v = getY1X1(m, side);
+					sl = getSlope(v);
 					
 					// If the laser is vertical
 					if (slope == Float.POSITIVE_INFINITY || slope == Float.NEGATIVE_INFINITY) {
@@ -138,6 +144,8 @@ public class ReflectionCalculation {
 		}
 	}
 
+	static float[] midpoint;
+	static float length;
 	/**
 	 * Returns the object data of the closest intersection point
 	 * 
@@ -145,15 +153,15 @@ public class ReflectionCalculation {
 	 */
 	private static Object[] getClosestIntersection() {
 		// Start with a massive value
-		Object[] closest = new Object[] { null, Float.MAX_VALUE / 2f, Float.MAX_VALUE / 2f, 0f };
-		float length = 0;
-		float midpoint[] = new float[2];
+		closest = new Object[] { null, Float.MAX_VALUE / 2f, Float.MAX_VALUE / 2f, 0f };
+		length = 0;
+		midpoint = new float[2];
 		
 		ArrayList<Object[]> inters = new ArrayList<Object[]>();
 		inters.addAll(intersects);
 		
 		// For all intersecting points
-		for (Object[] b : inters) {
+		for (Object[] b : intersects) {
 			try {
 				length = (float) Math.hypot((float) b[1] - coords[0], (float) b[2] - coords[1]);
 				// If the new object is closer than the old one
