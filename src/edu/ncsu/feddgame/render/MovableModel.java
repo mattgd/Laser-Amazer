@@ -41,7 +41,6 @@ public class MovableModel extends Model implements IClickable {
 		super.setVertices(coords);
 		super.xOffset = xOffset;
 		super.yOffset = yOffset;
-		//System.out.println(xOffset + ", "  + yOffset);
 	}
 	
 	private void splitCoords(float[] coords){

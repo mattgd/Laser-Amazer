@@ -58,7 +58,6 @@ public class LaserWrapper {
 		for (LaserModel m : laserList){
 			m.render();
 		}
-		
 		lock.readLock().unlock(); // Unlocks the list
 	}
 	

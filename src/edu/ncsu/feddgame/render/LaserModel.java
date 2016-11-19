@@ -1,6 +1,27 @@
 package edu.ncsu.feddgame.render;
 
+import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL11.glDrawElements;
+import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
+import static org.lwjgl.opengl.GL15.glBindBuffer;
+import static org.lwjgl.opengl.GL15.glBufferData;
+import static org.lwjgl.opengl.GL15.glGenBuffers;
+import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
+
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+
 import org.joml.Vector2d;
+import org.lwjgl.BufferUtils;
+
+import edu.ncsu.feddgame.GameInstance;
+
 
 public class LaserModel extends Model {
 	
@@ -13,6 +34,12 @@ public class LaserModel extends Model {
 	public Vector2d vect;
 	public int xDir = 0, yDir = 0;
 	
+	private static boolean renderGens = false;
+	FloatBuffer vert;
+	static FloatBuffer coors;
+	static IntBuffer indec;
+	static Texture tex;
+	static int vertexId, textureId, indexId;
 	/**
 	 * New LaserModel given angle and length
 	 * @param vertices
@@ -139,6 +166,64 @@ public class LaserModel extends Model {
 	 */
 	public void setCoords(float[] f) {
 		this.coords = f;
+	}
+	
+	@Override
+	public void render() {
+		
+		if (!renderGens) {
+			tex = new Texture(texStr);
+			vertexId = glGenBuffers();
+			textureId = glGenBuffers();
+			indexId = glGenBuffers();
+			renderGens = true;
+			coors = createBuffer(tCoords);
+			indec = BufferUtils.createIntBuffer(indices.length);
+			indec.put(indices);
+			indec.flip();
+		}
+		
+		newv = vertices.clone();
+		for (int i = 0; i < this.sideCount; i++){
+			newv[i * 3] /= GameInstance.window.ratio;
+		}
+		vert = createBuffer(newv);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, vertexId);
+		glBufferData(GL_ARRAY_BUFFER, vert, GL_STATIC_DRAW);
+		
+		
+		glBindBuffer(GL_ARRAY_BUFFER, textureId);
+		glBufferData(GL_ARRAY_BUFFER, coors, GL_STATIC_DRAW);
+		
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
+		
+		
+		
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indec, GL_STATIC_DRAW);
+		
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		tex.bind(0);
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+
+		glBindBuffer(GL_ARRAY_BUFFER, vertexId);
+		glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, textureId);
+		glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 0);
+		
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
+		glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_INT, 0);
+		
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+		tex.unbind();
+		
 	}
 
 }

@@ -21,17 +21,18 @@ import edu.ncsu.feddgame.GameInstance;
 
 public class Model {
 	
-	private int drawCount, vertexId, textureId, indexId;
+	protected int drawCount;
+	static int vertexId, textureId, indexId;
 	public int sideCount;
-	private boolean generated = false;
+	protected boolean generated = false;
 	public float[] vertices, tCoords;
-	private int[] indices;
-	private Texture tex;
-	private String texStr;
+	protected int[] indices;
+	protected Texture tex;
+	protected String texStr;
 	protected float xOffset, yOffset;
-	private float[] newv;
+	protected float[] newv;
 	
-	FloatBuffer vert, coords;
+	FloatBuffer vert, coors;
 	IntBuffer indec;
 	
 	private String defaultTexString = "bgtile.png";
@@ -98,19 +99,21 @@ public class Model {
 	 * Render all of the vertices on screen.
 	 */
 	public void render() {
+		
 		if (!generated) {
+			System.out.println(this.toString());
 			tex = new Texture(texStr);
 			vertexId = glGenBuffers();
 			textureId = glGenBuffers();
 			indexId = glGenBuffers();
 			generated = true;
 			vert = createBuffer(vertices);
-			coords = createBuffer(tCoords);
+			coors = createBuffer(tCoords);
 			indec = BufferUtils.createIntBuffer(indices.length);
 			indec.put(indices);
 			indec.flip();
 		}
-		
+
 		newv = vertices.clone();
 		//System.out.println(ratio);
 		for (int i = 0; i < this.sideCount; i++){
@@ -122,7 +125,7 @@ public class Model {
 		
 		
 		glBindBuffer(GL_ARRAY_BUFFER, textureId);
-		glBufferData(GL_ARRAY_BUFFER, coords, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, coors, GL_STATIC_DRAW);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
 		
@@ -159,14 +162,14 @@ public class Model {
 	 * @return buffer array of vertex or texture coordinate data
 	 * in the correct orientation.
 	 */
-	private FloatBuffer createBuffer(float[] data) {
+	protected FloatBuffer createBuffer(float[] data) {
 		FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
 		buffer.put(data);
 		buffer.flip();
 		
 		return buffer;
 	}
-	private void updateBuffer(FloatBuffer b, float[] data){
+	protected void updateBuffer(FloatBuffer b, float[] data){
 		b.clear();
 		b.put(data);
 		b.flip();
