@@ -29,6 +29,7 @@ import org.lwjgl.opengl.GL;
 
 import edu.ncsu.feddgame.level.GameComplete;
 import edu.ncsu.feddgame.level.Level1;
+import edu.ncsu.feddgame.level.Level10;
 import edu.ncsu.feddgame.level.Level2;
 import edu.ncsu.feddgame.level.Level3;
 import edu.ncsu.feddgame.level.Level4;
@@ -63,7 +64,7 @@ public class GameInstance {
 		add(new Level2());
 		add(new Level3());
 		add(new Level4());
-		//add(new Level10());
+		add(new Level10());
 		add(new GameComplete());
 	}};
 	
@@ -291,7 +292,7 @@ public class GameInstance {
 	}
 	
 	public static void setState(State s) {
-		fade = 90f;
+		fade();
 		state = s;
 	}
 	
@@ -326,7 +327,7 @@ public class GameInstance {
 			levNum = levelNumber;
 		}
 		
-		fade = 90f;
+		fade();
 		scenes.get(levNum).setActive(true); // Set active level
 		hasLevel = false;
 	}
@@ -341,6 +342,10 @@ public class GameInstance {
 		} else if (!hasLevel) {
 			System.out.println("End of game");
 		}
+	}
+	
+	private static void fade() {
+		fade = 90f;
 	}
 	
 }
