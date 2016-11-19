@@ -41,7 +41,6 @@ import edu.ncsu.feddgame.gui.UIElement;
 import edu.ncsu.feddgame.gui.UIUtils;
 import edu.ncsu.feddgame.level.Level;
 import edu.ncsu.feddgame.render.GameColor;
-import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.Model;
 import edu.ncsu.feddgame.render.MovableModel;
 

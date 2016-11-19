@@ -3,7 +3,6 @@ package edu.ncsu.feddgame;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ncsu.feddgame.render.LaserModel;
 import edu.ncsu.feddgame.render.Model;
 
 public class ObjectManager {

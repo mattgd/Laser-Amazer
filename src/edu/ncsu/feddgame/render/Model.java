@@ -99,9 +99,7 @@ public class Model {
 	 * Render all of the vertices on screen.
 	 */
 	public void render() {
-		
 		if (!generated) {
-			System.out.println(this.toString());
 			tex = new Texture(texStr);
 			vertexId = glGenBuffers();
 			textureId = glGenBuffers();
@@ -119,6 +117,7 @@ public class Model {
 		for (int i = 0; i < this.sideCount; i++){
 			newv[i * 3] /= GameInstance.window.ratio;
 		}
+		
 		updateBuffer(vert, newv);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexId);
 		glBufferData(GL_ARRAY_BUFFER, vert, GL_STATIC_DRAW);
@@ -128,9 +127,6 @@ public class Model {
 		glBufferData(GL_ARRAY_BUFFER, coors, GL_STATIC_DRAW);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexId);
-		
-		
-		
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indec, GL_STATIC_DRAW);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
