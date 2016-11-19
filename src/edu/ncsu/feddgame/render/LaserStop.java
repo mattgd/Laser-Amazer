@@ -6,8 +6,8 @@ import edu.ncsu.feddgame.State;
 
 public class LaserStop extends Model {
 
-	public LaserStop(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset) {
-		super(vertices, tCoords, indices, xOffset, yOffset, 4, "finish.png");
+	LaserStop(float[] vertices, float[] tCoords, int[] indices, float xOffset, float yOffset) {
+		super(vertices, tCoords, indices, xOffset, yOffset, 4, GameTexture.FINISH.getPath());
 	}
 	
 	/**

@@ -14,7 +14,7 @@ public abstract class Scene {
 	protected List<UIElement> elementList = new ArrayList<UIElement>();
 	private double timeStart, timeStop;
 	
-	public Scene(String name) {
+	Scene(String name) {
 		this.name = name;
 	}
 	

@@ -1,6 +1,7 @@
 package edu.ncsu.feddgame;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.joml.Vector2d;
 
@@ -10,12 +11,11 @@ import edu.ncsu.feddgame.render.CreateModel;
 import edu.ncsu.feddgame.render.LaserModel;
 import edu.ncsu.feddgame.render.LaserStop;
 import edu.ncsu.feddgame.render.Model;
-import edu.ncsu.feddgame.render.Wall;
 
 public class ReflectionCalculation {
 
-	static private ArrayList<Object[]> intersects = new ArrayList<Object[]>(); // list of arrays : [Model, xIntercept, yIntercept, slope of intersected line segment]
-	static float coords[];
+	private static ArrayList<Object[]> intersects = new ArrayList<Object[]>(); // list of arrays : [Model, xIntercept, yIntercept, slope of intersected line segment]
+	private static float coords[];
 
 	/**
 	 * Calculates the path of travel of the laser and sets the laser to such a
@@ -24,7 +24,7 @@ public class ReflectionCalculation {
 	 * @param laser
 	 * @param models
 	 */
-	public static Object[] reflect(LaserModel laser) {
+	static Object[] reflect(LaserModel laser) {
 		findIntersects(laser, GameInstance.objectManager.getModels());
 		
 		// If there exists at least one valid intersection
@@ -56,7 +56,7 @@ public class ReflectionCalculation {
 	 * @param surface
 	 * @return
 	 */
-	public static Vector2d reflectionVector(Vector2d incidence, Vector2d surface) {
+	private static Vector2d reflectionVector(Vector2d incidence, Vector2d surface) {
 		Vector2d resultant = new Vector2d();
 		Vector2d normal;
 		
@@ -77,18 +77,13 @@ public class ReflectionCalculation {
 		return resultant;
 	}
 
-	public static void findIntersects(LaserModel laser, ArrayList<Model> models) {
-		intersects.clear();
+	private static void findIntersects(LaserModel laser, List<Model> models) {
+		intersects.clear(); // Remove existing intersects from the list
+		
 		float slope = (float) Math.tan(laser.getAngle());
 		coords = laser.getCoords();
 		int xDir = laser.xDir;
 		int yDir = laser.yDir;
-		
-		/*
-		 * List<Model> mods = new ArrayList<Model>(); for(Model m : models){
-		 * //Crude way to avoid concurrentModification errors when testing by
-		 * adding objects to the scene mods.add(m); }
-		 */
 		
 		// For all Models in the scene
 		for (Model m : models) {
@@ -127,9 +122,6 @@ public class ReflectionCalculation {
 					
 					// Check if the point of intersection  is in the correct direction
 					if (((xIntercept - coords[0]) * xDir >= 0) && ((yIntercept - coords[1]) * yDir >= 0)) {
-						//if (GameInstance.window.shiftHeld)
-							//System.out.println("Potential: " + xIntercept + ", " + yIntercept);
-						
 						// Check if the point lies on a side of the polygon
 						if (((xIntercept <= v[0]) && (xIntercept >= v[2]))
 								|| ((xIntercept >= v[0]) && (xIntercept <= v[2]))) {
@@ -137,9 +129,6 @@ public class ReflectionCalculation {
 							//TODO: Check if this works for all polygons (it might, not sure)
 							if (((yIntercept <= v[1]) && (yIntercept >= v[3]))
 									|| ((yIntercept >= v[1]) && (yIntercept <= v[3]))) {
-								// if (GameInstance.window.shiftHeld)
-								// System.out.println("Added: " + xIntercept +
-								// ", " + yIntercept);
 								intersects.add(new Object[] { m, xIntercept, yIntercept, sl });
 							}
 						}
@@ -156,34 +145,37 @@ public class ReflectionCalculation {
 	 */
 	private static Object[] getClosestIntersection() {
 		// Start with a massive value
-		
 		Object[] closest = new Object[] { null, Float.MAX_VALUE / 2f, Float.MAX_VALUE / 2f, 0f };
 		float length = 0;
 		float midpoint[] = new float[2];
+		
 		ArrayList<Object[]> inters = new ArrayList<Object[]>();
 		inters.addAll(intersects);
-		for (Object[] b : inters) { // For all intersecting points
-			try{
+		
+		// For all intersecting points
+		for (Object[] b : inters) {
+			try {
 				length = (float) Math.hypot((float) b[1] - coords[0], (float) b[2] - coords[1]);
-			// If the new object is closer than the old one
-			if ((Math.hypot((float) b[1] - coords[0], (float) b[2] - coords[1])) < (Math
-					.hypot((float) closest[1] - coords[0], (float) closest[2] - coords[1]))) {
-				midpoint[0] = ((float)b[1]+coords[0]) / 2f;
-				midpoint[1] = ((float)b[2]+coords[1]) /2f;
-				// Ensure that the new intersection point isn't at the exact same spot
-				if (length > 0.05f) {
-					boolean inside = false;
-					for(Model m : GameInstance.objectManager.getModels()){
-						if (UIUtils.checkIntersection(m.vertices, midpoint[0], midpoint[1])){
-							//System.out.println("Culling: " + midpoint[0] + " : " + midpoint[1]);
-							inside = true;
+				// If the new object is closer than the old one
+				if ((Math.hypot((float) b[1] - coords[0], (float) b[2] - coords[1])) < (Math
+						.hypot((float) closest[1] - coords[0], (float) closest[2] - coords[1]))) {
+					midpoint[0] = ((float)b[1]+coords[0]) / 2f;
+					midpoint[1] = ((float)b[2]+coords[1]) /2f;
+					// Ensure that the new intersection point isn't at the exact same spot
+					if (length > 0.05f) {
+						boolean inside = false;
+						
+						for (Model m : GameInstance.objectManager.getModels()) {
+							if (UIUtils.checkIntersection(m.vertices, midpoint[0], midpoint[1])) {
+								inside = true;
+							}
 						}
+						
+						if (!inside)
+							closest = b; // set the new one to the closest
 					}
-					if (!inside)
-						closest = b; // set the new one to the closest
 				}
-			}
-			}catch (Exception e){}
+			} catch (Exception e) {}
 		}
 		
 		return closest;
@@ -200,8 +192,11 @@ public class ReflectionCalculation {
 	private static float[] getY1X1(Model mod, int side) {
 		if (side == 0) {
 			// If the first side, use last vertex and first
-			return new float[] { mod.vertices[mod.vertices.length - 3], mod.vertices[mod.vertices.length - 2],
-					mod.vertices[0], mod.vertices[1] };
+			return new float[] {
+					mod.vertices[mod.vertices.length - 3],
+					mod.vertices[mod.vertices.length - 2],
+					mod.vertices[0], mod.vertices[1]
+			};
 		} else if (side > 0) {
 			// else use the set determined by side number
 			return new float[] { mod.vertices[side * 3 - 3], mod.vertices[side * 3 - 2], mod.vertices[side * 3],
@@ -227,8 +222,7 @@ public class ReflectionCalculation {
 	 * @param l
 	 */
 	private static void reflectionCallback(Model m, LaserModel l) {
-		if (m instanceof Wall) {
-		} else if (m instanceof LaserStop) {
+		if (m instanceof LaserStop) {
 			((LaserStop) m).laserIntersection();
 		}
 	}

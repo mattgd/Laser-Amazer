@@ -10,12 +10,8 @@ public class Dropdown extends Button {
 	private LinkedList<Button> options = new LinkedList<Button>();
 	private boolean open = false;
 	private float length = 0;
-
-	public Dropdown(float[] coords, float[] tCoords, int[] indices, float xOffset, float yOffset, float height, float width) {
-		super(coords, tCoords, indices, null, xOffset, yOffset, height, width);
-	}
 	
-	public Dropdown(float[] coords, float[] tCoords, int[] indices, GameFont f, float xOffset, float yOffset, float height, float width) {
+	Dropdown(float[] coords, float[] tCoords, int[] indices, GameFont f, float xOffset, float yOffset, float height, float width) {
 		super(coords, tCoords, indices, null, f, xOffset, yOffset, height, width);
 	}
 	

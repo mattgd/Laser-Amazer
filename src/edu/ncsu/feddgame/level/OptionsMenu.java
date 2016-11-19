@@ -13,14 +13,15 @@ import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.GameColor;
 import edu.ncsu.feddgame.render.GameFont;
 
-public class OptionsMenu extends Menu{
+public class OptionsMenu extends Menu {
+	
 	public ArrayList<UIElement> gameList = new ArrayList<UIElement>();
 	public ArrayList<UIElement> graphicsList = new ArrayList<UIElement>();
-	int display = 0;
-	boolean levelComplete = true, showTimer = true;
-	Button complete;
-	Button timer;
-	Dropdown multisampling;
+	private int display = 0;
+	private boolean levelComplete = true, showTimer = true;
+	private Button complete, timer;
+	private Dropdown multisampling;
+	
 	public OptionsMenu() {
 		super("Options Menu");
 	}

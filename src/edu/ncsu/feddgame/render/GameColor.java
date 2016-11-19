@@ -13,14 +13,6 @@ public enum GameColor {
 	YELLOW(232, 231, 43),
 	RED(228, 21, 19);
 	
-	/* Old colors
-	BLUE(0, 174, 219),
-	GREEN(0, 177, 89),
-	RED(209, 17, 65),
-	TEAL(50, 153, 187),
-	YELLOW(255, 196, 37);
-	*/
-	
 	private final Color color;
 	
 	GameColor(int r, int g, int b) {

@@ -15,9 +15,8 @@ import edu.ncsu.feddgame.render.LaserStop;
 public abstract class Level extends Scene {
 	
 	protected ArrayList<LaserStart> laserWrappers = new ArrayList<LaserStart>();
-	protected LaserStop laserStop;
 	
-	public Level(String name) {
+	Level(String name) {
 		super(name);
 	}
 	

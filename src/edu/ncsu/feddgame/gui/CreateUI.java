@@ -13,25 +13,26 @@ public class CreateUI {
 	 * @param r
 	 */
 	public static Button createButton(float xOffset, float yOffset, float width, float height, Runnable r, GameFont f) {
-		// Vertices for a trapezoid
+		// Vertices for a button
 		float[] vertices = new float[] {
-			-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
-			width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
-			width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
-			-width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
+				-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
+				width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
+				width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
+				-width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
 		};
 		
 		float[] texture = new float[] {
-			0, 0, // TOP LEFT
-			1, 0, // TOP RIGHT
-			1, 1, // BOTTOM RIGHT
-			0, 1, // BOTTOM LEFT
+				0, 0, // TOP LEFT
+				1, 0, // TOP RIGHT
+				1, 1, // BOTTOM RIGHT
+				0, 1, // BOTTOM LEFT
 		};
 		
 		int[] indices = new int[] {
 				0, 1, 2,
 				2, 3, 0
 		};
+		
 		return new Button(vertices, texture, indices, r, f, xOffset, yOffset, height, width);
 	}
 	/**
@@ -44,19 +45,19 @@ public class CreateUI {
 	 * @return
 	 */
 	public static Button createButton(float xOffset, float yOffset, float width, float height, Runnable r) {
-		// Vertices for a trapezoid
+		// Vertices for a button
 		float[] vertices = new float[] {
-			-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
-			width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
-			width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
-			-width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
+				-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
+				width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
+				width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM RIGHT - 2
+				-width/2f + xOffset, -height/2f + yOffset, 0, // BOTTOM LEFT - 3
 		};
 		
 		float[] texture = new float[] {
-			0, 0, // TOP LEFT
-			1, 0, // TOP RIGHT
-			1, 1, // BOTTOM RIGHT
-			0, 1, // BOTTOM LEFT
+				0, 0, // TOP LEFT
+				1, 0, // TOP RIGHT
+				1, 1, // BOTTOM RIGHT
+				0, 1, // BOTTOM LEFT
 		};
 		
 		int[] indices = new int[] {
@@ -76,17 +77,19 @@ public class CreateUI {
 	 * @param f
 	 * @param fs
 	 * @param rs
-	 * @return
+	 * @return Dropdown
 	 */
-	public static Dropdown createDropdown(float xOffset, float yOffset, float width, float height, GameFont f, GameFont[] fs, Runnable[] rs){
+	public static Dropdown createDropdown(float xOffset, float yOffset, float width, float height, GameFont f, GameFont[] fs, Runnable[] rs) {
 		Dropdown d = createDropdown(xOffset, yOffset, width, height, f);
-		for (int i = 0; i < rs.length; i++){
+		
+		for (int i = 0; i < rs.length; i++) {
 			d.addButton(createButton(xOffset, yOffset, width, height, rs[i], fs[i]));
 		}
+		
 		return d;
 	}
 	
-	public static Dropdown createDropdown(float xOffset, float yOffset, float width, float height, GameFont f){
+	public static Dropdown createDropdown(float xOffset, float yOffset, float width, float height, GameFont f) {
 		float[] vertices = new float[] {
 				-width/2f + xOffset, height/2f + yOffset, 0, // TOP LEFT - 0
 				width/2f + xOffset, height/2f + yOffset, 0, // TOP RIGHT - 1
@@ -95,18 +98,18 @@ public class CreateUI {
 		};
 		
 		float[] texture = new float[] {
-			0, 0, // TOP LEFT
-			1, 0, // TOP RIGHT
-			1, 1, // BOTTOM RIGHT
-			0, 1, // BOTTOM LEFT
+				0, 0, // TOP LEFT
+				1, 0, // TOP RIGHT
+				1, 1, // BOTTOM RIGHT
+				0, 1, // BOTTOM LEFT
 		};
 		
 		int[] indices = new int[] {
 				0, 1, 2,
 				2, 3, 0
 		};
-		Dropdown d = new Dropdown(vertices, texture, indices, f, xOffset, yOffset, height, width);
-		return d;
+		
+		return new Dropdown(vertices, texture, indices, f, xOffset, yOffset, height, width);
 	}
 
 }

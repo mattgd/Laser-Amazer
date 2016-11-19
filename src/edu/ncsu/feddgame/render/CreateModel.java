@@ -37,15 +37,15 @@ public class CreateModel {
 	}
 	
 	public static Model createBox(float xOffset, float yOffset) {
-		return createBox(xOffset, yOffset, 1); 	// Default size of 1
+		return createBox(xOffset, yOffset, 1); // Default size of 1
 	}
 	
 	public static Model createTriangle(float xOffset, float yOffset, float xSide, float ySide) {
 		// Right Triangle
 		float[] vertices = new float[] {
-				-xSide/2f + xOffset, ySide/2f + yOffset, 0, // TOP LEFT - 0
-				xSide/2f + xOffset, ySide/2f + yOffset, 0, // TOP RIGHT - 1
-				xSide/2f + xOffset, -ySide/2f + yOffset, 0, // BOTTOM - 2
+				-xSide / 2f + xOffset, ySide / 2f + yOffset, 0, // TOP LEFT - 0
+				xSide / 2f + xOffset, ySide / 2f + yOffset, 0, // TOP RIGHT - 1
+				xSide / 2f + xOffset, -ySide / 2f + yOffset, 0, // BOTTOM - 2
 		};
 				
 		float[] texture = new float[] {
@@ -55,8 +55,8 @@ public class CreateModel {
 		};
 		
 		int[] indices = new int[] {
-				0, 1, 2,
-				2
+				0, 1,
+				2, 2
 		};
 		
 		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 3, GameTexture.UNMOVEABLE_BOX.getPath()));
@@ -65,6 +65,7 @@ public class CreateModel {
 	public static MovableModel createMovableTriangle(float xOffset, float yOffset, float xSide, float ySide) {
 		float xO = xSide/6f;
 		float yO = ySide/6f;
+		
 		// Right Triangle
 		float[] vertices = new float[] {
 				xSide/2f + xO, -ySide/2f + yO, 0, // TOP LEFT - 0
@@ -208,8 +209,8 @@ public class CreateModel {
 		float[] texture = new float[] {
 				0, 0,
 				1, 0,
-					1, 1,
-			0, 1,
+				1, 1,
+				0, 1,
 		};
 		
 		int[] indices = new int[] {
@@ -217,7 +218,7 @@ public class CreateModel {
 				2, 3, 0
 		};
 		
-		return new LaserModel(texture, indices, begX, begY, (float)angle, length); 	//Add the model to the objectManager
+		return new LaserModel(texture, indices, begX, begY, (float)angle, length);
 	}
 	
 	public static LaserWrapper newLaser(float begX, float begY, double angle, float length){
@@ -232,13 +233,12 @@ public class CreateModel {
 	 * @param vect
 	 * @return
 	 */
-	public static LaserModel createReflectedLaser(float begX, float begY, Vector2d vect){
-		
+	public static LaserModel createReflectedLaser(float begX, float begY, Vector2d vect) {
 		float[] texture = new float[] {
-			0, 0,
-			1, 0,
-			1, 1,
-			0, 1,
+				0, 0,
+				1, 0,
+				1, 1,
+				0, 1,
 		};
 		
 		int[] indices = new int[] {
@@ -246,7 +246,7 @@ public class CreateModel {
 				2, 3, 0
 		};
 		
-		return new LaserModel(texture, indices, begX, begY, vect); 	//Return the new Laser
+		return new LaserModel(texture, indices, begX, begY, vect); // Return the new Laser
 	}
 	
 	/**

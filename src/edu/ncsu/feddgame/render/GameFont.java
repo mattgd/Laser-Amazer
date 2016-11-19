@@ -43,7 +43,7 @@ public class GameFont {
 		}
 	}
 	
-	public void setUpTextures() throws IOException {
+	private void setUpTextures() throws IOException {
         fontTexture = glGenTextures(); // Create new texture for the bitmap font
         
         // Bind the texture object to the GL_TEXTURE_2D target, specifying that it will be a 2D texture

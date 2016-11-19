@@ -12,9 +12,10 @@ import java.util.Scanner;
 
 
 public class SaveData {
-	static Scanner input;
-	static Object[] values;
-	static Runnable[] runs = new Runnable[]{
+	
+	private static Scanner input;
+	private static Object[] values;
+	private static Runnable[] runs = new Runnable[] {
 			() -> {
 				GameInstance.levelCompleteDialogue = (boolean)values[0];
 			},
@@ -28,11 +29,12 @@ public class SaveData {
 				GameInstance.latestLevel = (int)values[3];			
 			}
 	};
-	//Read from the file, generate a new one with defaults if such a file doesn't exist
-	static{
-		try{
+	
+	// Read from the file, generate a new one with defaults if such a file doesn't exist
+	static {
+		try {
 			input = new Scanner(new File("saveGame.fd"));
-		}catch (FileNotFoundException e){
+		} catch (FileNotFoundException e) {
 			try {
 				List<String> defaults = Arrays.asList("true", "true", "4", "2");
 				Files.write(Paths.get("saveGame.fd"), defaults, Charset.forName("UTF-8"));
@@ -41,7 +43,7 @@ public class SaveData {
 				input = new Scanner(new File("saveGame.fd"));
 			} catch (FileNotFoundException e1) {}
 		}
-		values = new Object[]{
+		values = new Object[] {
 			true,
 			true,
 			0,
@@ -52,26 +54,29 @@ public class SaveData {
 	/**
 	 * Reads data from "saveGame.fd" in the root directory and stores the read data to the correct locations
 	 */
-	public static void readData(){
+	static void readData() {
 		int i = 0;
-		while(input.hasNextLine()){
+		while (input.hasNextLine()) {
 			String s = input.nextLine();
-			if (values[i] instanceof Boolean){
+			if (values[i] instanceof Boolean) {
 				values[i] = Boolean.parseBoolean(s);
 				runs[i].run();
-			}else if (values[i] instanceof Integer){
+			} else if (values[i] instanceof Integer) {
 				values[i] = Integer.parseInt(s);
 				runs[i].run();
 			}
+			
 			i++;
 		}
 	}
+	
 	/**
 	 * Writes all of the options to disk
 	 */
-	public static void writeData(){
+	public static void writeData() {
 		try {
-			List<String> defaults = Arrays.asList(Boolean.toString(GameInstance.levelCompleteDialogue), 
+			List<String> defaults = Arrays.asList(
+					Boolean.toString(GameInstance.levelCompleteDialogue), 
 					Boolean.toString(GameInstance.showTimer),
 					Integer.toString(GameInstance.samplingLevel),
 					Integer.toString(GameInstance.latestLevel));

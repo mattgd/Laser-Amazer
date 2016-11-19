@@ -3,7 +3,6 @@ package edu.ncsu.feddgame.gui;
 import java.util.ArrayList;
 
 import edu.ncsu.feddgame.GameInstance;
-import edu.ncsu.feddgame.render.Alignment;
 import edu.ncsu.feddgame.render.FloatColor;
 import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.GameTexture;
@@ -14,7 +13,7 @@ public class Button extends Model implements UIElement, IClickable {
 	private ArrayList<Runnable> callbacks = new ArrayList<Runnable>();
 	protected float [] xCoords, yCoords;
 	private GameFont label;
-	public float xOffset, yOffset, height, width;
+	float height, width;
 	
 	/**
 	 * New Button extension from Model with Runnable object for execution on click events
@@ -23,7 +22,7 @@ public class Button extends Model implements UIElement, IClickable {
 	 * @param indices
 	 * @param r
 	 */
-	public Button(float[] coords, float[] tCoords, int[] indices, Runnable r, float xOffset, float yOffset, float height, float width) {
+	Button(float[] coords, float[] tCoords, int[] indices, Runnable r, float xOffset, float yOffset, float height, float width) {
 		super(coords, tCoords, indices, 4, GameTexture.BUTTON.getPath());
 		callbacks.add(r);
 		this.xOffset = xOffset;
@@ -47,7 +46,7 @@ public class Button extends Model implements UIElement, IClickable {
 	 * @param height
 	 * @param width
 	 */
-	public Button(float[] coords, float[] tCoords, int[] indices, Runnable r, GameFont f, float xOffset, float yOffset, float height, float width) {
+	Button(float[] coords, float[] tCoords, int[] indices, Runnable r, GameFont f, float xOffset, float yOffset, float height, float width) {
 		super(coords, tCoords, indices, 4, GameTexture.BUTTON.getPath());
 		callbacks.add(r);
 		this.xOffset = xOffset;
@@ -59,7 +58,7 @@ public class Button extends Model implements UIElement, IClickable {
 		yCoords = new float[]{coords[1], coords[4], coords[7], coords[10]};
 	}
 
-	public void addCallback(Runnable r) {
+	void addCallback(Runnable r) {
 		callbacks.add(r);
 	}
 	
@@ -70,7 +69,6 @@ public class Button extends Model implements UIElement, IClickable {
 	public Runnable getCallback(int index) {
 		return callbacks.get(index);
 	}
-	
 	
 	/**
 	 * Returns whether the button was clicked based on mouse coordinates passed
@@ -105,20 +103,19 @@ public class Button extends Model implements UIElement, IClickable {
 	@Override
 	public void move(float x, float y, float z) {
 		super.move(x, y, z);
-		yOffset += y; 	//Manually set the new coordinates after move, needed for font movement
+		yOffset += y; // Manually set the new coordinates after move, needed for font movement
 		xCoords = new float[]{super.vertices[0], super.vertices[3], super.vertices[6], super.vertices[9]};
 		yCoords = new float[]{super.vertices[1], super.vertices[4], super.vertices[7], super.vertices[10]};
 	}
 
 	@Override
-	public void setCallback(Runnable r) {
-	}
+	public void setCallback(Runnable r) {}
 	
 	/**
 	 * Change the label rendered by the text
 	 * @param f
 	 */
-	public void setLabel(GameFont f){
+	public void setLabel(GameFont f) {
 		this.label = f;
 	}
 

@@ -1,8 +1,6 @@
 package edu.ncsu.feddgame;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_CONTROL;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_SHIFT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
@@ -48,16 +46,17 @@ import edu.ncsu.feddgame.render.MovableModel;
 
 public class Window {
 
-	public long window;
+	long window;
 	private float mouseX, mouseY;
 	public float ratio;
 	public int refreshRate, width, height;
-	public boolean fullscreen, mouseHeld = false, ctrlHeld = false, shiftHeld = false;
+	private boolean fullscreen;
+	public boolean mouseHeld = false;
 	private String title;
 	public static boolean isClicked = false;
 	private GLFWVidMode vidMode;
 	
-	public ArrayList<UIElement> elementList = new ArrayList<UIElement>();
+	private ArrayList<UIElement> elementList = new ArrayList<UIElement>();
 	
 	public Window () {
 		this(800, 800, "FEDD Game", false);
@@ -70,10 +69,10 @@ public class Window {
 	 * @param title
 	 * @param fullscreen
 	 */
-	public Window (int width, int height, String title, boolean fullscreen) {
+	Window (int width, int height, String title, boolean fullscreen) {
 		this.width = width;
 		this.height = height;
-		this.ratio = (float)width / (float)height;
+		this.ratio = (float) width / (float) height;
 		this.title = title;
 		this.fullscreen = fullscreen;
 		createWindow();
@@ -83,15 +82,9 @@ public class Window {
 	 * Creates the window with the parameters
 	 * of the local variables.
 	 */
-	public void createWindow() {
+	private void createWindow() {
 		long monitor = glfwGetPrimaryMonitor();
-
-		window = glfwCreateWindow(
-				width,
-				height,
-				title,
-				fullscreen ? monitor : 0,
-				0);
+		window = glfwCreateWindow(width, height, title, fullscreen ? monitor : 0, 0);
 		
 		if (window == 0)
 			throw new IllegalStateException("Failed to create window.");
@@ -114,31 +107,31 @@ public class Window {
 	/**
 	 * Adds all specified elements to the Window's array and scene
 	 */
-	public void addElements() {
+	void addElements() {
 		//Add items here that need to be rendered every frame on all screens
 		if (GameInstance.getCurrentLevel() instanceof Level && GameInstance.showTimer)
 			elementList.add(new Text(11f, -2f, "Time: " + (int)((Level)GameInstance.getCurrentLevel()).getElapsedTime(), GameColor.TEAL.getFloatColor(), 1));
 	}
 	
-	public void clearElements() {
+	void clearElements() {
 		elementList.clear();
 	}
 	
-	public void centerWindow() {
+	void centerWindow() {
 		glfwSetWindowPos(window, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2); // Show window in center of screen
 	}
 	
 	/**
 	 * @return close flag of the window
 	 */
-	public boolean shouldClose() {
+	boolean shouldClose() {
 		return glfwWindowShouldClose(window);
 	}
 	
 	/**
 	 * Swaps the front and back buffers of the window
 	 */
-	public void swapBuffers() {
+	void swapBuffers() {
 		glfwSwapBuffers(window);
 	}
 	
@@ -153,11 +146,15 @@ public class Window {
 	 * Sets the key callback to be checked
 	 * when glfwPollEvents is called
 	 */
-	public void setKeyCallback() {
-		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> { 	//Key listener
-			if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) 	//on Escape, set the window to close
+	private void setKeyCallback() {
+		// Set key listener
+		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
+			// On Escape, set the window to close
+			if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
 				glfwSetWindowShouldClose(window, true);
-			if (key == GLFW_KEY_LEFT_CONTROL) {
+			}
+				
+			/*if (key == GLFW_KEY_LEFT_CONTROL) {
 				if (action == GLFW_PRESS) {
 					ctrlHeld = true;
 					
@@ -173,7 +170,7 @@ public class Window {
 				} else if (action == GLFW_RELEASE) {
 					shiftHeld = false;
 				}
-			}
+			}*/
 			
 			if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE) {
 				State state = GameInstance.getState();
@@ -188,7 +185,7 @@ public class Window {
 	/**
 	 * Sets the size callback for the window
 	 */
-	public void setWindowSizeCallback() {
+	private void setWindowSizeCallback() {
 		glfwSetWindowSizeCallback(window, (window, width, height) -> { 	//Resize listener
 			glViewport(0,0,width, height); 	//Reset the viewport to the correct size
 			this.width = width;
@@ -201,8 +198,9 @@ public class Window {
 	 * Sets the mouse callback to be checked
 	 * when glfwPollEvents is called
 	 */
-	public void setMouseButtonCallback() {
-		glfwSetMouseButtonCallback(window, (window, button, action, mods) -> { 	//Mouse click listener
+	private void setMouseButtonCallback() {
+		// Mouse click listener
+		glfwSetMouseButtonCallback(window, (window, button, action, mods) -> {
 			if (button == GLFW_MOUSE_BUTTON_LEFT) { 	//If left mouse button
 				if (action == GLFW_RELEASE) { 	//Set a boolean variable based on state of mouse (GLFW won't poll mouse state again if already pressed, need to manually store state)
 					mouseHeld = false;
@@ -212,11 +210,12 @@ public class Window {
 					// Iterate over all models in the scene
 					for (int j = GameInstance.objectManager.getModels().size()-1; j >= 0; j--) {
 						Model b = GameInstance.objectManager.getModel(j);
+						
 						if (b instanceof MovableModel) {
 							MovableModel m = (MovableModel) b;
 							if (m.checkClick(mouseX, mouseY)){ 	//If the object is movable and is the one clicked
 								new Thread(() -> { 	//Start a new thread to move it while the mouse is being held
-									while (mouseHeld){
+									while (mouseHeld) {
 										try {
 											//TODO: The game breaks without some random code before the followCursor call
 											wait(0);
@@ -240,26 +239,19 @@ public class Window {
 							((IClickable) e).checkClick(mouseX, mouseY);
 						}
 					}
+					
 					GameInstance.getCurrentLevel().checkClick(mouseX, mouseY);
 				}
 			}
 		});
 	}
 	
-	public void setMousePosCallback() {
+	private void setMousePosCallback() {
 		glfwSetCursorPosCallback(window, (window, xPos, yPos) -> {
 			float[] newC = UIUtils.convertToWorldspace((float)xPos, (float)yPos, this.width, this.height);
 			this.mouseX = newC[0];
 			this.mouseY = newC[1];
-				
 		});
-	}
-	
-	/**
-	 * @return true if GLFW_MOUSE_BUTTON_LEFT is held
-	 */
-	public boolean isMouseHeld() {
-		return mouseHeld;
 	}
 	
 	/**
@@ -286,19 +278,21 @@ public class Window {
 	/**
 	 * Updates input array and polls GLFW events
 	 */
-	public void update() {
+	void update() {
 		glfwPollEvents();
-		//input.update();
 	}
 	
 	/**
 	 * Renders all UI elements in elementList
 	 */
-	public void renderElements() {
+	void renderElements() {
 		for (UIElement e : elementList)
 			e.render();
 	}
 	
+	/**
+	 * Sets the taskbar and window icon for the game
+	 */
 	private void setWindowIcon() {
 		GLFWImage image = GLFWImage.malloc();
 		image.set(32, 32, loadIcon("res/icon.png"));
@@ -311,6 +305,10 @@ public class Window {
 		image.free();
 	}
 	
+	/**
+	 * @param path
+	 * @return PNG image as a ByteBuffer
+	 */
 	private ByteBuffer loadIcon(String path) {
 		PNGDecoder dec = null;
 		ByteBuffer buf = null;

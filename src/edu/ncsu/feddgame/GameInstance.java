@@ -69,12 +69,12 @@ public class GameInstance {
 	}};
 	
 	private static int levNum = 0; // Start with 0
-	public static float fade = 90f; // Amount of fade in degrees (0-90)
+	private static float fade = 90f; // Amount of fade in degrees (0-90)
 	private static boolean hasLevel = false;
 	public static Shader shader;
 	
 	private static State state;
-	public static volatile boolean gameState; // Boolean value to pause logic Thread when state != GAME
+	static volatile boolean gameState; // Boolean value to pause logic Thread when state != GAME
 	
 	// Game begins here
 	public GameInstance() {
@@ -88,19 +88,16 @@ public class GameInstance {
 		}
 	}
 	
-
 	/**
 	 * Setup all the window settings
 	 */
 	private void setup() {
 		SaveData.readData();
-		//Window.setCallbacks();
 		objectManager = new ObjectManager();
 		
-		if (!glfwInit()) {
-			// Throw exception if glfw fails to initialize
-			throw new IllegalStateException("Can not initialize GLFW");
-		}	
+		// If glfw fails to initialize, throw exception 
+		if (!glfwInit())
+			throw new IllegalStateException("Cannot initialize GLFW");
 
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); 	// Set window resizable and visible (set at defaults right now)
 		glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
@@ -108,8 +105,6 @@ public class GameInstance {
 		glfwWindowHint(GLFW_STENCIL_BITS, 4);
 		
 		window = new Window(800, 800, "Laser Amazer", false);
-		
-		setState(State.GAME); // Set the game state
 	}
 	
 	/**
@@ -119,46 +114,41 @@ public class GameInstance {
 		GL.createCapabilities();
 		//TODO Should probably throw exception and exit here if window is null
 		
-		//TODO: Move this to it's own class, and have Fonts instantiated with location info
-		// Set up main menu text
-		GameFont menuItem = new GameFont("Start Game", new FloatColor(GameColor.ORANGE.getColor()));
-		GameFont startGame = new GameFont("Press Space to Start Game", new FloatColor(GameColor.YELLOW.getColor()));
-		
-		Camera camera = new Camera(window.getWidth(), window.getHeight());
-		
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
 		FloatColor clearColor = new FloatColor(GameColor.DARK_GREY.getColor());
 		glClearColor(clearColor.red(), clearColor.blue(), clearColor.green(), 1f);
-		//glClearColor(1f, 1f, 1f, 1f);
-		
-		shader = new Shader("shader");
 
-		Matrix4f scale = new Matrix4f()
-				.translate(new Vector3f(100, 0, 0))
-				.scale(40);
+		// Set up main menu text
+		GameFont menuItem = new GameFont("Start Game", new FloatColor(GameColor.ORANGE.getColor()));
+		GameFont startGame = new GameFont("Press Space to Start Game", new FloatColor(GameColor.YELLOW.getColor()));
+		
+		Matrix4f scale = new Matrix4f().translate(new Vector3f(100, 0, 0)).scale(40);
 		Matrix4f target = new Matrix4f();
 		
+		Camera camera = new Camera(window.getWidth(), window.getHeight());
 		camera.setPosition(new Vector3f(-100, 0, 0));
+		
+		shader = new Shader("shader");
 		
 		double frameCap = 1.0 / 60; // 60 FPS
 		
 		double frameTime = 0;
-		@SuppressWarnings("unused")
-		int frames = 0;
-		
 		double time = getTime();
 		double unprocessed = 0;
 		
-		setLevel(0); // Set the level starting level
+		setState(State.GAME); // Set the game state
+		setLevel(0); // Set the starting level
 		
-		new Thread(() -> logicLoop()).start(); 	//Run the logic in a separate thread
+		new Thread(() -> logicLoop()).start(); // Run the logic in a separate thread
+		
 		glfwSetWindowSize(window.window, 1200, 800);
 		window.centerWindow(); // Center window on screen
 
-		while (!window.shouldClose()) { 	// Poll window while window isn't about to close
+		// Poll window while window isn't about to close
+		while (!window.shouldClose()) {
 			canRender = false;
 			
 			// Control frames per second
@@ -169,9 +159,11 @@ public class GameInstance {
 				frameTime += elapsed;
 				time = timeNow;
 			}
+			
 			renderLevel();
 			window.clearElements();
 			window.addElements();
+			
 			// Run all non-render related tasks
 			while (unprocessed >= frameCap) {
 				unprocessed -= frameCap;
@@ -180,10 +172,8 @@ public class GameInstance {
 				
 				window.update();
 				
-				if (frameTime >= 1.0) {
+				if (frameTime >= 1.0) 
 					frameTime = 0;
-					frames = 0;
-				}
 			}
 			
 			// Render when scene changes
@@ -251,7 +241,6 @@ public class GameInstance {
 				}
 
 				window.swapBuffers(); // Swap the render buffers
-				frames++;
 			}
 			
 		}
@@ -296,11 +285,11 @@ public class GameInstance {
 		state = s;
 	}
 	
-	public static State getState() {
+	static State getState() {
 		return state;
 	}
 	
-	public static void nextLevel() {
+	private static void nextLevel() {
 		getCurrentLevel().setActive(false); // No longer the active level
 		
 		// If all levels complete, reset to level 0
@@ -316,7 +305,7 @@ public class GameInstance {
 		hasLevel = false;
 	}
 	
-	public static Scene getCurrentLevel() {
+	static Scene getCurrentLevel() {
 		return scenes.get(levNum);
 	}
 	
@@ -332,11 +321,11 @@ public class GameInstance {
 		hasLevel = false;
 	}
 	
-	public void renderLevel() {
+	private void renderLevel() {
 		if (levNum < scenes.size() && !hasLevel) {
 			objectManager.clearAll();
 			window.clearElements();
-			scenes.get(levNum).renderObjects(); // Add all objects to the scene from the level class
+			getCurrentLevel().renderObjects(); // Add all objects to the scene from the level class
 			objectManager.updateModels();
 			hasLevel = true;
 		} else if (!hasLevel) {

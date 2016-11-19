@@ -18,7 +18,7 @@ public class Text implements UIElement {
 	 * @param f
 	 * @param size
 	 */
-	public Text(float xOffset, float yOffset, String str, FloatColor f, float size){
+	public Text(float xOffset, float yOffset, String str, FloatColor f, float size) {
 		label = new GameFont(str, f);
 		this.xOffset = xOffset/10f;
 		this.yOffset = yOffset/10f;
@@ -34,9 +34,10 @@ public class Text implements UIElement {
 	 * @param f
 	 * @param size
 	 */
-	public Text(float xOffset, float yOffset, Alignment align, String str, FloatColor f, float size){
+	public Text(float xOffset, float yOffset, Alignment align, String str, FloatColor f, float size) {
 		yOffset /= 20f;
 		size /= 10f;
+		
 		switch (align) {
 		case LEFT:
 			xOffset = -1.5f;
@@ -61,7 +62,6 @@ public class Text implements UIElement {
 	@Override
 	public void render() {
 		label.renderString(label.getRenderString(), xOffset, yOffset, size);
-		
 	}
 	
 	/**
@@ -71,6 +71,7 @@ public class Text implements UIElement {
 	public void setLabel(GameFont f) {
 		this.label = f;
 		String str = label.getRenderString();
+		
 		switch (align) {
 		case LEFT:
 			xOffset = -1.5f;
