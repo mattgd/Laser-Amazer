@@ -28,7 +28,7 @@ public class Level4 extends Level {
 		// Laser start/stop
 		laserWrappers.add(CreateModel.createLaserStart(0f, 9f, 3));
 		LaserStop laserStop = CreateModel.createLaserStop(0f, -9f);
-		laserStop.rotate((float) Math.toRadians(180));
+		laserStop.rotate((float) Math.toRadians(180.1));
 		
 		// Moveables
 		CreateModel.createMovableBox(4.05f, -5.925f);

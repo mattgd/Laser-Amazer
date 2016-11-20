@@ -198,8 +198,8 @@ public class Model {
 	 */
 	public void rotate(float angle){
 			for (int i = 0; i < sideCount; i++){
-				float newX = (float) (xOffset + (this.vertices[i * 3]-xOffset)*Math.cos(angle) - (this.vertices[i * 3 + 1]-yOffset)*Math.sin(angle));
-				float newY = (float) (yOffset + (this.vertices[i * 3]-xOffset)*Math.sin(angle) + (this.vertices[i * 3 + 1]-yOffset)*Math.cos(angle));
+				float newX = (float) (xOffset + (this.vertices[i * 3]-xOffset)*(float)Math.cos(angle) - (this.vertices[i * 3 + 1]-yOffset)*(float)Math.sin(angle));
+				float newY = (float) (yOffset + (this.vertices[i * 3]-xOffset)*(float)Math.sin(angle) + (this.vertices[i * 3 + 1]-yOffset)*(float)Math.cos(angle));
 				vertices[i * 3] = newX;
 				vertices[i * 3 + 1] = newY;
 			}
