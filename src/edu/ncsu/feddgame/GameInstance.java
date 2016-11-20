@@ -33,8 +33,9 @@ import edu.ncsu.feddgame.level.Level10;
 import edu.ncsu.feddgame.level.Level2;
 import edu.ncsu.feddgame.level.Level3;
 import edu.ncsu.feddgame.level.Level4;
-import edu.ncsu.feddgame.level.Level6;
 import edu.ncsu.feddgame.level.Level5;
+import edu.ncsu.feddgame.level.Level6;
+import edu.ncsu.feddgame.level.Level7;
 import edu.ncsu.feddgame.level.MainMenu;
 import edu.ncsu.feddgame.level.OptionsMenu;
 import edu.ncsu.feddgame.level.Scene;
@@ -68,6 +69,7 @@ public class GameInstance {
 		add(new Level4());
 		add(new Level5());
 		add(new Level6());
+		add(new Level7());
 		add(new Level10());
 		add(new GameComplete());
 	}};

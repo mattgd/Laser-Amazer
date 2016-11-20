@@ -8,7 +8,7 @@ import edu.ncsu.feddgame.render.Model;
 public class Level6 extends Level {
 
 	public Level6() {
-		super("Level 5");
+		super("Level 6");
 	}
 	
 	@Override
