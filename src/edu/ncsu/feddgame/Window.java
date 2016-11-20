@@ -24,7 +24,6 @@ import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.opengl.GL11.glViewport;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -303,7 +302,7 @@ public class Window {
 	 */
 	private void setWindowIcon() {
 		GLFWImage image = GLFWImage.malloc();
-		image.set(32, 32, loadIcon("res/icon.png"));
+		image.set(32, 32, loadIcon("/icon.png"));
 		GLFWImage.Buffer images = GLFWImage.malloc(1);
 		images.put(0, image);
 
@@ -322,7 +321,7 @@ public class Window {
 		ByteBuffer buf = null;
 		
 		try {
-		    dec = new PNGDecoder(new FileInputStream(path));
+		    dec = new PNGDecoder(getClass().getResourceAsStream(path));
 		    int width = dec.getWidth();
 		    int height = dec.getHeight();
 		    buf = BufferUtils.createByteBuffer(width * height * 4);

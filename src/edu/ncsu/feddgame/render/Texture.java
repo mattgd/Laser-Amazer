@@ -11,12 +11,10 @@ import static org.lwjgl.opengl.GL11.glDeleteTextures;
 import static org.lwjgl.opengl.GL11.glGenTextures;
 import static org.lwjgl.opengl.GL11.glTexImage2D;
 import static org.lwjgl.opengl.GL11.glTexParameterf;
-
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
@@ -36,7 +34,7 @@ public class Texture {
 		BufferedImage image;
 
 		try {
-			image = ImageIO.read(new File("./res/textures/" + path));
+			image = ImageIO.read(getClass().getResourceAsStream("/textures/" + path));
 			width = image.getWidth();
 			height = image.getHeight();
 			

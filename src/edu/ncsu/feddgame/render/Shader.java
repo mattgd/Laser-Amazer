@@ -26,9 +26,8 @@ import static org.lwjgl.opengl.GL20.glUseProgram;
 import static org.lwjgl.opengl.GL20.glValidateProgram;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
 
 import org.joml.Matrix4f;
@@ -120,7 +119,7 @@ public class Shader {
 		BufferedReader reader;
 		
 		try {
-			reader = new BufferedReader(new FileReader(new File("./res/shaders/" + path)));
+			reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/shaders/" + path), "UTF-8"));
 			String line;
 			
 			while ((line = reader.readLine()) != null) {
