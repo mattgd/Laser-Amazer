@@ -278,7 +278,7 @@ public class CreateModel {
 				2, 3, 0
 		};
 
-		LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, newLaser(xOffset, yOffset - height/2f, angle, .1f));
+		LaserStart l = new LaserStart(vertices, texture, indices, xOffset, yOffset, newLaser(xOffset - .1f * (float)Math.sin(angle), yOffset - height/2f + .1f, angle, .1f));
 		l.rotate((float)Math.toRadians(-90 - 90 * side));
 		GameInstance.objectManager.addModel(l);
 		
