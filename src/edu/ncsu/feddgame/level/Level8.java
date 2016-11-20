@@ -39,7 +39,7 @@ public class Level8 extends Level {
 		}
 		
 		// Laser start/stop
-		LaserStart laserStart = CreateModel.createLaserStart(3f, 9.3f, 3, Math.toRadians(1));
+		LaserStart laserStart = CreateModel.createLaserStart(3f, 9.3f, 3);
 		laserWrappers.add(laserStart);
 		
 		LaserStop laserStop = CreateModel.createLaserStop(0f, -9.5f);

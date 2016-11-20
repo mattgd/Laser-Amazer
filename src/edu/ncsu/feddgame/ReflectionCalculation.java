@@ -92,7 +92,11 @@ public class ReflectionCalculation {
 		coords = laser.getCoords();
 		int xDir = laser.xDir;
 		int yDir = laser.yDir;
-		
+		if (slope  < .01f && slope > 0){
+			slope = .01f;
+		}else if (slope > -.01f && slope < 0){
+			slope = -.01f;
+		}
 		// For all Models in the scene
 		for (Model m : models) {
 			// Don't intersect with lasers or UI Elements
