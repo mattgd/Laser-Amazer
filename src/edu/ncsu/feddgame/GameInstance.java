@@ -57,6 +57,7 @@ public class GameInstance {
 	public static boolean showTimer = true;
 	public static int samplingLevel = 4;
 	public static int latestLevel = 5;
+	public static int currentLevel = 2;
 	
 	private boolean canRender;
 	
@@ -150,7 +151,10 @@ public class GameInstance {
 		double unprocessed = 0;
 		
 		setState(State.GAME); // Set the game state
-		setLevel(0); // Set the starting level
+		
+		//
+			setLevel(0); // Set the starting level
+		//
 		
 		new Thread(() -> logicLoop()).start(); // Run the logic in a separate thread
 		
@@ -297,6 +301,8 @@ public class GameInstance {
 		// If all levels complete, reset to level 0
 		levNum++;
 		latestLevel = (levNum <= latestLevel) ? (latestLevel) : (levNum);
+		if (levNum > 1)
+			currentLevel = levNum;
 		
 		if (levNum > scenes.size() - 1) {
 			levNum = 0;
@@ -317,6 +323,8 @@ public class GameInstance {
 		} else {
 			levNum = levelNumber;
 		}
+		if (levNum > 1)
+			currentLevel = levNum;
 		
 		fade();
 		scenes.get(levNum).setActive(true); // Set active level

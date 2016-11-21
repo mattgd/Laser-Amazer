@@ -3,14 +3,12 @@ package edu.ncsu.feddgame.level;
 import edu.ncsu.feddgame.render.CreateModel;
 import edu.ncsu.feddgame.render.LaserStart;
 import edu.ncsu.feddgame.render.Model;
-import edu.ncsu.feddgame.render.MovableModel;
 import edu.ncsu.feddgame.render.MovingBox;
 
 public class Level10 extends Level {
 
 	private MovingBox[] movingBoxes;
 	private Model tri1;
-	private MovableModel box2;
 	
 	public Level10() {
 		super("Level 10");
@@ -44,7 +42,7 @@ public class Level10 extends Level {
 		
 		movingBoxes = new MovingBox[] { movingBox1, movingBox2 };
 		
-		box2 = CreateModel.createMovableBox(4.05f, -5.925f);
+		CreateModel.createMovableBox(4.05f, -5.925f);
 		CreateModel.createMovableTrapezoid(-.9f, 5.8f, 1.5f, 1, 1);
 		CreateModel.createBox(4f, 0f);
 		

@@ -27,6 +27,9 @@ public class SaveData {
 			},
 			() -> {
 				GameInstance.latestLevel = (int)values[3];			
+			},
+			() -> {
+				GameInstance.currentLevel = (int)values[4];			
 			}
 	};
 	
@@ -36,7 +39,7 @@ public class SaveData {
 			input = new Scanner(new File("saveGame.fd"));
 		} catch (FileNotFoundException e) {
 			try {
-				List<String> defaults = Arrays.asList("true", "true", "4", "2");
+				List<String> defaults = Arrays.asList("true", "true", "4", "2", "2"); 	//Set the defaults for read settings
 				Files.write(Paths.get("saveGame.fd"), defaults, Charset.forName("UTF-8"));
 			} catch (IOException e1) {}
 			try {
@@ -46,6 +49,7 @@ public class SaveData {
 		values = new Object[] {
 			true,
 			true,
+			0,
 			0,
 			0
 		};
@@ -79,7 +83,8 @@ public class SaveData {
 					Boolean.toString(GameInstance.levelCompleteDialogue), 
 					Boolean.toString(GameInstance.showTimer),
 					Integer.toString(GameInstance.samplingLevel),
-					Integer.toString(GameInstance.latestLevel));
+					Integer.toString(GameInstance.latestLevel),
+					Integer.toString(GameInstance.currentLevel));
 			Files.write(Paths.get("saveGame.fd"), defaults, Charset.forName("UTF-8"));
 		} catch (IOException e1) {}
 	}

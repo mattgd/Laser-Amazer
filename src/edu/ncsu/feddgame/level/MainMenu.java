@@ -16,8 +16,9 @@ public class MainMenu extends Menu {
 
 	@Override
 	public void renderObjects() {
+		elementList.clear();
 		elementList.add(CreateUI.createButton(0, 1, 3, 1.25f, () -> {
-			GameInstance.setLevel(GameInstance.latestLevel);
+			GameInstance.setLevel(GameInstance.currentLevel);
 		}, new GameFont("Continue", GameColor.RED.getFloatColor())));
 		
 		elementList.add(CreateUI.createButton(0, -0.5f, 3, 1.25f, () -> {

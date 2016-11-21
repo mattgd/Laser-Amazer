@@ -37,6 +37,7 @@ public abstract class Level extends Scene {
 	@Override
 	public void renderObjects() {
 		laserWrappers.clear();
+		elementList.clear();
 		timeStart = getTime();
 		Dropdown du = CreateUI.createDropdown(-12f, 8f, 3f, 1f, new GameFont("Select Level", GameColor.RED.getFloatColor()));
 		for (Scene level : GameInstance.scenes) {
