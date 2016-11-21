@@ -177,32 +177,33 @@ public class Model {
 	 * @param y
 	 * @param z
 	 */
-	public void move(float x, float y, float z){ 	//Moves the vertices by x, y, and z
-		for (int i = 0; i < this.sideCount; i++){
+	public void move(float x, float y, float z) {
+		for (int i = 0; i < this.sideCount; i++) {
 			this.vertices[i * 3] += x;
 		}
-		for (int i = 0; i < this.sideCount; i++){
+		for (int i = 0; i < this.sideCount; i++) {
 			this.vertices[i * 3 + 1] += y;
 		}
-		for (int i = 0; i < this.sideCount; i++){
+		for (int i = 0; i < this.sideCount; i++) {
 			this.vertices[i * 3 + 2] += z;
 		}
 	}
 	
-	public void setVertices(float[] vertices){
+	public void setVertices(float[] vertices) {
 		this.vertices = vertices;
 	}
+	
 	/**
-	 * Rotates by the passed angle in radians
+	 * Rotates by the passed angle in radians or degrees
 	 * @param angle
 	 */
-	public void rotate(float angle){
-			for (int i = 0; i < sideCount; i++){
-				float newX = (float) (xOffset + (this.vertices[i * 3]-xOffset)*Math.cos(angle) - (this.vertices[i * 3 + 1]-yOffset)*Math.sin(angle));
-				float newY = (float) (yOffset + (this.vertices[i * 3]-xOffset)*Math.sin(angle) + (this.vertices[i * 3 + 1]-yOffset)*Math.cos(angle));
-				vertices[i * 3] = newX;
-				vertices[i * 3 + 1] = newY;
-			}
+	public void rotate(float angle) {
+		for (int i = 0; i < sideCount; i++){
+			float newX = (float) (xOffset + (this.vertices[i * 3]-xOffset)*Math.cos(angle) - (this.vertices[i * 3 + 1]-yOffset)*Math.sin(angle));
+			float newY = (float) (yOffset + (this.vertices[i * 3]-xOffset)*Math.sin(angle) + (this.vertices[i * 3 + 1]-yOffset)*Math.cos(angle));
+			vertices[i * 3] = newX;
+			vertices[i * 3 + 1] = newY;
+		}
 	}
 	
 }

@@ -7,13 +7,16 @@ import java.util.Random;
 import edu.ncsu.feddgame.GameInstance;
 import edu.ncsu.feddgame.gui.CreateUI;
 import edu.ncsu.feddgame.gui.Dropdown;
+import edu.ncsu.feddgame.render.CreateModel;
 import edu.ncsu.feddgame.render.GameColor;
 import edu.ncsu.feddgame.render.GameFont;
 import edu.ncsu.feddgame.render.LaserStart;
+import edu.ncsu.feddgame.render.Model;
 
 public abstract class Level extends Scene {
 	
 	protected ArrayList<LaserStart> laserWrappers = new ArrayList<LaserStart>();
+	protected boolean isRendered = false;
 	
 	Level(String name) {
 		super(name);
@@ -47,7 +50,23 @@ public abstract class Level extends Scene {
 		elementList.add(CreateUI.createButton(-12f, 9.25f, 3, 1, ()-> {
 			GameInstance.setLevel(0);
 		}, new GameFont("Main Menu", GameColor.RED.getFloatColor())));
+		
+		// Outer bounds
+		CreateModel.createWall(0f, 10f, 20f, .5f);
+		CreateModel.createWall(0f, -10f, 20f, .5f);
+		CreateModel.createWall(-10f, 0f, .5f, 20f);
+		CreateModel.createWall(10f, 0f, .5f, 20f);
 	}
 
+	protected void randomRotate(Model model) {
+		boolean rotate = false;
+		if (Math.random() < 0.5)
+			rotate = true;
+		
+		if (rotate) {
+			float r = (float) Math.random();
+			model.rotate(r < .5f ? (-(float)Math.PI / 3f) : ((float)Math.PI / 6f));
+		}
+	}
 
 }

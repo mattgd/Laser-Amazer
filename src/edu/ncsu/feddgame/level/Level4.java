@@ -13,17 +13,9 @@ public class Level4 extends Level {
 	@Override
 	public void renderObjects() {
 		super.renderObjects();
-		// Walls
-		{
-			// Outer bounds
-			CreateModel.createWall(0f, 10f, 20f, .5f);
-			CreateModel.createWall(0f, -10f, 20f, .5f);
-			CreateModel.createWall(-10f, 0f, .5f, 20f);
-			CreateModel.createWall(10f, 0f, .5f, 20f);
-			
-			// Inner bounds
-			CreateModel.createWall(-6.3f, -2f, 8f, .25f);
-		}
+		
+		// Inner bounds
+		CreateModel.createWall(-6.3f, -2f, 8f, .25f);
 		
 		// Laser start/stop
 		laserWrappers.add(CreateModel.createLaserStart(0f, 9f, 3));
@@ -40,16 +32,11 @@ public class Level4 extends Level {
 		// Stationary Models
 		CreateModel.createBox(-4f, 2f);
 		
-		Model centerBox = CreateModel.createBox(0f, 0f);
-		centerBox.rotate((float)Math.toRadians(45));
+		Model model = CreateModel.createBox(0f, 0f);
+		model.rotate((float) Math.toRadians(45));
 		
-		Model triangle = CreateModel.createTriangle(-4, -4, -1, -2);
-		triangle.rotate(.3f);
-	}
-	
-	@Override
-	public void logicLoop() {
-		super.logicLoop();
+		model = CreateModel.createTriangle(-4f, -4f, -1f, -2f);
+		model.rotate((float) Math.toRadians(17));
 	}
 
 }

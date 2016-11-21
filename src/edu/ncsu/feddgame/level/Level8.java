@@ -14,14 +14,9 @@ public class Level8 extends Level {
 	@Override
 	public void renderObjects() {
 		super.renderObjects();
+		
 		// Walls
 		{
-			// Outer bounds
-			CreateModel.createWall(0f, 10f, 20f, .5f);
-			CreateModel.createWall(0f, -10f, 20f, .5f);
-			CreateModel.createWall(-10f, 0f, .5f, 20f);
-			CreateModel.createWall(10f, 0f, .5f, 20f);
-			
 			// Inner bounds
 			CreateModel.createWall(-8f, 5f, .25f, 5f);
 			CreateModel.createWall(-2f, 5f, .25f, 5f);
@@ -52,12 +47,7 @@ public class Level8 extends Level {
 			int y = randomInt(-3, 8);
 			
 			model = CreateModel.createMovableBox(x, y);
-			
-			boolean rotate = false;
-			if (Math.random() < 0.5) rotate = true;
-			float r = (float)Math.random();
-			if (rotate)
-				model.rotate(r < .5f ? (-(float)Math.PI / 3f):((float)Math.PI / 6f));
+			randomRotate(model);
 		}
 		
 		for (int i = 0; i < 6; i++) {
@@ -65,12 +55,7 @@ public class Level8 extends Level {
 			int y = randomInt(-3, 8);
 			
 			model = CreateModel.createMovableTriangle(x, y, 1f, 1f);
-			
-			boolean rotate = false;
-			if (Math.random() < 0.5) rotate = true;
-			float r = (float)Math.random();
-			if (rotate)
-				model.rotate(r < .5f ? (-(float)Math.PI / 3f):((float)Math.PI / 6f));
+			randomRotate(model);
 		}
 		
 		// Stationary Models
@@ -99,11 +84,6 @@ public class Level8 extends Level {
 		triangle = CreateModel.createTriangle(8.75f, 8.75f, 2f, 2f);
 		triangle = CreateModel.createTriangle(-8.75f, 8.75f, 2f, 2f);
 		triangle.rotate((float) Math.toRadians(90));
-	}
-	
-	@Override
-	public void logicLoop() {
-		super.logicLoop();
 	}
 
 }

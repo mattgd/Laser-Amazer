@@ -17,26 +17,18 @@ public class Level7 extends Level {
 	@Override
 	public void renderObjects() {
 		super.renderObjects();
-		// Walls
-		{
-			// Outer bounds
-			CreateModel.createWall(0f, 10f, 20f, .5f);
-			CreateModel.createWall(0f, -10f, 20f, .5f);
-			CreateModel.createWall(-10f, 0f, .5f, 20f);
-			CreateModel.createWall(10f, 0f, .5f, 20f);
-			
-			// Inner bounds
-			CreateModel.createWall(0f, -5f, 8f, .25f);
-			CreateModel.createWall(5f, -9f, .25f, 1.5f);
-			CreateModel.createWall(7f, -8.5f, .25f, 2.5f);
-			
-			CreateModel.createWall(0f, 7f, 8f, .25f);
-			CreateModel.createWall(4f, 4f, 5f, .25f);
-			CreateModel.createWall(-4f, 4f, 5f, .25f);
-			
-			CreateModel.createWall(5.8f, 0f, 8f, .25f);
-			CreateModel.createWall(-5.8f, -2f, 8f, .25f);
-		}
+		
+		// Inner bounds
+		CreateModel.createWall(0f, -5f, 8f, .25f);
+		CreateModel.createWall(5f, -9f, .25f, 1.5f);
+		CreateModel.createWall(7f, -8.5f, .25f, 2.5f);
+		
+		CreateModel.createWall(0f, 7f, 8f, .25f);
+		CreateModel.createWall(4f, 4f, 5f, .25f);
+		CreateModel.createWall(-4f, 4f, 5f, .25f);
+		
+		CreateModel.createWall(5.8f, 0f, 8f, .25f);
+		CreateModel.createWall(-5.8f, -2f, 8f, .25f);
 		
 		// Laser start/stop
 		LaserStart laserStart = CreateModel.createLaserStart(6f, 9f, 3);
@@ -59,12 +51,7 @@ public class Level7 extends Level {
 			int y = randomInt(-3, 8);
 			
 			model = CreateModel.createMovableBox(x, y);
-			
-			boolean rotate = false;
-			if (Math.random() < 0.5) rotate = true;
-			float r = (float)Math.random();
-			if (rotate)
-				model.rotate(r < .5f ? (-(float)Math.PI / 3f):((float)Math.PI / 6f));
+			randomRotate(model);
 		}
 		
 		// Moving Models
@@ -79,13 +66,15 @@ public class Level7 extends Level {
 		
 		triangle = CreateModel.createTriangle(9.25f, -9.25f, 1f, 1f);
 		triangle.rotate((float) Math.toRadians(-90));
+		
+		isRendered = true;
 	}
 	
 	@Override
 	public void logicLoop() {
-		super.logicLoop();
-		
-		if (movingBox != null) {
+		if (isRendered) {
+			super.logicLoop();
+			
 			movingBox.logicLoop();
 		}
 	}

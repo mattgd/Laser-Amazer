@@ -32,8 +32,8 @@ public class MovingBox {
 		}
 	}
 	
-	public void rotate(float degrees) {
-		model.rotate((float) Math.toRadians(degrees));
+	public void rotate(float angle) {
+		model.rotate(angle);
 	}
 	
 }

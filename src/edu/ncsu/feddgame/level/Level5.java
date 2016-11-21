@@ -13,14 +13,9 @@ public class Level5 extends Level {
 	@Override
 	public void renderObjects() {
 		super.renderObjects();
+		
 		// Walls
 		{
-			// Outer bounds
-			CreateModel.createWall(0f, 10f, 20f, .5f);
-			CreateModel.createWall(0f, -10f, 20f, .5f);
-			CreateModel.createWall(-10f, 0f, .5f, 20f);
-			CreateModel.createWall(10f, 0f, .5f, 20f);
-			
 			// Inner bounds
 			CreateModel.createWall(0f, -5f, 8f, .25f);
 			
@@ -68,11 +63,6 @@ public class Level5 extends Level {
 		
 		triangle = CreateModel.createTriangle(-5.38f, 7.75f, 1f, 1f);
 		triangle = CreateModel.createTriangle(8.8f, 7.25f, 2f, 2f);
-	}
-	
-	@Override
-	public void logicLoop() {
-		super.logicLoop();
 	}
 
 }
