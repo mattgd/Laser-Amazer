@@ -3,6 +3,7 @@ package edu.ncsu.feddgame.level;
 import java.util.ArrayList;
 
 import edu.ncsu.feddgame.GameInstance;
+import edu.ncsu.feddgame.SaveData;
 import edu.ncsu.feddgame.gui.Button;
 import edu.ncsu.feddgame.gui.CreateUI;
 import edu.ncsu.feddgame.gui.Dropdown;
@@ -38,6 +39,7 @@ public class OptionsMenu extends Menu {
 			display = 1;
 		}, new GameFont("Graphics", GameColor.TEAL.getFloatColor())));
 		elementList.add(CreateUI.createButton(0, -6, 6, 1.5f, () ->{
+			SaveData.writeData();
 			GameInstance.setLevel(0);
 		}, new GameFont("Return to Main Menu", GameColor.TEAL.getFloatColor())));
 		
