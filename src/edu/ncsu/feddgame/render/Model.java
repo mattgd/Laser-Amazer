@@ -165,7 +165,7 @@ public class Model {
 		
 		return buffer;
 	}
-	protected void updateBuffer(FloatBuffer b, float[] data){
+	protected void updateBuffer(FloatBuffer b, float[] data) {
 		b.clear();
 		b.put(data);
 		b.flip();
@@ -197,7 +197,7 @@ public class Model {
 	 * Rotates by the passed angle in radians or degrees
 	 * @param angle
 	 */
-	public void rotate(float angle){
+	public void rotate(float angle) {
 		for (int i = 0; i < sideCount; i++) {
 			float newX = (float) (xOffset + (this.vertices[i * 3]-xOffset)*(float)Math.cos(angle) - (this.vertices[i * 3 + 1]-yOffset)*(float)Math.sin(angle));
 			float newY = (float) (yOffset + (this.vertices[i * 3]-xOffset)*(float)Math.sin(angle) + (this.vertices[i * 3 + 1]-yOffset)*(float)Math.cos(angle));

@@ -48,21 +48,19 @@ public class Level5 extends Level {
 		CreateModel.createMovableTrapezoid(-4f, 5f, 1.5f, 1f, 1f);
 		CreateModel.createMovableTrapezoid(-4f, 8f, 1.5f, 1, 1f);
 		
-		Model triangle = CreateModel.createMovableTriangle(4f, 5f, 1f, 1f);;
-		triangle.rotate((float) Math.toRadians(35));
+		Model model = CreateModel.createMovableTriangle(4f, 5f, 1f, 1f);;
+		model.rotate((float) Math.toRadians(35));
 		
-		triangle = CreateModel.createMovableTriangle(4f, 6f, 1f, 1f);;
-		triangle.rotate((float) Math.toRadians(90));
+		model = CreateModel.createMovableTriangle(4f, 6f, 1f, 1f);;
+		model.rotate((float) Math.toRadians(90));
 		
 		CreateModel.createMovableTriangle(4f, 5f, 1f, 1f);
 		CreateModel.createMovableTriangle(0f, 5f, 1f, 1f);
 		
 		// Stationary Models
-		triangle = CreateModel.createTriangle(-8.8f, 7.25f, 2f, 2f);
-		triangle.rotate((float) Math.toRadians(90));
-		
-		triangle = CreateModel.createTriangle(-5.38f, 7.75f, 1f, 1f);
-		triangle = CreateModel.createTriangle(8.8f, 7.25f, 2f, 2f);
+		model = CreateModel.createBox(-8.8f, 7.25f, 2f);
+		model = CreateModel.createBox(8.8f, 7.25f, 2f);
+		model = CreateModel.createTriangle(-5.38f, 7.75f, 1f, 1f);
 	}
 
 }

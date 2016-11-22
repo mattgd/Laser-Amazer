@@ -90,7 +90,7 @@ public class Level9 extends Level {
 			}
 		}
 		
-		model = CreateModel.createBox(0f, -6.5f, 0.7f);
+		model = CreateModel.createBox(0f, -6.5f, 1f);
 		model.rotate((float) Math.toRadians(65));
 		
 		isRendered = true;

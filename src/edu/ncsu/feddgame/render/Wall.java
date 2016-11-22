@@ -3,7 +3,11 @@ package edu.ncsu.feddgame.render;
 public class Wall extends Model{
 
 	public Wall(float[] vertices, float[] tCoords, int[] indices) {
-		super(vertices, tCoords, indices, 4, "bgtile.png");
+		this(vertices, tCoords, indices, 4);
+	}
+	
+	public Wall(float[] vertices, float[] tCoords, int[] indices, int sideNum) {
+		super(vertices, tCoords, indices, sideNum, "bgtile.png");
 	}
 
 }
