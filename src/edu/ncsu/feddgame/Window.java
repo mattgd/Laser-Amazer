@@ -178,7 +178,7 @@ public class Window {
 			}
 			
 			if (key == GLFW_KEY_TAB && action == GLFW_RELEASE) {
-				GameInstance.setLevel(GameInstance.scenes.size() - 3);
+				GameInstance.setLevel(GameInstance.scenes.size() - 2);
 			}
 			
 			/*
