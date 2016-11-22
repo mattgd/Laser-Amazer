@@ -64,25 +64,25 @@ public class Level8 extends Level {
 		}
 		
 		// Box 1
-		Model triangle = CreateModel.createTriangle(-3.1f, 3.5f, 2f, 2f);
+		Model triangle = CreateModel.createTriangle(-3.1f, 3.5f, -2f, -2f);
 		triangle.rotate((float) Math.toRadians(-90));
-		triangle = CreateModel.createTriangle(-6.9f, 3.5f, 2f, 2f);
+		triangle = CreateModel.createTriangle(-6.9f, 3.5f, -2f, -2f);
 		triangle.rotate((float) Math.toRadians(-180));
 		
 		// Box 2
-		triangle = CreateModel.createTriangle(3.1f, 3.5f, 2f, 2f);
+		triangle = CreateModel.createTriangle(3.1f, 3.5f, -2f, -2f);
 		triangle.rotate((float) Math.toRadians(-180));
-		triangle = CreateModel.createTriangle(6.9f, 3.5f, 2f, 2f);
+		triangle = CreateModel.createTriangle(6.9f, 3.5f, -2f, -2f);
 		triangle.rotate((float) Math.toRadians(-90));
 		
 		// Box 3
-		triangle = CreateModel.createTriangle(-6.9f, -6f, 2f, 2f);
+		triangle = CreateModel.createTriangle(-6.9f, -6f, -2f, -2f);
 		triangle.rotate((float) Math.toRadians(-180));
-		triangle = CreateModel.createTriangle(6.9f, -6f, 2f, 2f);
+		triangle = CreateModel.createTriangle(6.9f, -6f, -2f, -2f);
 		triangle.rotate((float) Math.toRadians(-90));
 		
-		triangle = CreateModel.createTriangle(8.75f, 8.75f, 2f, 2f);
-		triangle = CreateModel.createTriangle(-8.75f, 8.75f, 2f, 2f);
+		triangle = CreateModel.createTriangle(8.75f, 8.75f, -2f, -2f);
+		triangle = CreateModel.createTriangle(-8.75f, 8.75f, -2f, -2f);
 		triangle.rotate((float) Math.toRadians(90));
 	}
 

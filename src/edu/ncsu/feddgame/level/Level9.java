@@ -77,9 +77,9 @@ public class Level9 extends Level {
 		spinBox = CreateModel.createBox(-4f, -7f, 1.4f);
 		
 		Model[] triangles = {
-				CreateModel.createTriangle(-0.88f, -2f, 1f, 1f),
-				CreateModel.createTriangle(0.88f, -3f, 1.3f, 1.3f),
-				CreateModel.createTriangle(-0.88f, -4f, 1f, 1f)
+				CreateModel.createTriangle(-0.88f, -2f, -1f, -1f),
+				CreateModel.createTriangle(0.88f, -3f, -1.3f, -1.3f),
+				CreateModel.createTriangle(-0.88f, -4f, -1f, -1f)
 		};
 
 		for (int i = 0; i < triangles.length; i++) {
