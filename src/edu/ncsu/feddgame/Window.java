@@ -1,7 +1,10 @@
 package edu.ncsu.feddgame;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_ALT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_CONTROL;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_TAB;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
@@ -53,6 +56,7 @@ public class Window {
 	public boolean mouseHeld = false;
 	private String title;
 	public static boolean isClicked = false;
+	public static boolean ctrlHeld = false;
 	private GLFWVidMode vidMode;
 	private Text times;
 	
@@ -110,9 +114,11 @@ public class Window {
 	void addElements() {
 		//Add items here that need to be rendered every frame on all screens
 		if (GameInstance.getCurrentLevel() instanceof Level && GameInstance.showTimer){
-			times = new Text(11f, -2f, "Time: ", GameColor.TEAL.getFloatColor(), 1);
+			times = new Text(10.25f, -2f, "Time: ", GameColor.TEAL.getFloatColor(), 1);
 			elementList.add(times);
 		}
+		if (GameInstance.getCurrentLevel() instanceof Level)
+			elementList.add(new Text(10.2f, -1.5f, GameInstance.getCurrentLevel().getName(), GameColor.YELLOW.getFloatColor(), 1.4f));
 	}
 	public void updateTime(){
 		if (GameInstance.getCurrentLevel() instanceof Level)
@@ -161,7 +167,7 @@ public class Window {
 				glfwSetWindowShouldClose(window, true);
 			}
 				
-			/*if (key == GLFW_KEY_LEFT_CONTROL) {
+			if (key == GLFW_KEY_LEFT_CONTROL) {
 				if (action == GLFW_PRESS) {
 					ctrlHeld = true;
 					
@@ -171,13 +177,27 @@ public class Window {
 				}
 			}
 			
+			if (key == GLFW_KEY_TAB && action == GLFW_RELEASE) {
+				GameInstance.setLevel(GameInstance.scenes.size() - 3);
+			}
+			
+			/*
 			if (key == GLFW_KEY_LEFT_SHIFT) {
 				if (action == GLFW_PRESS) {
 					shiftHeld = true;
 				} else if (action == GLFW_RELEASE) {
 					shiftHeld = false;
 				}
-			}*/
+			}
+			*/
+			if (GameInstance.demoMode)
+				if (key == GLFW_KEY_LEFT_ALT && action == GLFW_RELEASE) {
+					if (GameInstance.levNum != 12) {
+						GameInstance.setLevel(12);
+					}else{
+						GameInstance.setLevel(0);
+					}
+				}
 			
 			if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE) {
 				State state = GameInstance.getState();

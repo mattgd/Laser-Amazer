@@ -8,7 +8,6 @@ import edu.ncsu.feddgame.render.MovingBox;
 public class Level10 extends Level {
 
 	private MovingBox[] movingBoxes;
-	private Model tri1;
 	
 	public Level10() {
 		super("Level 10");
@@ -48,7 +47,7 @@ public class Level10 extends Level {
 		CreateModel.createMovableTrapezoid(-.9f, 5.8f, 1.5f, 1, 1);
 		CreateModel.createBox(4f, 0f);
 		
-		tri1 = CreateModel.createTriangle(-4f, -4f, -1f, -2f);
+		Model tri1 = CreateModel.createTriangle(-4f, -4f, -1f, -2f);
 		tri1.rotate((float) Math.toRadians(17));
 		
 		CreateModel.createMovableTriangle(-1f, 1f, 1f, 1f);
