@@ -27,12 +27,14 @@ public class Level10 extends Level {
 		CreateModel.createWall(6f, -4f, .25f, 9f);
 		CreateModel.createWall(6f, 7.5f, .25f, 8f);
 		
+		CreateModel.createWall(-3f, 5f, 6f, .25f);
+		CreateModel.createWall(-3f, 0f, 6f, .25f);
+		
 		// Laser start/stop
 		LaserStart start = CreateModel.createLaserStart(9.3f, 9.3f, 3, (float) Math.toRadians(-10));
 		laserWrappers.add(start);
 		
 		CreateModel.createLaserStop(-9f, 9.3f);
-		//CreateModel.createBox(-9.3f, 9.3f);
 		
 		// MovingBoxes
 		MovingBox movingBox1 = new MovingBox(2.85f, 2f, 123, 1f, 0f);
@@ -59,6 +61,9 @@ public class Level10 extends Level {
 			model = CreateModel.createMovableTriangle(x, y, 1, 1);
 			randomRotate(model);
 		}
+		
+		model = CreateModel.createMovableTriangle(-6f, -8f, 1f, 1f);
+		model.rotate((float) Math.toRadians(75));
 		
 		isRendered = true;
 	}

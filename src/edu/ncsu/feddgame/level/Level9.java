@@ -46,8 +46,8 @@ public class Level9 extends Level {
 		// Moveables
 		Model model;
 		for (int i = 0; i < 6; i++) {
-			int x = randomInt(-3, 9);
-			int y = randomInt(-3, 8);
+			int x = randomInt(0, 9);
+			int y = randomInt(0, 8);
 			
 			model = CreateModel.createMovableTriangle(x, y, 1f, 1f);
 			randomRotate(model);
@@ -74,7 +74,7 @@ public class Level9 extends Level {
 			movingBoxes[i] = movingBox;
 		}
 		
-		spinBox = CreateModel.createBox(-4.5f, -7f, 1.4f);
+		spinBox = CreateModel.createBox(-4f, -7f, 1.4f);
 		
 		Model[] triangles = {
 				CreateModel.createTriangle(-0.88f, -2f, 1f, 1f),
