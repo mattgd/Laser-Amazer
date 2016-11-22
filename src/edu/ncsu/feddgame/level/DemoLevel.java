@@ -28,7 +28,7 @@ public class DemoLevel extends Level{
 		box2 = CreateModel.createBox(0, 5.5f,1.5f);
 		box2.rotate((float)Math.toRadians(40));
 		box3 = CreateModel.createBox(7, -1);
-		box4 = CreateModel.createBox(-7, -1);
+		box4 = CreateModel.createBox(-7f, -1);
 		isRendered = true;
 	}
 	
@@ -37,7 +37,7 @@ public class DemoLevel extends Level{
 		if (isRendered) {
 			super.logicLoop();
 			box3.rotate((float)Math.toRadians(.5));
-			box4.rotate((float)Math.toRadians(.7));
+			box4.rotate((float)Math.toRadians(.3));
 			movingBox.logicLoop();
 		}
 	}
