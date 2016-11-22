@@ -27,6 +27,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
 
+import edu.ncsu.feddgame.level.DemoLevel;
 import edu.ncsu.feddgame.level.GameComplete;
 import edu.ncsu.feddgame.level.Level1;
 import edu.ncsu.feddgame.level.Level10;
@@ -60,6 +61,7 @@ public class GameInstance {
 	public static int currentLevel = 2;
 	
 	private boolean canRender;
+	public static final boolean demoMode = true;
 	
 	public static List<Scene> scenes = new ArrayList<Scene>() {
 		private static final long serialVersionUID = 525308338634565467L;
@@ -76,10 +78,12 @@ public class GameInstance {
 		add(new Level8());
 		add(new Level9());
 		add(new Level10());
+		if (demoMode)
+			add(new DemoLevel());
 		add(new GameComplete());
 	}};
 	
-	private static int levNum = 0; // Start with 0
+	public static int levNum = 0; // Start with 0
 	private static float fade = 90f; // Amount of fade in degrees (0-90)
 	private static boolean hasLevel = false;
 	public static Shader shader;
@@ -323,9 +327,13 @@ public class GameInstance {
 		} else {
 			levNum = levelNumber;
 		}
-		if (levNum > 1)
-			currentLevel = levNum;
-		
+		if (demoMode){
+			if (levNum > 1 && levNum != 12)
+				currentLevel = levNum;
+		}else{
+			if (levNum > 1)
+				currentLevel = levNum;
+		}
 		fade();
 		scenes.get(levNum).setActive(true); // Set active level
 		hasLevel = false;

@@ -43,9 +43,9 @@ public class CreateModel {
 	public static Model createTriangle(float xOffset, float yOffset, float xSide, float ySide) {
 		// Right Triangle
 		float[] vertices = new float[] {
-				-xSide / 2f + xOffset, ySide / 2f + yOffset, 0, // TOP LEFT - 0
-				xSide / 2f + xOffset, ySide / 2f + yOffset, 0, // TOP RIGHT - 1
-				xSide / 2f + xOffset, -ySide / 2f + yOffset, 0, // BOTTOM - 2
+				xSide / 2f + xOffset, -ySide / 2f + yOffset, 0, // TOP LEFT - 0
+				-xSide / 2f + xOffset, -ySide / 2f + yOffset, 0, // TOP RIGHT - 1
+				-xSide / 2f + xOffset, ySide / 2f + yOffset, 0, // BOTTOM - 2
 		};
 				
 		float[] texture = new float[] {
@@ -55,8 +55,7 @@ public class CreateModel {
 		};
 		
 		int[] indices = new int[] {
-				0, 1,
-				2, 2
+				0, 1, 2,
 		};
 		
 		return GameInstance.objectManager.addModel(new Model(vertices, texture, indices, xOffset, yOffset, 3, GameTexture.UNMOVEABLE_BOX.getPath()));
