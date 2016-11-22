@@ -329,7 +329,7 @@ public class GameInstance {
 		}
 		
 		if (demoMode) {
-			if (levNum > 1 && levNum != 12)
+			if (levNum > 1 && levNum != scenes.size() - 2)
 				currentLevel = levNum;
 		} else {
 			if (levNum > 1)

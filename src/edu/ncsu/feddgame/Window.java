@@ -178,7 +178,11 @@ public class Window {
 			}
 			
 			if (key == GLFW_KEY_TAB && action == GLFW_RELEASE) {
-				GameInstance.setLevel(GameInstance.scenes.size() - 2);
+				if (GameInstance.demoMode){
+					GameInstance.setLevel(GameInstance.scenes.size() - 3);
+				}else{
+					GameInstance.setLevel(GameInstance.scenes.size() - 2);
+				}
 			}
 			
 			/*
@@ -192,8 +196,8 @@ public class Window {
 			*/
 			if (GameInstance.demoMode)
 				if (key == GLFW_KEY_LEFT_ALT && action == GLFW_RELEASE) {
-					if (GameInstance.levNum != 12) {
-						GameInstance.setLevel(12);
+					if (GameInstance.levNum != GameInstance.scenes.size() - 2) {
+						GameInstance.setLevel(GameInstance.scenes.size() - 2);
 					}else{
 						GameInstance.setLevel(0);
 					}
