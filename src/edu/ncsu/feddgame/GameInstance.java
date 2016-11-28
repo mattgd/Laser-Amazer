@@ -78,9 +78,6 @@ public class GameInstance {
 		add(new Level8());
 		add(new Level9());
 		add(new Level10());
-		if (demoMode)
-			add(new DemoLevel());
-		add(new GameComplete());
 	}};
 	
 	public static int levNum = 0; // Start with 0
@@ -108,6 +105,7 @@ public class GameInstance {
 	 */
 	private void setup() {
 		SaveData.readData();
+		new ModLoader();
 		objectManager = new ObjectManager();
 		
 		// If glfw fails to initialize, throw exception 
@@ -120,6 +118,10 @@ public class GameInstance {
 		glfwWindowHint(GLFW_STENCIL_BITS, 4);
 		
 		window = new Window(800, 800, "Laser Amazer", false);
+		
+		if (demoMode)
+			scenes.add(new DemoLevel());
+		scenes.add(new GameComplete());
 	}
 	
 	/**
@@ -159,7 +161,7 @@ public class GameInstance {
 		//
 			setLevel(0); // Set the starting level
 		//
-		
+			
 		new Thread(() -> logicLoop()).start(); // Run the logic in a separate thread
 		
 		glfwSetWindowSize(window.window, 1200, 800);
